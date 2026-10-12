@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Futuristic Portfolio Template — Live Demo | SAMSUC Resource Hub</title>
+<meta name="description" content="Live demo preview for a SAMSUC Resource Hub digital product."/>
+<meta name="robots" content="noindex,nofollow"/>
+<link rel="canonical" href="https://samsuchub.github.io/demos/portfolio.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#07090f; --elev:#0e1320; --surface:#141b2d; --text:#f0f2f8; --muted:#8b93a7;
+  --blue:#3b82f6; --blue-l:#60a5fa; --gold:#d4a017; --gold-l:#e8c547;
+  --border:rgba(255,255,255,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.topbar{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:14px 24px;
+  background:rgba(7,9,15,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.03em}
+.brand span{color:var(--gold);font-weight:500;font-size:.72rem;margin-left:6px}
+.topbar-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 18px;border-radius:999px;font-size:.85rem;font-weight:700;border:1px solid var(--border);transition:.2s}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#b8860b);color:#0a0a0a;border:none}
+.btn-gold:hover{transform:scale(1.03);box-shadow:0 8px 24px rgba(212,160,23,.35)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.demo-banner{text-align:center;padding:10px 16px;font-size:.78rem;color:var(--muted);background:var(--elev);border-bottom:1px solid var(--border)}
+.demo-banner strong{color:var(--gold);font-weight:600}
+/* Simulated portfolio site */
+.site-nav{display:flex;justify-content:space-between;align-items:center;max-width:1100px;margin:0 auto;padding:28px 24px}
+.site-nav .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.15rem}
+.site-nav ul{display:flex;gap:28px;list-style:none}
+.site-nav a{font-size:.88rem;color:var(--muted);transition:color .2s}
+.site-nav a:hover{color:var(--gold)}
+.hero{max-width:1100px;margin:0 auto;padding:48px 24px 72px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.hero-badge{display:inline-block;font-size:.7rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.2rem,5vw,3.4rem);font-weight:700;letter-spacing:-.04em;line-height:1.05;margin-bottom:16px;
+  background:linear-gradient(135deg,#fff 0%,#c7d2fe 45%,var(--gold-l) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--muted);font-size:1.05rem;max-width:420px;margin-bottom:28px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap}
+.hero-visual{aspect-ratio:4/5;border-radius:24px;background:linear-gradient(160deg,var(--surface),var(--elev));border:1px solid var(--border);position:relative;overflow:hidden;
+  box-shadow:0 30px 60px -20px rgba(0,0,0,.55),0 0 40px rgba(59,130,246,.08)}
+.hero-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 30% 20%,rgba(59,130,246,.25),transparent 55%),radial-gradient(ellipse 60% 40% at 80% 80%,rgba(212,160,23,.12),transparent 50%)}
+.hero-visual .inner{position:absolute;inset:24px;border-radius:16px;border:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
+.hero-visual .inner span{font-size:.75rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase}
+.hero-visual .inner strong{font-family:'Space Grotesk',sans-serif;font-size:1.2rem;margin-top:6px}
+.section{max-width:1100px;margin:0 auto;padding:0 24px 72px}
+.section h2{font-family:'Space Grotesk',sans-serif;font-size:1.5rem;margin-bottom:8px}
+.section .lead{color:var(--muted);margin-bottom:28px;max-width:480px}
+.work-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.work{background:var(--surface);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform .3s,border-color .3s}
+.work:hover{transform:translateY(-4px);border-color:rgba(59,130,246,.25)}
+.work-img{aspect-ratio:16/10;background:var(--elev);position:relative}
+.work-img::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(212,160,23,.08))}
+.work-body{padding:18px}
+.work-body strong{display:block;font-size:1rem;margin-bottom:4px}
+.work-body span{font-size:.85rem;color:var(--muted)}
+.about-row{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.skills{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.skills span{font-size:.78rem;padding:6px 12px;border-radius:999px;border:1px solid var(--border);color:var(--muted);background:var(--elev)}
+.contact-box{background:linear-gradient(145deg,rgba(26,36,56,.95),rgba(14,19,32,.95));border:1px solid var(--border);border-radius:20px;padding:40px 32px;text-align:center}
+.contact-box h2{margin-bottom:10px}
+.contact-box p{color:var(--muted);margin-bottom:22px}
+.includes{max-width:1100px;margin:0 auto;padding:0 24px 48px}
+.includes-inner{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px}
+.includes h3{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;margin-bottom:14px}
+.check{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 24px}
+.check li{padding:6px 0 6px 26px;position:relative;font-size:.92rem;color:var(--muted)}
+.check li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:700}
+.footer-cta{text-align:center;padding:32px 24px 72px;border-top:1px solid var(--border)}
+.footer-cta p{color:var(--muted);margin-bottom:16px}
+.demo-note{font-size:.8rem;color:var(--muted);margin-top:12px}
+.demo-note a{color:var(--gold)}
+@media(max-width:800px){
+  .hero,.about-row{grid-template-columns:1fr;gap:28px}
+  .work-grid,.check{grid-template-columns:1fr}
+  .site-nav ul{display:none}
+  .hero-visual{max-width:280px;margin:0 auto}
+}
+</style>
+
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="SAMSUC Resource Hub"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://samsuchub.github.io/demos/portfolio.html"/>
+<meta property="og:title" content="Futuristic Portfolio Template — Live Demo | SAMSUC Resource Hub"/>
+<meta property="og:description" content="Live demo preview for a SAMSUC Resource Hub digital product."/>
+<meta property="og:image" content="https://samsuchub.github.io/media/og-share.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Futuristic Portfolio Template — Live Demo | SAMSUC Resource Hub"/>
+<meta name="twitter:description" content="Live demo preview for a SAMSUC Resource Hub digital product."/>
+<meta name="twitter:image" content="https://samsuchub.github.io/media/og-share.png"/>
+</head>
+<body>
+  <div class="topbar">
+    <a class="brand" href="../index.html">SAMSUC <span>Demo</span></a>
+    <div class="topbar-actions">
+      <a class="btn btn-ghost" href="../index.html#products">Back to hub</a>
+      <a class="btn btn-gold" href="https://samsuchub.gumroad.com/l/FuturisticPortfolio" data-gumroad-overlay-checkout="true">Get this resource · $29</a>
+    </div>
+  </div>
+  <div class="demo-banner">You’re viewing a <strong>live sample</strong> of the Futuristic Portfolio Template — full HTML, CSS &amp; JS files unlock after purchase.</div>
+
+  <nav class="site-nav">
+    <div class="logo">Alex Rivera</div>
+    <ul>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div>
+      <div class="hero-badge">Product designer · 2026</div>
+      <h1>Interfaces that feel calm, fast, and intentional.</h1>
+      <p>I help startups and product teams ship digital experiences people actually want to use — from dashboards to marketing sites.</p>
+      <div class="hero-actions">
+        <a class="btn btn-gold" href="#work">View selected work</a>
+        <a class="btn btn-ghost" href="#contact">Let’s talk</a>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="inner">
+        <span>Featured</span>
+        <strong>Nova Analytics</strong>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" id="work">
+    <h2>Selected work</h2>
+    <p class="lead">A sample project grid from the template — replace with your real case studies.</p>
+    <div class="work-grid">
+      <article class="work">
+        <div class="work-img"></div>
+        <div class="work-body">
+          <strong>Nova Dashboard</strong>
+          <span>SaaS analytics UI · Product design</span>
+        </div>
+      </article>
+      <article class="work">
+        <div class="work-img" style="filter:hue-rotate(40deg)"></div>
+        <div class="work-body">
+          <strong>Pulse Mobile</strong>
+          <span>Health app system · 2025</span>
+        </div>
+      </article>
+      <article class="work">
+        <div class="work-img" style="filter:hue-rotate(80deg)"></div>
+        <div class="work-body">
+          <strong>Atlas Brand</strong>
+          <span>Identity + marketing site</span>
+        </div>
+      </article>
+      <article class="work">
+        <div class="work-img" style="filter:hue-rotate(140deg)"></div>
+        <div class="work-body">
+          <strong>Orbit Landing</strong>
+          <span>Launch page · Conversion design</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="about-row">
+      <div>
+        <h2>About the sample profile</h2>
+        <p class="lead" style="margin-bottom:12px">This block shows how the template structures a short bio and skill chips. Edit the copy, swap colors, and ship your own story.</p>
+        <p style="color:var(--muted);font-size:.95rem">Built with plain HTML, CSS, and JavaScript — no framework required. Responsive from phone to desktop.</p>
+      </div>
+      <div>
+        <div class="skills">
+          <span>UI design</span><span>Design systems</span><span>HTML / CSS</span>
+          <span>Prototyping</span><span>SaaS</span><span>Brand</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact">
+    <div class="contact-box">
+      <h2>Ready for the next project?</h2>
+      <p>Sample contact CTA — wire this to your email or form in the full template files.</p>
+      <a class="btn btn-gold" href="mailto:hello@example.com">hello@example.com</a>
+    </div>
+  </section>
+
+  <div class="includes">
+    <div class="includes-inner">
+      <h3>What’s in the full template download</h3>
+      <ul class="check">
+        <li>Complete responsive dark-mode layout</li>
+        <li>Hero, work grid, about, and contact sections</li>
+        <li>Clean HTML structure you can edit</li>
+        <li>CSS variables for easy recoloring</li>
+        <li>Vanilla JS interactions</li>
+        <li>Commercial use for personal &amp; client projects</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-cta">
+    <p>Like this layout? Get the full source and customize it for your brand.</p>
+    <a class="btn btn-gold" href="https://samsuchub.gumroad.com/l/FuturisticPortfolio" data-gumroad-overlay-checkout="true">Get this resource · $29</a>
+    <p class="demo-note"><a href="../index.html#products">← Return to Featured Resources</a></p>
+  </div>
+  <script src="https://gumroad.com/js/gumroad.js"></script>
+</body>
+</html>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Futuristic SaaS Landing Page — Live Demo | SAMSUC Resource Hub</title>
+<meta name="description" content="Live demo preview for a SAMSUC Resource Hub digital product."/>
+<meta name="robots" content="noindex,nofollow"/>
+<link rel="canonical" href="https://samsuchub.github.io/demos/saas.html"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#07090f; --elev:#0e1320; --surface:#141b2d; --text:#f0f2f8; --muted:#8b93a7;
+  --blue:#3b82f6; --blue-l:#60a5fa; --gold:#d4a017; --gold-l:#e8c547;
+  --border:rgba(255,255,255,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.topbar{position:sticky;top:0;z-index:30;display:flex;justify-content:space-between;align-items:center;padding:14px 24px;
+  background:rgba(7,9,15,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.brand{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-.03em}
+.brand span{color:var(--gold);font-weight:500;font-size:.72rem;margin-left:6px}
+.topbar-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:11px 20px;border-radius:999px;font-size:.85rem;font-weight:700;border:1px solid var(--border);transition:.2s}
+.btn-gold{background:linear-gradient(135deg,var(--gold),#b8860b);color:#0a0a0a;border:none}
+.btn-gold:hover{transform:scale(1.03);box-shadow:0 8px 24px rgba(212,160,23,.35)}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn-blue{background:linear-gradient(135deg,var(--blue),#2563eb);color:#fff;border:none}
+.demo-banner{text-align:center;padding:10px 16px;font-size:.78rem;color:var(--muted);background:var(--elev);border-bottom:1px solid var(--border)}
+.demo-banner strong{color:var(--gold);font-weight:600}
+/* Landing page chrome */
+.lp-nav{max-width:1100px;margin:0 auto;padding:22px 24px;display:flex;justify-content:space-between;align-items:center}
+.lp-nav .mark{font-family:'Space Grotesk',sans-serif;font-weight:700;display:flex;align-items:center;gap:8px}
+.lp-nav .mark i{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--blue),var(--gold));display:inline-block}
+.lp-nav ul{display:flex;gap:24px;list-style:none}
+.lp-nav a{font-size:.88rem;color:var(--muted)}
+.lp-nav a:hover{color:#fff}
+.hero{max-width:900px;margin:0 auto;padding:56px 24px 40px;text-align:center;position:relative}
+.hero::before{content:'';position:absolute;inset:-20% 10% auto;height:280px;background:radial-gradient(ellipse at center,rgba(59,130,246,.2),transparent 70%);pointer-events:none}
+.pill{display:inline-block;font-size:.72rem;font-weight:600;letter-spacing:.06em;padding:6px 14px;border-radius:999px;border:1px solid rgba(59,130,246,.3);background:rgba(59,130,246,.1);color:var(--blue-l);margin-bottom:20px}
+.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2.2rem,5.5vw,3.5rem);font-weight:700;letter-spacing:-.04em;line-height:1.08;margin-bottom:16px;position:relative}
+.hero h1 span{background:linear-gradient(90deg,var(--blue-l),var(--gold-l));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{color:var(--muted);font-size:1.08rem;max-width:520px;margin:0 auto 28px;position:relative}
+.hero-cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative;margin-bottom:12px}
+.hero-note{font-size:.8rem;color:var(--muted)}
+.mock{max-width:920px;margin:32px auto 0;padding:0 24px}
+.mock-frame{border-radius:16px 16px 0 0;border:1px solid var(--border);border-bottom:none;background:var(--surface);overflow:hidden;
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.65),0 0 50px rgba(59,130,246,.1)}
+.mock-bar{display:flex;gap:6px;padding:12px 16px;background:var(--elev);border-bottom:1px solid var(--border)}
+.mock-bar i{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.15)}
+.mock-body{aspect-ratio:16/9;background:linear-gradient(160deg,#0c1220 0%,#141b2d 50%,#0a1020 100%);position:relative;display:grid;grid-template-columns:200px 1fr}
+.mock-side{border-right:1px solid var(--border);padding:16px;display:flex;flex-direction:column;gap:10px}
+.mock-side span{height:10px;border-radius:6px;background:rgba(255,255,255,.06)}
+.mock-main{padding:20px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;align-content:start}
+.mock-card{height:72px;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.05)}
+.mock-card:nth-child(1){background:rgba(59,130,246,.12);border-color:rgba(59,130,246,.2)}
+.mock-card:nth-child(2){background:rgba(212,160,23,.1);border-color:rgba(212,160,23,.15)}
+.section{max-width:1100px;margin:0 auto;padding:72px 24px}
+.section-h{text-align:center;max-width:520px;margin:0 auto 40px}
+.section-h h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,3vw,2.1rem);margin-bottom:10px}
+.section-h p{color:var(--muted)}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.feat{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;transition:border-color .25s,transform .25s}
+.feat:hover{border-color:rgba(59,130,246,.3);transform:translateY(-3px)}
+.feat .ico{width:36px;height:36px;border-radius:10px;background:rgba(59,130,246,.15);margin-bottom:14px;display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.feat h3{font-size:1rem;margin-bottom:8px}
+.feat p{font-size:.9rem;color:var(--muted)}
+.social{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.quote{background:var(--elev);border:1px solid var(--border);border-radius:14px;padding:22px}
+.quote p{font-size:.92rem;color:var(--muted);margin-bottom:14px;font-style:italic}
+.quote strong{font-size:.85rem}
+.quote span{display:block;font-size:.75rem;color:var(--muted);margin-top:2px}
+.cta-band{max-width:900px;margin:0 auto 24px;padding:48px 32px;text-align:center;border-radius:24px;border:1px solid var(--border);
+  background:linear-gradient(145deg,rgba(20,27,45,.95),rgba(10,14,24,.98));position:relative;overflow:hidden}
+.cta-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 0%,rgba(59,130,246,.15),transparent 60%);pointer-events:none}
+.cta-band h2{font-family:'Space Grotesk',sans-serif;font-size:1.8rem;margin-bottom:10px;position:relative}
+.cta-band p{color:var(--muted);margin-bottom:22px;position:relative}
+.cta-band .btn{position:relative}
+.includes{max-width:1100px;margin:0 auto;padding:24px 24px 48px}
+.includes-inner{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px}
+.includes h3{font-family:'Space Grotesk',sans-serif;font-size:1.1rem;margin-bottom:14px}
+.check{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 24px}
+.check li{padding:6px 0 6px 26px;position:relative;font-size:.92rem;color:var(--muted)}
+.check li::before{content:'✓';position:absolute;left:0;color:var(--gold);font-weight:700}
+.footer-cta{text-align:center;padding:32px 24px 72px;border-top:1px solid var(--border)}
+.footer-cta p{color:var(--muted);margin-bottom:16px}
+.demo-note{font-size:.8rem;color:var(--muted);margin-top:12px}
+.demo-note a{color:var(--gold)}
+@media(max-width:800px){
+  .feat-grid,.social,.check{grid-template-columns:1fr}
+  .lp-nav ul{display:none}
+  .mock-body{grid-template-columns:1fr}
+  .mock-side{display:none}
+}
+</style>
+
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="SAMSUC Resource Hub"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://samsuchub.github.io/demos/saas.html"/>
+<meta property="og:title" content="Futuristic SaaS Landing Page — Live Demo | SAMSUC Resource Hub"/>
+<meta property="og:description" content="Live demo preview for a SAMSUC Resource Hub digital product."/>
+<meta property="og:image" content="https://samsuchub.github.io/media/og-share.png"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Futuristic SaaS Landing Page — Live Demo | SAMSUC Resource Hub"/>
+<meta name="twitter:description" content="Live demo preview for a SAMSUC Resource Hub digital product."/>
+<meta name="twitter:image" content="https://samsuchub.github.io/media/og-share.png"/>
+</head>
+<body>
+  <div class="topbar">
+    <a class="brand" href="../index.html">SAMSUC <span>Demo</span></a>
+    <div class="topbar-actions">
+      <a class="btn btn-ghost" href="../index.html#products">Back to hub</a>
+      <a class="btn btn-gold" href="https://samsuchub.gumroad.com/l/FuturisticSaaS" data-gumroad-overlay-checkout="true">Get this resource · $22</a>
+    </div>
+  </div>
+  <div class="demo-banner">You’re viewing a <strong>live sample</strong> of the Futuristic SaaS Landing Page — full HTML, CSS &amp; JS unlock after purchase.</div>
+
+  <nav class="lp-nav">
+    <div class="mark"><i></i> Northline</div>
+    <ul>
+      <li><a href="#features">Product</a></li>
+      <li><a href="#social">Customers</a></li>
+      <li><a href="#cta">Pricing</a></li>
+    </ul>
+    <a class="btn btn-blue" href="#cta">Start free</a>
+  </nav>
+
+  <header class="hero">
+    <div class="pill">New · AI-assisted workflows</div>
+    <h1>Ship product updates your team <span>actually sees</span></h1>
+    <p>Sample SaaS headline and subcopy from the template. Swap in your product story, keep the conversion structure.</p>
+    <div class="hero-cta">
+      <a class="btn btn-gold" href="#cta">Start building free</a>
+      <a class="btn btn-ghost" href="#features">See how it works</a>
+    </div>
+    <p class="hero-note">No credit card required · Sample social proof line</p>
+  </header>
+
+  <div class="mock" aria-hidden="true">
+    <div class="mock-frame">
+      <div class="mock-bar"><i></i><i></i><i></i></div>
+      <div class="mock-body">
+        <div class="mock-side">
+          <span style="width:70%"></span>
+          <span style="width:55%"></span>
+          <span style="width:80%"></span>
+          <span style="width:45%"></span>
+          <span style="width:60%"></span>
+        </div>
+        <div class="mock-main">
+          <div class="mock-card"></div>
+          <div class="mock-card"></div>
+          <div class="mock-card"></div>
+          <div class="mock-card" style="grid-column:1/-1;height:100px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section" id="features">
+    <div class="section-h">
+      <h2>Everything your launch page needs</h2>
+      <p>Feature grid sample — edit titles and descriptions to match your product.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat">
+        <div class="ico">⚡</div>
+        <h3>Live sync</h3>
+        <p>Keep every seat on the same version of truth across the team.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">🚀</div>
+        <h3>Fast setup</h3>
+        <p>Go from signup to first value in minutes, not days.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">✦</div>
+        <h3>Clean UI</h3>
+        <p>Dark interface built for modern tech and AI brands.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">{ }</div>
+        <h3>No framework tax</h3>
+        <p>Plain HTML, CSS, and JavaScript you can host anywhere.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">📱</div>
+        <h3>Responsive</h3>
+        <p>Looks sharp on desktop, tablet, and mobile out of the box.</p>
+      </div>
+      <div class="feat">
+        <div class="ico">🎯</div>
+        <h3>Conversion structure</h3>
+        <p>Hero, proof, features, and CTA sequenced for clarity.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="social" style="padding-top:0">
+    <div class="section-h">
+      <h2>Sample social proof</h2>
+      <p>Placeholder quotes — replace with real customers when you launch.</p>
+    </div>
+    <div class="social">
+      <div class="quote">
+        <p>“We replaced our old marketing page in a weekend. Clean structure, easy to edit.”</p>
+        <strong>Maya R.</strong>
+        <span>Head of Growth</span>
+      </div>
+      <div class="quote">
+        <p>“Dark mode out of the box and no React build step. Perfect for our MVP site.”</p>
+        <strong>Jordan K.</strong>
+        <span>Founder</span>
+      </div>
+      <div class="quote">
+        <p>“The section order made it obvious what to customize first.”</p>
+        <strong>Sam T.</strong>
+        <span>Product designer</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="section" id="cta" style="padding-top:24px">
+    <div class="cta-band">
+      <h2>Ready to launch your page?</h2>
+      <p>Sample final CTA block from the template. Point the button at your signup or sales link.</p>
+      <a class="btn btn-gold" href="https://samsuchub.gumroad.com/l/FuturisticSaaS" data-gumroad-overlay-checkout="true">Get the full template · $22</a>
+    </div>
+  </div>
+
+  <div class="includes">
+    <div class="includes-inner">
+      <h3>What’s in the full template download</h3>
+      <ul class="check">
+        <li>Hero, features, social proof, and CTA sections</li>
+        <li>Product mock / visual stage area</li>
+        <li>Responsive layout for all screen sizes</li>
+        <li>Easy color and content customization</li>
+        <li>Clean HTML, CSS &amp; JavaScript source</li>
+        <li>License for personal and client projects</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-cta">
+    <p>This is a live sample. Full source files unlock after purchase — instant download.</p>
+    <a class="btn btn-gold" href="https://samsuchub.gumroad.com/l/FuturisticSaaS" data-gumroad-overlay-checkout="true">Get this resource · $22</a>
+    <p class="demo-note"><a href="../index.html#products">← Return to Featured Resources</a></p>
+  </div>
+  <script src="https://gumroad.com/js/gumroad.js"></script>
+</body>
+</html>

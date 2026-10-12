@@ -1,0 +1,100 @@
+[
+  {
+    "slug": "how-to-set-up-church-livestream",
+    "title": "How to Set Up a Church Livestream (Practical Guide)",
+    "description": "A practical guide to setting up a church livestream: planning, roles, signal flow, and a pre-service checklist so Sunday streaming is calmer.",
+    "category": "church",
+    "path": "/blog/how-to-set-up-church-livestream/"
+  },
+  {
+    "slug": "obs-church-livestream-setup",
+    "title": "OBS Church Livestream Setup: Scenes, Audio, and Stability",
+    "description": "OBS church livestream setup tips for scenes, audio sources, and stability so volunteers can run Sunday streams with fewer surprises.",
+    "category": "church",
+    "path": "/blog/obs-church-livestream-setup/"
+  },
+  {
+    "slug": "church-media-team-checklist",
+    "title": "Church Media Team Checklist for Calmer Sundays",
+    "description": "A church media team checklist covering roles, arrival times, and pre-service checks so livestream and in-room media run with fewer gaps.",
+    "category": "church",
+    "path": "/blog/church-media-team-checklist/"
+  },
+  {
+    "slug": "how-to-connect-a-camera-to-obs",
+    "title": "How to Connect a Camera to OBS for Church Streaming",
+    "description": "How to connect a camera to OBS for church streaming: USB, capture cards, and practical checks so the video source appears reliably.",
+    "category": "church",
+    "path": "/blog/how-to-connect-a-camera-to-obs/"
+  },
+  {
+    "slug": "church-livestream-equipment-guide",
+    "title": "Church Livestream Equipment Guide (Start Simple)",
+    "description": "A church livestream equipment guide focused on practical starting gear: audio, camera, computer, and network\u2014without unnecessary complexity.",
+    "category": "church",
+    "path": "/blog/church-livestream-equipment-guide/"
+  },
+  {
+    "slug": "how-to-create-a-modern-portfolio-website",
+    "title": "How to Create a Modern Portfolio Website",
+    "description": "How to create a modern portfolio website: structure, project presentation, performance basics, and a practical path using HTML templates.",
+    "category": "templates",
+    "path": "/blog/how-to-create-a-modern-portfolio-website/"
+  },
+  {
+    "slug": "html-css-javascript-website-tips",
+    "title": "HTML, CSS, and JavaScript Website Tips for Cleaner Builds",
+    "description": "Practical HTML, CSS, and JavaScript website tips for clearer structure, maintainable styles, and lighter interaction\u2014especially on template-based sites.",
+    "category": "templates",
+    "path": "/blog/html-css-javascript-website-tips/"
+  },
+  {
+    "slug": "saas-landing-page-design",
+    "title": "SaaS Landing Page Design: What Actually Needs to Be Clear",
+    "description": "SaaS landing page design basics: problem statement, product proof, feature clarity, and calls to action\u2014without unnecessary sections.",
+    "category": "templates",
+    "path": "/blog/saas-landing-page-design/"
+  },
+  {
+    "slug": "how-to-choose-a-website-template",
+    "title": "How to Choose a Website Template Without Wasting Time",
+    "description": "How to choose a website template: fit to content, editability, performance, and license clarity\u2014so you buy once and actually launch.",
+    "category": "templates",
+    "path": "/blog/how-to-choose-a-website-template/"
+  },
+  {
+    "slug": "jamb-chemistry-revision",
+    "title": "JAMB Chemistry Revision: A Focused Weekly Plan",
+    "description": "JAMB Chemistry revision guidance with a focused weekly plan, active recall habits, and topic prioritization for clearer exam preparation.",
+    "category": "students",
+    "path": "/blog/jamb-chemistry-revision/"
+  },
+  {
+    "slug": "important-chemistry-formulas-for-jamb",
+    "title": "Important Chemistry Formulas for JAMB (Study Smart)",
+    "description": "Important Chemistry formulas for JAMB candidates: how to organize formulas, when memorization helps, and how to practice applying them.",
+    "category": "students",
+    "path": "/blog/important-chemistry-formulas-for-jamb/"
+  },
+  {
+    "slug": "how-to-prepare-for-jamb-chemistry",
+    "title": "How to Prepare for JAMB Chemistry Without Burning Out",
+    "description": "How to prepare for JAMB Chemistry with a realistic timeline, syllabus coverage, practice questions, and review habits that reduce last-minute panic.",
+    "category": "students",
+    "path": "/blog/how-to-prepare-for-jamb-chemistry/"
+  },
+  {
+    "slug": "jamb-chemistry-topics-to-study",
+    "title": "JAMB Chemistry Topics to Study First",
+    "description": "JAMB Chemistry topics to study with a practical order of priority so candidates strengthen foundations before rarer detail.",
+    "category": "students",
+    "path": "/blog/jamb-chemistry-topics-to-study/"
+  },
+  {
+    "slug": "common-jamb-chemistry-mistakes",
+    "title": "Common JAMB Chemistry Mistakes (And How to Avoid Them)",
+    "description": "Common JAMB Chemistry mistakes in reading questions, units, equations, and rushed calculations\u2014with practical ways to reduce them.",
+    "category": "students",
+    "path": "/blog/common-jamb-chemistry-mistakes/"
+  }
+]
