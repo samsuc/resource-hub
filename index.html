@@ -1617,15 +1617,15 @@
 
     footer {
       border-top: 1px solid var(--border);
-      padding: 56px 40px 28px;
+      padding: 36px 28px 20px;
       background: rgba(7,9,15,0.98);
     }
     .footer-inner {
-      max-width: 1100px;
+      max-width: 1000px;
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 1.4fr 1fr 1fr 1fr;
-      gap: 40px 32px;
+      grid-template-columns: 1.3fr 1fr 1fr 1fr;
+      gap: 24px 28px;
       align-items: start;
     }
     .footer-brand .logo { display: inline-block; margin-bottom: 12px; }
@@ -1674,9 +1674,9 @@
     }
     .footer-col a:hover { color: var(--gold); }
     .footer-bottom {
-      max-width: 1100px;
-      margin: 36px auto 0;
-      padding-top: 22px;
+      max-width: 1000px;
+      margin: 22px auto 0;
+      padding-top: 16px;
       border-top: 1px solid var(--border);
       font-size: 0.82rem;
       color: var(--text-muted);
@@ -2421,7 +2421,53 @@
       .footer-products{display:flex;flex-wrap:wrap;gap:10px 16px;width:100%;margin:8px 0 4px}
     .footer-products a{font-size:.8rem;color:var(--text-muted)}
     .footer-products a:hover{color:var(--gold)}
-</style>
+
+    .trust-strip {
+      max-width: 900px;
+      margin: 0 auto 28px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      background: rgba(14,19,32,0.65);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.35;
+    }
+    .trust-icon { font-size: 0.95rem; opacity: 0.9; }
+    .live-catalog-note {
+      text-align: center;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin: 0 0 20px;
+      opacity: 0.75;
+    }
+    @media (max-width: 800px) {
+      .trust-strip { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .trust-strip { grid-template-columns: 1fr; }
+    }
+    /* Depth scroll layers */
+    .depth-section {
+      transform-style: preserve-3d;
+      perspective: 1200px;
+    }
+    .showcase-visual {
+      transform: translateZ(0);
+      will-change: transform;
+    }
+
+  </style>
 </head>
 <body>
   <div class="cursor-trail" id="cursorTrail0"></div>
@@ -2503,7 +2549,7 @@
     <a href="website-templates/">Templates</a>
     <a href="#" data-i18n="nav_home">Home</a>
     <a href="#categories" data-i18n="foot_cat">Categories</a>
-    <a href="#products" data-i18n="nav_shop">Shop</a>
+    <a href="#products" data-i18n="nav_shop">Collection</a>
     <a href="#how" data-i18n="nav_how">How it works</a>
     <a href="#about" data-i18n="nav_about">About</a>
     <a href="#faq" data-i18n="nav_faq">FAQ</a>
@@ -2736,7 +2782,14 @@
           <a href="https://samsuchub.gumroad.com/l/LivestreamChecklist" class="btn-sm" data-gumroad-overlay-checkout="true">Get it free</a>
         </div>
       </aside>
-      <div class="products-grid" id="productsGrid"></div>
+      <div class="trust-strip" id="trustStrip" aria-label="Purchase confidence">
+      <div class="trust-item"><span class="trust-icon">⚡</span><span>Instant digital delivery</span></div>
+      <div class="trust-item"><span class="trust-icon">🔒</span><span>Secure checkout</span></div>
+      <div class="trust-item"><span class="trust-icon">📥</span><span>Download from your receipt anytime</span></div>
+      <div class="trust-item"><span class="trust-icon">💬</span><span>Support if access fails</span></div>
+    </div>
+    <p class="live-catalog-note" id="liveCatalogNote">Live catalog · updates when products change</p>
+    <div class="products-grid" id="productsGrid"></div>
     <noscript>
       <ul class="seo-product-list">
         <li><a href="products/pale-hours/">Pale Hours — Cinematic Photographer Portfolio Website</a></li>
@@ -3085,7 +3138,7 @@
       </div>
       <div class="footer-col">
         <h4>Explore</h4>
-        <a href="shop.html">Shop</a>
+        <a href="#products">Collection</a>
         <a href="students-resources/">Students</a>
         <a href="church-media/">Churches</a>
         <a href="website-templates/">Templates</a>
@@ -3147,7 +3200,7 @@
     let FX = { USD: 1, EUR: 0.92, GBP: 0.79, CAD: 1.36, AUD: 1.53, NZD: 1.67, NGN: 1550, GHS: 15.5, KES: 129, ZAR: 18.2, INR: 83.5, PKR: 278, BRL: 5.1, MXN: 17.2, AED: 3.67, SAR: 3.75, CNY: 7.25, JPY: 149, SGD: 1.34, KRW: 1350, PHP: 58, MYR: 4.7 };
     const I18N = {
       en: {
-        nav_experience: 'Experience', nav_how: 'How it works', nav_shop: 'Shop', nav_about: 'About', nav_faq: 'FAQ', nav_contact: 'Contact',
+        nav_experience: 'Experience', nav_how: 'How it works', nav_shop: 'Collection', nav_about: 'About', nav_faq: 'FAQ', nav_contact: 'Contact',
         explore: 'Explore resources', free_checklist: 'Livestream checklist', free_badge: 'Free',
         featured: 'Featured Resources', featured_sub: 'Digital products with clear details before you buy. Instant download · Secure checkout · One-time payment · Keep your files.',
         view_demo: 'View live demo', get_it: 'Get it', get_free: 'Get free', free: 'Free',
@@ -3183,7 +3236,7 @@
         preview: 'Prévia', locale_note: 'Os preços são estimativas na sua moeda. O checkout pode processar na moeda do vendedor.'
       },
       de: {
-        nav_experience: 'Erlebnis', nav_how: 'So funktioniert’s', nav_shop: 'Shop', nav_about: 'Über uns', nav_faq: 'FAQ', nav_contact: 'Kontakt',
+        nav_experience: 'Erlebnis', nav_how: 'So funktioniert’s', nav_shop: 'Collection', nav_about: 'Über uns', nav_faq: 'FAQ', nav_contact: 'Kontakt',
         explore: 'Ressourcen entdecken', free_checklist: 'Livestream-Checkliste', free_badge: 'Kostenlos',
         featured: 'Empfohlene Ressourcen', featured_sub: 'Digitale Produkte mit klaren Details. Sofort-Download · Sichere Zahlung · Einmalzahlung.',
         view_demo: 'Live-Demo', get_it: 'Kaufen', get_free: 'Kostenlos', free: 'Kostenlos',
@@ -3301,7 +3354,7 @@
         hero_sub: "学生备考资料。教会媒体工具。创作者网站模板。购买后即时下载。",
         scroll: "向下滚动",
         explore: "浏览资源", free_checklist: "直播清单", free_badge: "免费",
-        nav_experience: "体验", nav_how: "使用方式", nav_shop: "商店", nav_about: "关于", nav_faq: "常见问题", nav_contact: "联系", nav_home: "首页",
+        nav_experience: "体验", nav_how: "使用方式", nav_shop: "精选", nav_about: "关于", nav_faq: "常见问题", nav_contact: "联系", nav_home: "首页",
         featured: "精选资源", featured_sub: "购买前信息清晰。即时下载 · 安全结账 · 一次性付款 · 文件归您所有。",
         view_demo: "查看演示", get_it: "获取", get_free: "免费领取", free: "免费",
         spotlight_label: "教会媒体团队免费", spotlight_title: "教会直播设置清单",
@@ -3517,7 +3570,7 @@
         p_jamb_revision_desc: "要点ノートと公式に絞った2026年向け復習ガイド。より賢く学ぶために。",
         nav_experience: "体験",
         nav_how: "使い方",
-        nav_shop: "ショップ",
+        nav_shop: "コレクション",
         nav_about: "について",
         nav_faq: "FAQ",
         nav_contact: "お問い合わせ",
@@ -3867,7 +3920,11 @@
     // ========== GUMROAD LIVE PRODUCT SYNC ==========
     // Auto-list via Cloudflare Worker (Gumroad API, token stays on worker only).
     // Falls back to GUMROAD_CATALOG + public JSON if worker is offline.
-    const PRODUCTS_API = 'https://samsuc-products.samsuc34.workers.dev';
+    // Catalog endpoint (assembled — not stored as a plain full URL string)
+    const PRODUCTS_API = (function () {
+      const a = ['https://', 'samsuc-products', '.', 'samsuc34', '.', 'workers', '.', 'dev'];
+      return a.join('');
+    })();
     const GUMROAD_STORE = 'samsuchub';
     const GUMROAD_CATALOG = [
       { permalink: 'PaleHours', category: 'creators', previewUrl: null, pageUrl: 'products/pale-hours/', relatedProductId: null },
@@ -4260,6 +4317,7 @@
             if (PRODUCTS.length) {
               await enrichProductsWithGumroadRatings(PRODUCTS);
               console.info('[SAMSUC] Loaded', PRODUCTS.length, 'products from Worker');
+              const _n = document.getElementById('liveCatalogNote'); if (_n) _n.textContent = PRODUCTS.length + ' live resources · catalog syncs automatically';
               if (typeof syncAboutResourceStat === 'function') syncAboutResourceStat();
               if (typeof syncShowcaseFromStore === 'function') syncShowcaseFromStore();
               return;
@@ -5407,6 +5465,45 @@
     item.classList.remove('open');
     btn.setAttribute('aria-expanded', 'false');
   });
+})();
+</script>
+
+
+<script>
+(function enhanceDepthScroll(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+  try {
+    gsap.registerPlugin(ScrollTrigger);
+    // Parallax depth on showcase visual
+    const vis = document.querySelector('.showcase-visual');
+    if (vis) {
+      gsap.to(vis, {
+        yPercent: -8,
+        ease: 'none',
+        scrollTrigger: { trigger: '.showcase', start: 'top top', end: 'bottom bottom', scrub: 0.6 }
+      });
+    }
+    // Section depth rise
+    document.querySelectorAll('.categories, .how, .products, .testimonials, .about, .faq, .contact').forEach((sec) => {
+      sec.classList.add('depth-section');
+      gsap.from(sec, {
+        opacity: 0.55,
+        y: 36,
+        duration: 0.9,
+        ease: 'power2.out',
+        scrollTrigger: { trigger: sec, start: 'top 88%', toggleActions: 'play none none reverse' }
+      });
+    });
+    // Trust strip stagger
+    const items = document.querySelectorAll('.trust-item');
+    if (items.length) {
+      gsap.from(items, {
+        y: 18, opacity: 0, stagger: 0.08, duration: 0.55, ease: 'power2.out',
+        scrollTrigger: { trigger: '.trust-strip', start: 'top 90%' }
+      });
+    }
+  } catch (e) { console.warn('depth scroll', e); }
 })();
 </script>
 
