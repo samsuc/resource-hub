@@ -7,8 +7,8 @@
 <meta name="description" content="Study materials and student resources from SAMSUC Resource Hub. Clear digital downloads built for focused revision and practical learning."/>
 <meta name="robots" content="index,follow"/>
 <link rel="canonical" href="https://samsuchub.github.io/students-resources/"/>
-<link rel="icon" type="image/png" sizes="32x32" href="../media/favicon-32.png"/>
-<link rel="apple-touch-icon" href="../media/apple-touch-icon.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32.png"/>
+<link rel="apple-touch-icon" href="media/apple-touch-icon.png"/>
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="SAMSUC Resource Hub"/>
 <meta property="og:locale" content="en_US"/>
@@ -64,23 +64,25 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
 .footer-social-link:hover{color:var(--gold);border-color:rgba(212,160,23,.45);background:rgba(212,160,23,.08)}
 
 </style>
+<!-- samsuc-depth -->
+<link rel="stylesheet" href="../js/samsuc-depth.css"/>
 </head>
-<body>
+<body class="depth-scene">
 <header class="header">
-  <a href="../index.html" class="logo">SAMSUC <span>Resource Hub</span></a>
+  <a href="" class="logo">SAMSUC <span>Resource Hub</span></a>
   <nav class="nav">
-    <a href="../index.html">Home</a>
-    <a href="../students-resources/" class="active">Students</a>
-    <a href="../church-media/" class="">Churches</a>
-    <a href="../website-templates/" class="">Templates</a>
-    <a href="../blog/">Blog</a>
-    <a href="../index.html#products">Shop</a>
-    <a href="../contact.html">Contact</a>
+    <a href="">Home</a>
+    <a href="students-resources/" class="active">Students</a>
+    <a href="church-media/" class="">Churches</a>
+    <a href="website-templates/" class="">Templates</a>
+    <a href="blog/">Blog</a>
+    <a href="shop.html">Shop</a>
+    <a href="contact.html">Contact</a>
   </nav>
-  <a href="../index.html#products" class="btn btn-gold" style="padding:10px 16px;font-size:.82rem">Shop</a>
+  <a href="shop.html" class="btn btn-gold" style="padding:10px 16px;font-size:.82rem">Shop</a>
 </header>
 <main class="wrap">
-  <p class="breadcrumb"><a href="../index.html">Home</a> · Students</p>
+  <p class="breadcrumb"><a href="">Home</a> · Students</p>
   <div class="hero-block">
     <div class="eyebrow">Students</div>
     <h1>Study materials for focused learning</h1>
@@ -91,32 +93,65 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
     <h2>Student resources available now</h2>
   </div>
   <div class="grid"><div class="empty">
-  <p><strong>Student study materials are being prepared for this shelf.</strong></p>
+  <p><strong>Student products from the live catalog appear below when published.</strong></p>
   <p>When new study resources are published, they will appear here. In the meantime, explore our church media tools and website templates, or check back soon.</p>
-  <p style="margin-top:14px"><a class="btn btn-ghost" href="../church-media/">Church media resources</a>
-  <a class="btn btn-ghost" href="../website-templates/" style="margin-left:8px">Website templates</a></p>
+  <p style="margin-top:14px"><a class="btn btn-ghost" href="church-media/">Church media resources</a>
+  <a class="btn btn-ghost" href="website-templates/" style="margin-left:8px">Website templates</a></p>
 </div></div>
-  <div class="links"><p style="margin-bottom:10px;color:var(--muted)"><strong style="color:var(--text)">From the blog</strong></p><a href="../blog/jamb-chemistry-revision/">JAMB Chemistry revision</a> <a href="../blog/important-chemistry-formulas-for-jamb/">Important Chemistry formulas for JAMB</a> <a href="../blog/how-to-prepare-for-jamb-chemistry/">How to prepare for JAMB Chemistry</a> </div>
+  <div class="links"><p style="margin-bottom:10px;color:var(--muted)"><strong style="color:var(--text)"><div class="grid" id="studentGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin:24px 0 40px"></div>
+<script>
+(async function(){
+  const grid=document.getElementById('studentGrid');
+  if(!grid) return;
+  try{
+    const res=await fetch('https://samsuc-products.samsuc34.workers.dev',{cache:'no-store'});
+    const data=await res.json();
+    const items=(data.products||[]).filter(p=>{
+      const s=((p.name||'')+' '+(p.url||'')+' '+(p.permalink||'')).toLowerCase();
+      return /jamb|student|chemistry|exam|revision|formula|study/.test(s);
+    });
+    if(!items.length){
+      grid.innerHTML='<div style="grid-column:1/-1;padding:20px;border:1px solid rgba(255,255,255,.08);border-radius:16px;color:#8b93a7">No student products are published in the store right now. Church media and website templates are available — or check back soon.</div>';
+      return;
+    }
+    grid.innerHTML=items.map(p=>{
+      const m=String(p.url||'').match(/\/l\/([^/?#]+)/);
+      const perm=p.permalink||(m&&m[1])||'';
+      const cents=typeof p.price_cents==='number'?p.price_cents:(typeof p.price==='number'?p.price:0);
+      const price=Math.round(cents)/100;
+      const href=p.url||('#');
+      return '<article style="background:#0e1320;border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden">'+
+        (p.thumbnail_url?'<img src="'+p.thumbnail_url+'" alt="" style="width:100%;aspect-ratio:16/10;object-fit:cover">':'')+
+        '<div style="padding:16px"><h3 style="margin:0 0 8px;font-size:1.05rem">'+ (p.name||perm) +'</h3>'+
+        '<p style="color:#8b93a7;font-size:.88rem;margin:0 0 12px">'+(price?('$'+price.toFixed(2)):'Free')+'</p>'+
+        '<a href="'+href+'" style="display:inline-flex;padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,#d4a017,#b8860b);color:#0a0a0a;font-weight:700;font-size:.82rem;text-decoration:none">View</a></div></article>';
+    }).join('');
+  }catch(e){
+    grid.innerHTML='<p style="color:#8b93a7">Could not load student products right now.</p>';
+  }
+})();
+</script>
+    <h2 style="margin-top:8px">From the blog</strong></p><a href="../blog/jamb-chemistry-revision/">JAMB Chemistry revision</a> <a href="../blog/important-chemistry-formulas-for-jamb/">Important Chemistry formulas for JAMB</a> <a href="../blog/how-to-prepare-for-jamb-chemistry/">How to prepare for JAMB Chemistry</a> </div>
   <div class="links">
-    <a href="../index.html#products">Browse full shop</a>
-    <a href="../students-resources/">Students</a>
-    <a href="../church-media/">Church media</a>
-    <a href="../website-templates/">Website templates</a>
-    <a href="../contact.html">Contact</a>
-    <a href="../support.html">Support</a>
+    <a href="shop.html">Browse full shop</a>
+    <a href="students-resources/">Students</a>
+    <a href="church-media/">Church media</a>
+    <a href="website-templates/">Website templates</a>
+    <a href="contact.html">Contact</a>
+    <a href="support.html">Support</a>
   </div>
 </main>
 <footer class="footer">
-  <a href="../index.html" class="logo">SAMSUC <span>Resource Hub</span></a>
+  <a href="" class="logo">SAMSUC <span>Resource Hub</span></a>
   <div class="footer-links">
-    <a href="../students-resources/">Students</a>
-    <a href="../church-media/">Churches</a>
-    <a href="../website-templates/">Templates</a>
-    <a href="../index.html#products">Shop</a>
-    <a href="../contact.html">Contact</a>
-    <a href="../support.html">Support</a>
-    <a href="../privacy.html">Privacy</a>
-    <a href="../terms.html">Terms</a>
+    <a href="students-resources/">Students</a>
+    <a href="church-media/">Churches</a>
+    <a href="website-templates/">Templates</a>
+    <a href="shop.html">Shop</a>
+    <a href="contact.html">Contact</a>
+    <a href="support.html">Support</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
   </div>
   
     <div class="footer-social" aria-label="Social">
@@ -129,6 +164,8 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
     </div>
   <div class="copyright">© 2026 SAMSUC Resource Hub</div>
 </footer>
-<script src="../js/samsuc-locale.js" defer></script>
+<script src="js/samsuc-locale.js" defer></script>
+<script src="../js/samsuc-depth.js" defer></script>
+<!-- /samsuc-depth -->
 </body>
 </html>

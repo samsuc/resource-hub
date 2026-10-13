@@ -2468,8 +2468,10 @@
     }
 
   </style>
+<!-- samsuc-depth -->
+<link rel="stylesheet" href="js/samsuc-depth.css"/>
 </head>
-<body>
+<body class="depth-scene">
   <div class="cursor-trail" id="cursorTrail0"></div>
   <div class="cursor-trail" id="cursorTrail1"></div>
   <div class="cursor-trail" id="cursorTrail2"></div>
@@ -2768,8 +2770,8 @@
     <div class="products-content">
       <div class="section-header">
         <h2>Featured Resources</h2>
-        <p>Digital products with clear details before you buy. Instant download · Secure checkout · One-time payment · Keep your files.</p>
-        <button id="showAllProducts" class="btn-sm outline" style="margin-top:16px;display:none;opacity:0.9" data-i18n="show_all">Show all products</button>
+        <p>A selection from each category — clear details before you buy. Instant download · Secure checkout.</p>
+        <a href="collection.html" class="btn-sm outline" id="viewFullCollection" style="margin-top:16px;display:inline-flex;opacity:0.95">View full collection</a>
       </div>
       <aside class="free-spotlight" aria-label="Free resource">
         <div class="free-spotlight-copy">
@@ -3138,7 +3140,7 @@
       </div>
       <div class="footer-col">
         <h4>Explore</h4>
-        <a href="#products">Collection</a>
+        <a href="collection.html">Collection</a>
         <a href="students-resources/">Students</a>
         <a href="church-media/">Churches</a>
         <a href="website-templates/">Templates</a>
@@ -4836,12 +4838,54 @@
       }
     }
 
+
+    function truncateText(str, max) {
+      const s = String(str || '').replace(/\s+/g, ' ').trim();
+      if (!s) return '';
+      if (s.length <= max) return s;
+      // cut on word boundary when possible
+      let cut = s.slice(0, max - 1);
+      const sp = cut.lastIndexOf(' ');
+      if (sp > Math.floor(max * 0.55)) cut = cut.slice(0, sp);
+      return cut.replace(/[.,;:]+$/, '') + '…';
+    }
+
+    function pickFeaturedProducts(list) {
+      const items = Array.isArray(list) ? list.slice() : [];
+      const order = ['students', 'churches', 'creators'];
+      const picked = [];
+      const used = new Set();
+      // At least one from each category when available
+      order.forEach((cat) => {
+        const pool = items.filter(p => p && p.category === cat && !used.has(p.id));
+        if (!pool.length) return;
+        // Prefer paid/higher signal for featured
+        pool.sort((a, b) => (Number(b.price) || 0) - (Number(a.price) || 0));
+        picked.push(pool[0]);
+        used.add(pool[0].id);
+      });
+      // If fewer than 3 categories, fill up to 3 total
+      items.forEach((p) => {
+        if (picked.length >= 3) return;
+        if (!p || used.has(p.id)) return;
+        picked.push(p);
+        used.add(p.id);
+      });
+      return picked;
+    }
+
     function renderProducts(filter = 'all') {
       currentFilter = filter;
-      const list = filter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === filter);
       const grid = document.getElementById('productsGrid');
-      const showAllBtn = document.getElementById('showAllProducts');
-      if (showAllBtn) showAllBtn.style.display = filter === 'all' ? 'none' : 'inline-flex';
+      if (!grid) return;
+
+      let list;
+      if (filter === 'all') {
+        // Homepage: featured only — one from each category
+        list = pickFeaturedProducts(PRODUCTS);
+      } else {
+        list = PRODUCTS.filter(p => p.category === filter).slice(0, 3);
+      }
 
       if (list.length === 0) {
         grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--text-muted);padding:40px 0;">No products in this category yet.</p>';
@@ -4857,21 +4901,21 @@
         const pDescKey = 'p_' + pKey + '_desc';
         const pNameRaw = t(pNameKey);
         const pDescRaw = t(pDescKey);
-        // English uses live Gumroad name/desc; other languages use i18n when available
         const useI18n = localeState.lang && localeState.lang !== 'en';
         const pName = (useI18n && pNameRaw && pNameRaw !== pNameKey) ? pNameRaw : p.name;
-        const pDesc = (useI18n && pDescRaw && pDescRaw !== pDescKey) ? pDescRaw : p.desc;
+        const pDescFull = (useI18n && pDescRaw && pDescRaw !== pDescKey) ? pDescRaw : p.desc;
+        const pDesc = truncateText(pDescFull, 110);
         return `
-        <article class="product-item">
+        <article class="product-item depth-card depth-reveal">
           <div class="product-item-img">
             <a href="${pageHref}" aria-label="${pName}">
-              <img src="${p.image}" alt="${pName}" width="800" height="500" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://placehold.co/800x500/141b2d/d4a017?text='+encodeURIComponent('${p.name.split(' ').slice(0,3).join(' ')}');" />
+              <img src="${p.image}" alt="${pName}" width="800" height="500" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src='https://placehold.co/800x500/141b2d/d4a017?text='+encodeURIComponent('${String(p.name||'').split(' ').slice(0,3).join(' ')}');" />
             </a>
           </div>
           <div class="product-item-body">
             <h3><a href="${pageHref}" style="color:inherit;text-decoration:none;">${pName}</a></h3>
             ${ratingBadgeHtml(p)}
-            <p>${pDesc}</p>
+            <p title="${String(pDescFull || '').replace(/"/g, '&quot;')}">${pDesc}</p>
             ${related ? `<p class="product-related">${t('related_prefix')} <span>${(() => { const rk = 'p_' + String(related.id).replace(/-/g,'_') + '_name'; const rv = t(rk); return (rv && rv !== rk) ? rv : related.name; })()}</span> ${t('related_suffix')}</p>` : ''}
             <div class="product-meta">
               <span class="price">${formatMoney(p)}</span>
@@ -4882,7 +4926,6 @@
                 <div class="product-links">
                   <a href="${pageHref}">Details</a>
                   ${p.previewUrl ? `<a href="${demoHref}">Live demo</a>` : ''}
-                  <a href="#" data-id="${p.id}" onclick="event.preventDefault();addToCart('${p.id}');">Add to cart</a>
                 </div>
               </div>
             </div>
@@ -4890,8 +4933,21 @@
         </article>
       `;
       }).join('');
+
+      // View more row
+      const more = document.createElement('div');
+      more.style.cssText = 'grid-column:1/-1;display:flex;justify-content:center;margin-top:12px';
+      more.innerHTML = '<a href="collection.html" class="btn-sm primary" style="padding:12px 22px;border-radius:999px;">View full collection →</a>';
+      grid.appendChild(more);
+
       if (window.ScrollTrigger) {
         try { ScrollTrigger.refresh(); } catch (e) {}
+      }
+      // re-run depth reveals for new cards
+      if (window.__samsucDepthInit && typeof window !== 'undefined') {
+        try {
+          document.querySelectorAll('.product-item.depth-reveal').forEach(function(el){ el.classList.add('is-in'); });
+        } catch (e) {}
       }
     }
 
@@ -4914,8 +4970,7 @@
       });
     });
 
-    document.getElementById('showAllProducts')?.addEventListener('click', () => {
-      renderProducts('all');
+    // View full collection is a normal link to collection.html
     });
 
     // FAQ accordion
@@ -5507,5 +5562,7 @@
 })();
 </script>
 
+<script src="js/samsuc-depth.js" defer></script>
+<!-- /samsuc-depth -->
 </body>
 </html>

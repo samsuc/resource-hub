@@ -1,0 +1,62 @@
+/* SAMSUC immersive depth — shared across pages */
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .depth-reveal, .depth-card, .depth-hero-inner { opacity: 1 !important; transform: none !important; }
+}
+.depth-scene {
+  perspective: 1400px;
+  perspective-origin: 50% 40%;
+}
+.depth-hero {
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+}
+.depth-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(59,130,246,0.12), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(212,160,23,0.06), transparent 50%);
+  z-index: 0;
+}
+.depth-hero-inner {
+  position: relative;
+  z-index: 1;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+.depth-reveal {
+  opacity: 0;
+  transform: translateY(40px) translateZ(-40px) rotateX(6deg);
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+  transition: none;
+}
+.depth-reveal.is-in {
+  opacity: 1;
+  transform: translateY(0) translateZ(0) rotateX(0);
+  transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1);
+}
+.depth-card {
+  transform-style: preserve-3d;
+  transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s ease;
+  will-change: transform;
+}
+.depth-card:hover {
+  transform: translateY(-6px) translateZ(24px);
+  box-shadow: 0 24px 48px -20px rgba(0,0,0,0.55), 0 0 0 1px rgba(212,160,23,0.12);
+}
+.depth-float {
+  animation: depthFloat 7s ease-in-out infinite;
+}
+@keyframes depthFloat {
+  0%, 100% { transform: translateY(0) translateZ(0); }
+  50% { transform: translateY(-10px) translateZ(12px); }
+}
+.depth-grid {
+  transform-style: preserve-3d;
+}

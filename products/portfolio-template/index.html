@@ -7,8 +7,8 @@
 <meta name="description" content="Premium dark-mode portfolio template in HTML, CSS & JavaScript."/>
 <meta name="robots" content="index,follow"/>
 <link rel="canonical" href="https://samsuchub.github.io/products/portfolio-template/"/>
-<link rel="icon" type="image/png" sizes="32x32" href="../../media/favicon-32.png"/>
-<link rel="apple-touch-icon" href="../../media/apple-touch-icon.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="media/favicon-32.png"/>
+<link rel="apple-touch-icon" href="media/apple-touch-icon.png"/>
 <meta property="og:type" content="product"/>
 <meta property="og:site_name" content="SAMSUC Resource Hub"/>
 <meta property="og:locale" content="en_US"/>
@@ -35,9 +35,28 @@ a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
 .btn-blue{background:rgba(59,130,246,.15);border-color:rgba(59,130,246,.35);color:#93c5fd}
 .wrap{max-width:1100px;margin:0 auto;padding:40px 24px 80px}
 .breadcrumb{font-size:.8rem;color:var(--muted);margin-bottom:28px}.breadcrumb a:hover{color:var(--gold)}
-.product-hero{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:start;margin-bottom:48px}
-.product-visual{border-radius:18px;overflow:hidden;border:1px solid var(--border);background:var(--elev)}
-.product-visual img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.product-hero{display:block;margin-bottom:40px}
+.product-hero::after{content:"";display:table;clear:both}
+/* Image left — details fence from the right and continue under the image */
+.product-visual{
+  float:left;
+  width:min(46%,520px);
+  max-width:100%;
+  margin:0 28px 20px 0;
+  border-radius:18px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  background:var(--elev);
+  shape-outside:margin-box;
+}
+.product-visual img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block}
+.product-hero>.product-details,
+.product-hero>div:not(.product-visual){
+  display:block;
+  min-width:0;
+}
+.product-hero .features{clear:none}
+.product-hero .includes{clear:both;margin-top:16px}
 .eyebrow{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
 h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,3.5vw,2.2rem);letter-spacing:-.03em;line-height:1.15;margin-bottom:12px}
 .lead{color:var(--muted);font-size:1.02rem;margin-bottom:18px}
@@ -66,7 +85,7 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,3.5vw,2.2rem);l
 .locale-panel.open{opacity:1;visibility:visible;pointer-events:auto}
 .locale-panel label{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin:10px 0 6px}
 .locale-panel select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:var(--elev);color:var(--text);font:inherit}
-@media (max-width:900px){.product-hero{grid-template-columns:1fr}.related-grid{grid-template-columns:1fr}.nav{display:none}.header{padding:0 16px}.wrap{padding:28px 16px 64px}.locale-panel{position:fixed;top:72px;left:12px;right:12px;width:auto}}
+@media (max-width:900px){.product-visual{float:none;width:100%;margin:0 0 20px}.product-hero{display:block}.related-grid{grid-template-columns:1fr}.nav{display:none}.header{padding:0 16px}.wrap{padding:28px 16px 64px}.locale-panel{position:fixed;top:72px;left:12px;right:12px;width:auto}}
 
 .product-rating{display:inline-flex;align-items:center;gap:6px;margin:8px 0 4px;font-size:.82rem;color:var(--muted)}
 .product-rating .stars{color:var(--gold);letter-spacing:.06em}
@@ -140,24 +159,26 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,3.5vw,2.2rem);l
 .footer-social-link:hover{color:var(--gold);border-color:rgba(212,160,23,.45);background:rgba(212,160,23,.08)}
 
 </style>
+<!-- samsuc-depth -->
+<link rel="stylesheet" href="../../js/samsuc-depth.css"/>
 </head>
-<body>
+<body class="depth-scene">
 <header class="header">
-  <a href="../../index.html" class="logo">SAMSUC <span>Resource Hub</span></a>
-  <nav class="nav"><a href="../../index.html">Home</a><a href="../../students-resources/">Student resources</a><a href="../../church-media/">Church media</a><a href="../../website-templates/">Website templates</a><a href="../../index.html#products">Shop</a><a href="../../contact.html">Contact</a></nav>
+  <a href="" class="logo">SAMSUC <span>Resource Hub</span></a>
+  <nav class="nav"><a href="">Home</a><a href="students-resources/">Student resources</a><a href="church-media/">Church media</a><a href="website-templates/">Website templates</a><a href="shop.html">Shop</a><a href="contact.html">Contact</a></nav>
   <div style="display:flex;align-items:center;gap:8px">
     <div class="locale-picker" id="localePicker">
       <button type="button" class="locale-btn" id="localeBtn" aria-expanded="false"><span class="locale-flag" id="localeFlag">🌐</span><span class="locale-label" id="localeLabel">EN</span><span class="locale-code" id="localeCurrency">USD</span></button>
       <div class="locale-panel" id="localePanel"><label for="localeCountry">Country / region</label><select id="localeCountry"></select><label for="localeLang">Language</label><select id="localeLang"><option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="pt">Português</option><option value="de">Deutsch</option><option value="zh">中文</option><option value="ja">日本語</option></select><label for="localeCurrencySelect">Currency</label><select id="localeCurrencySelect"></select></div>
     </div>
-    <a href="../../index.html#products" class="btn btn-gold" style="padding:10px 16px;font-size:.82rem">Shop</a>
+    <a href="shop.html" class="btn btn-gold" style="padding:10px 16px;font-size:.82rem">Shop</a>
   </div>
 </header>
 <main class="wrap">
-  <p class="breadcrumb"><a href="../../index.html">Home</a> · <a href="../../index.html#products">Shop all resources</a> · <a href="../../website-templates/">Website templates</a> · Futuristic Portfolio Template — HTML, CSS &amp; Java</p>
+  <p class="breadcrumb"><a href="">Home</a> · <a href="shop.html">Shop all resources</a> · <a href="website-templates/">Website templates</a> · Futuristic Portfolio Template — HTML, CSS &amp; Java</p>
   <div class="product-hero">
     <div class="product-visual"><img src="https://public-files.gumroad.com/t81cnby2ockh0nef8o9o464dcmrw" alt="Futuristic Portfolio Template — HTML, CSS &amp; JavaScript" width="800" height="500" referrerpolicy="no-referrer"/></div>
-    <div>
+    <div class="product-details">
       <div class="eyebrow">Creators</div>
       <h1>Futuristic Portfolio Template — HTML, CSS &amp; JavaScript</h1>
       <p class="lead">Premium dark-mode portfolio template in HTML, CSS &amp; JavaScript.</p>
@@ -165,8 +186,8 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,3.5vw,2.2rem);l
       <div class="product-rating" id="productRating" data-permalink="FuturisticPortfolio" hidden></div>
       <div class="cta-row">
         <a class="btn btn-gold" href="https://samsuchub.gumroad.com/l/FuturisticPortfolio" data-gumroad-overlay-checkout="true">Get this resource</a>
-        <a class="btn btn-blue" href="../../demos/portfolio.html">View live demo</a>
-        <a class="btn btn-ghost" href="../../website-templates/">More website templates</a>
+        <a class="btn btn-blue" href="demos/portfolio.html">View live demo</a>
+        <a class="btn btn-ghost" href="website-templates/">More website templates</a>
       </div>
       <p>Present your work with a portfolio that looks as sharp as the projects inside it.
  The Futuristic Portfolio Template by Samsuc Resource Hub is a high-end dark-mode portfolio for designers, developers, creative professionals, and agencies. It combines luminous violet and cyan details, glassmorphism cards, responsive layouts, animated sections, and a polished project showcase.
@@ -187,17 +208,17 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,3.5vw,2.2rem);l
 <details class="faq-item"><summary>What format do I receive?</summary><p>Digital files delivered electronically after purchase. See the details on this page for what this resource includes.</p></details>
 <details class="faq-item"><summary>Can I get help if my download fails?</summary><p>Yes. Contact us with the email you used at checkout and the product name via the Contact page.</p></details>
 
-  <p class="lead" style="margin-top:28px">Explore more <a href="../../website-templates/" style="color:var(--gold);font-weight:600">HTML portfolio templates</a> from SAMSUC Resource Hub, or <a href="../../index.html#products" style="color:var(--gold);font-weight:600">browse the full digital resource shop</a>.</p>
+  <p class="lead" style="margin-top:28px">Explore more <a href="website-templates/" style="color:var(--gold);font-weight:600">HTML portfolio templates</a> from SAMSUC Resource Hub, or <a href="shop.html" style="color:var(--gold);font-weight:600">browse the full digital resource shop</a>.</p>
   <div class="related-block">
   <h2 class="section-title">More you may like</h2>
-  <div class="related-grid"><a class="related-card" href="../pale-hours/">
+  <div class="related-grid"><a class="related-card" href="products/pale-hours/">
   <img src="https://public-files.gumroad.com/wngmgzqe3disex3e6y37sfwimood" alt="Pale Hours — Cinematic Photographer Portfolio Website" loading="lazy" referrerpolicy="no-referrer"/>
   <div class="body">
     <h3>Pale Hours — Cinematic Photographer Portfolio Website</h3>
     <p>Cinematic photographer portfolio website with editorial presentation.</p>
     <div class="price-sm" data-price-usd="15.0">$15</div>
   </div>
-</a><a class="related-card" href="../noctis-room/">
+</a><a class="related-card" href="products/noctis-room/">
   <img src="https://public-files.gumroad.com/dbmmwkpw3l6tdq1q1m2nleectc8f" alt="NOCTIS ROOM — CINEMATIC PHOTOGRAPHER WEBSITE" loading="lazy" referrerpolicy="no-referrer"/>
   <div class="body">
     <h3>NOCTIS ROOM — CINEMATIC PHOTOGRAPHER WEBSITE</h3>
@@ -208,14 +229,14 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,3.5vw,2.2rem);l
 </div>
 </main>
 <footer class="footer">
-  <a href="../../index.html" class="logo">SAMSUC <span>Resource Hub</span></a>
+  <a href="" class="logo">SAMSUC <span>Resource Hub</span></a>
   <div class="footer-links">
-    <a href="../../students-resources/">Students</a>
-    <a href="../../church-media/">Churches</a>
-    <a href="../../website-templates/">Templates</a>
-    <a href="../../index.html#products">Shop</a>
-    <a href="../../contact.html">Contact</a>
-    <a href="../../support.html">Support</a>
+    <a href="students-resources/">Students</a>
+    <a href="church-media/">Churches</a>
+    <a href="website-templates/">Templates</a>
+    <a href="shop.html">Shop</a>
+    <a href="contact.html">Contact</a>
+    <a href="support.html">Support</a>
   </div>
   
     <div class="footer-social" aria-label="Social">
@@ -266,6 +287,8 @@ document.addEventListener('click', function (e) {
   }, 500);
 }, true);
 </script>
-<script src="../../js/samsuc-locale.js" defer></script>
+<script src="js/samsuc-locale.js" defer></script>
+<script src="../../js/samsuc-depth.js" defer></script>
+<!-- /samsuc-depth -->
 </body>
 </html>
