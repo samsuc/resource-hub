@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://samsuchub.github.io/</loc></url>
-  <url><loc>https://samsuchub.github.io/privacy.html</loc></url>
-  <url><loc>https://samsuchub.github.io/terms.html</loc></url>
+  <url><loc>https://samsuc.github.io/resource-hub/</loc></url>
+  <url><loc>https://samsuc.github.io/resource-hub/collection/</loc></url>
+  <url><loc>https://samsuc.github.io/resource-hub/contact/</loc></url>
+  <url><loc>https://samsuc.github.io/resource-hub/support/</loc></url>
+  <url><loc>https://samsuc.github.io/resource-hub/privacy/</loc></url>
+  <url><loc>https://samsuc.github.io/resource-hub/terms/</loc></url>
 </urlset>
