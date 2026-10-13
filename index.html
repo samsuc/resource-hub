@@ -2467,6 +2467,12 @@
       will-change: transform;
     }
 
+  
+    @media (min-width: 1024px) and (hover: hover) {
+      .cursor-dot, .cursor-circle, .cursor-ring-outer { display: block !important; }
+      body { cursor: none; }
+    }
+
   </style>
 <!-- samsuc-depth -->
 <link rel="stylesheet" href="js/samsuc-depth.css"/>
@@ -2591,8 +2597,8 @@
 
   <section class="hero" id="hero">
     <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="metadata" poster="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=75">
-      <source src="https://videos.pexels.com/video-files/3129957/3129957-uhd_2560_1440_25fps.mp4" type="video/mp4" />
-      <source src="https://videos.pexels.com/video-files/3045163/3045163-uhd_2560_1440_25fps.mp4" type="video/mp4" />
+      <source src="https://videos.pexels.com/video-files/3129957/3129957-hd_1280_720_25fps.mp4" type="video/mp4" />
+      <source src="https://videos.pexels.com/video-files/3045163/3045163-hd_1280_720_25fps.mp4" type="video/mp4" />
     </video>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -5020,7 +5026,7 @@
     }
 
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches || (window.matchMedia('(pointer: fine)').matches) || (window.innerWidth >= 1024 && !('ontouchstart' in window));
 
     // Crazy cinematic cursor + card tilt (desktop fine pointer only)
     if (finePointer && !prefersReducedMotion) {
