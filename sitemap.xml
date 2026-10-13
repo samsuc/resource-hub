@@ -1,32 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://samsuchub.github.io/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://samsuchub.github.io/students-resources/</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://samsuchub.github.io/church-media/</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://samsuchub.github.io/website-templates/</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
-  <url><loc>https://samsuchub.github.io/contact.html</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://samsuchub.github.io/support.html</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://samsuchub.github.io/privacy.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://samsuchub.github.io/terms.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://samsuchub.github.io/products/pale-hours/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://samsuchub.github.io/products/noctis-room/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://samsuchub.github.io/products/portfolio-template/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://samsuchub.github.io/products/saas-landing/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://samsuchub.github.io/products/church-media-manual/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://samsuchub.github.io/products/livestream-checklist/</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/how-to-set-up-church-livestream/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/obs-church-livestream-setup/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/church-media-team-checklist/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/how-to-connect-a-camera-to-obs/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/church-livestream-equipment-guide/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/how-to-create-a-modern-portfolio-website/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/html-css-javascript-website-tips/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/saas-landing-page-design/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/how-to-choose-a-website-template/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/jamb-chemistry-revision/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/important-chemistry-formulas-for-jamb/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/how-to-prepare-for-jamb-chemistry/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/jamb-chemistry-topics-to-study/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://samsuchub.github.io/blog/common-jamb-chemistry-mistakes/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://samsuchub.github.io/</loc></url>
+  <url><loc>https://samsuchub.github.io/privacy.html</loc></url>
+  <url><loc>https://samsuchub.github.io/terms.html</loc></url>
 </urlset>

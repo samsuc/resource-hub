@@ -1,8 +1,4 @@
-# SAMSUC Resource Hub
 User-agent: *
 Allow: /
-
-# Demo previews — thin content, keep out of main index
-Disallow: /demos/
 
 Sitemap: https://samsuchub.github.io/sitemap.xml

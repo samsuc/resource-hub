@@ -2483,9 +2483,9 @@
   <div class="cursor-label" id="cursorLabel">View</div>
 
   <header class="header" id="header">
-    <a href="index.html" class="logo">SAMSUC <span>Resource Hub</span></a>
+    <a href="./" class="logo">SAMSUC <span>Resource Hub</span></a>
     <nav class="nav" aria-label="Primary">
-      <a href="index.html">Home</a>
+      <a href="./">Home</a>
       <div class="nav-item" id="navCategories">
         <button type="button" class="nav-drop-btn" aria-expanded="false" aria-haspopup="true">
           Categories
@@ -2498,8 +2498,8 @@
         </div>
       </div>
       <a href="#about">About</a>
-      <a href="contact.html">Contact</a>
-      <a href="support.html">Support</a>
+      <a href="contact/">Contact</a>
+      <a href="support/">Support</a>
       <a href="#faq">FAQ</a>
     </nav>
     <div class="header-actions">
@@ -2555,8 +2555,8 @@
     <a href="#how" data-i18n="nav_how">How it works</a>
     <a href="#about" data-i18n="nav_about">About</a>
     <a href="#faq" data-i18n="nav_faq">FAQ</a>
-    <a href="contact.html" data-i18n="nav_contact">Contact</a>
-    <a href="support.html">Support</a>
+    <a href="contact/" data-i18n="nav_contact">Contact</a>
+    <a href="support/">Support</a>
   </nav>
 
   <div class="cart-overlay" id="cartOverlay"></div>
@@ -2771,7 +2771,7 @@
       <div class="section-header">
         <h2>Featured Resources</h2>
         <p>A selection from each category — clear details before you buy. Instant download · Secure checkout.</p>
-        <a href="collection.html" class="btn-sm outline" id="viewFullCollection" style="margin-top:16px;display:inline-flex;opacity:0.95">View full collection</a>
+        <a href="collection/" class="btn-sm outline" id="viewFullCollection" style="margin-top:16px;display:inline-flex;opacity:0.95">View full collection</a>
       </div>
       <aside class="free-spotlight" aria-label="Free resource">
         <div class="free-spotlight-copy">
@@ -3070,7 +3070,7 @@
     <div class="support-card">
       <h2>Need help after purchase?</h2>
       <p>Downloads are delivered digitally to the email you use at checkout. Use your receipt link anytime to re-download.</p>
-      <p>If a file won’t open, a link expires, or access fails, send a message via the <a href="contact.html">contact form</a> with your purchase email. We aim to reply as soon as possible and help restore access.</p>
+      <p>If a file won’t open, a link expires, or access fails, send a message via the <a href="contact/">contact form</a> with your purchase email. We aim to reply as soon as possible and help restore access.</p>
       <p>You can also reach the contact form from the footer anytime — no account required.</p>
     </div>
   </section>
@@ -3094,7 +3094,7 @@
         <h3>Your choices</h3>
         <p>You may request access or deletion of contact-form data by messaging us. Unsubscribe links are provided for marketing emails where applicable. You can clear browser storage to remove local preferences.</p>
         <h3>Contact</h3>
-        <p>Questions about privacy: use the <a href="contact.html">contact form</a> on this site.</p>
+        <p>Questions about privacy: use the <a href="contact/">contact form</a> on this site.</p>
       </div>
     </div>
   </section>
@@ -3119,7 +3119,7 @@
         <h3>Accuracy</h3>
         <p>We aim to keep product descriptions accurate. Exam materials marked for a specific year are maintained with that timeframe in mind; always verify against official requirements for your situation.</p>
         <h3>Contact</h3>
-        <p>For support or terms questions, use the <a href="contact.html">contact form</a>.</p>
+        <p>For support or terms questions, use the <a href="contact/">contact form</a>.</p>
       </div>
     </div>
   </section>
@@ -3127,7 +3127,7 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="index.html" class="logo">SAMSUC <span>Resource Hub</span></a>
+        <a href="./" class="logo">SAMSUC <span>Resource Hub</span></a>
         <p class="footer-tagline">Digital resources for students, churches, and creators.</p>
         <div class="footer-social" aria-label="Social">
           <a href="https://x.com/samsuchub" class="footer-social-link" target="_blank" rel="noopener noreferrer" aria-label="SAMSUC on X">
@@ -3140,7 +3140,7 @@
       </div>
       <div class="footer-col">
         <h4>Explore</h4>
-        <a href="collection.html">Collection</a>
+        <a href="collection/">Collection</a>
         <a href="students-resources/">Students</a>
         <a href="church-media/">Churches</a>
         <a href="website-templates/">Templates</a>
@@ -3149,13 +3149,13 @@
       <div class="footer-col">
         <h4>Help</h4>
         <a href="#faq">FAQ</a>
-        <a href="support.html">Support</a>
-        <a href="contact.html">Contact</a>
+        <a href="support/">Support</a>
+        <a href="contact/">Contact</a>
       </div>
       <div class="footer-col">
         <h4>Legal</h4>
-        <a href="privacy.html">Privacy</a>
-        <a href="terms.html">Terms</a>
+        <a href="privacy/">Privacy</a>
+        <a href="terms/">Terms</a>
       </div>
     </div>
     <div class="footer-bottom">© 2026 SAMSUC Resource Hub. All rights reserved.</div>
@@ -4937,7 +4937,7 @@
       // View more row
       const more = document.createElement('div');
       more.style.cssText = 'grid-column:1/-1;display:flex;justify-content:center;margin-top:12px';
-      more.innerHTML = '<a href="collection.html" class="btn-sm primary" style="padding:12px 22px;border-radius:999px;">View full collection →</a>';
+      more.innerHTML = '<a href="collection/" class="btn-sm primary" style="padding:12px 22px;border-radius:999px;">View full collection →</a>';
       grid.appendChild(more);
 
       if (window.ScrollTrigger) {
@@ -4971,7 +4971,6 @@
     });
 
     // View full collection is a normal link to collection.html
-    });
 
     // FAQ accordion
     document.querySelectorAll('.faq-q').forEach(btn => {
