@@ -4,7 +4,7 @@
 2. Rename the folder to a short slug: `my-new-article`.
 3. Edit `index.html`:
    - `<title>` and meta description
-   - canonical URL: `https://samsuc.github.io/samsuc-resource-hub/blog/my-new-article/`
+   - canonical URL: `https://samsuc.github.io/resource-hub/blog/my-new-article/`
    - H1, body copy, internal links
 4. Add a card on `blog/index.html` linking to `my-new-article/`.
 5. Add the URL to `sitemap.xml`.

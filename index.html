@@ -545,50 +545,15 @@
     <div class="footer-bottom">© 2026 SAMSUC Resource Hub</div>
   </footer>
 
+  <script src="js/samsuc-catalog.js"></script>
   <script src="https://gumroad.com/js/gumroad.js" defer></script>
   <script>
   (function () {
     'use strict';
 
-    // —— Catalog API (assembled) ——
-    var API = ['https://','samsuc-products','.','samsuc34','.','workers','.','dev'].join('');
-
-    var FALLBACK = [
-      { id: 'pale-hours', name: 'Pale Hours', desc: 'Cinematic photographer portfolio website template.', price: 15, category: 'creators', image: 'https://public-files.gumroad.com/wngmgzqe3disex3e6y37sfwimood', gumroadUrl: 'https://samsuchub.gumroad.com/l/PaleHours' },
-      { id: 'portfolio-template', name: 'Futuristic Portfolio Template', desc: 'HTML, CSS & JavaScript portfolio template for creatives.', price: 29, category: 'creators', image: 'https://public-files.gumroad.com/t81cnby2ockh0nef8o9o464dcmrw', gumroadUrl: 'https://samsuchub.gumroad.com/l/FuturisticPortfolio' },
-      { id: 'saas-landing', name: 'Futuristic SaaS Landing Page', desc: 'Modern SaaS landing page in clean HTML, CSS & JavaScript.', price: 22, category: 'creators', image: 'https://public-files.gumroad.com/r2u3pd7w6afm4kkn3sh4pxc2sqsk', gumroadUrl: 'https://samsuchub.gumroad.com/l/FuturisticSaaS' },
-      { id: 'church-media-manual', name: 'Church Media Operations Manual', desc: 'Standard operating procedures for church media teams.', price: 12, category: 'churches', image: 'https://public-files.gumroad.com/tndj2u5fspb4yta7p6e7q5xsml1s', gumroadUrl: 'https://samsuchub.gumroad.com/l/media' },
-      { id: 'livestream-checklist', name: 'Church Livestream Setup Checklist', desc: 'Free printable checklist for equipment, audio, OBS, and go-live.', price: 0, category: 'churches', image: 'https://public-files.gumroad.com/yh2o3ieh2f7o6a9vu3o5j87fzbm7', gumroadUrl: 'https://samsuchub.gumroad.com/l/LivestreamChecklist' }
-    ];
-
-    var PRODUCTS = FALLBACK.slice();
-
-    function inferCategory(name, permalink) {
-      var s = ((name || '') + ' ' + (permalink || '')).toLowerCase();
-      if (/jamb|student|chemistry|formula|revision|exam/.test(s)) return 'students';
-      if (/church|livestream|media|obs|worship/.test(s)) return 'churches';
-      return 'creators';
-    }
-
-    function mapWorker(p) {
-      var url = p.url || '';
-      var permalink = p.permalink || null;
-      if (!permalink && url) {
-        var m = String(url).match(/\/l\/([^/?#]+)/);
-        if (m) permalink = m[1];
-      }
-      var cents = typeof p.price_cents === 'number' ? p.price_cents : 0;
-      var desc = (p.description || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
-      return {
-        id: permalink || p.id || String(p.name || 'p'),
-        name: p.name || permalink || 'Product',
-        desc: desc.slice(0, 160),
-        price: Math.round(cents) / 100,
-        category: inferCategory(p.name, permalink),
-        image: p.thumbnail_url || '',
-        gumroadUrl: url || (permalink ? 'https://samsuchub.gumroad.com/l/' + permalink : '')
-      };
-    }
+    var catalog = window.SAMSUC_CATALOG;
+    var PRODUCTS = [];
+    var catalogNote = '';
 
     function truncate(str, max) {
       var s = String(str || '').replace(/\s+/g, ' ').trim();
@@ -597,15 +562,6 @@
       var sp = cut.lastIndexOf(' ');
       if (sp > max * 0.55) cut = cut.slice(0, sp);
       return cut.replace(/[.,;:]+$/, '') + '…';
-    }
-
-    function money(p) {
-      if (!p || Number(p.price) === 0) return 'Free';
-      try {
-        return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD' }).format(p.price);
-      } catch (e) {
-        return '$' + Number(p.price).toFixed(2);
-      }
     }
 
     function pickFeatured(list) {
@@ -631,23 +587,29 @@
     function renderProducts() {
       var grid = document.getElementById('productsGrid');
       if (!grid) return;
+      if (!PRODUCTS.length) {
+        grid.innerHTML = '<p class="status" style="grid-column:1/-1;color:var(--muted);text-align:center">' + catalog.escapeHtml(catalogNote || 'No products are published right now.') + '</p>';
+        return;
+      }
       var list = pickFeatured(PRODUCTS);
       grid.innerHTML = list.map(function (p) {
         var img = p.image || 'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC';
         var cat = p.category === 'students' ? 'Students' : p.category === 'churches' ? 'Churches' : 'Creators';
+        var page = catalog.detailHref(p, '');
+        var buy = p.gumroadUrl;
         return (
           '<article class="product-card">' +
-            '<div class="thumb"><a href="' + p.gumroadUrl + '"><img src="' + img + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.src=\'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC\'"/></a></div>' +
+            '<div class="thumb"><a href="' + catalog.escapeHtml(page) + '"><img src="' + catalog.escapeHtml(img) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.src=\'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC\'"/></a></div>' +
             '<div class="body">' +
               '<div class="cat-label">' + cat + '</div>' +
-              '<h3><a href="' + p.gumroadUrl + '">' + p.name + '</a></h3>' +
-              '<p class="desc">' + truncate(p.desc || 'Digital resource from SAMSUC Resource Hub.', 110) + '</p>' +
-              '<div class="meta"><span class="price">' + money(p) + '</span>' +
-              '<a class="btn-sm" href="' + p.gumroadUrl + '" data-gumroad-overlay-checkout="true">' + (p.price === 0 ? 'Get free' : 'Get it') + '</a></div>' +
+              '<h3><a href="' + catalog.escapeHtml(page) + '">' + catalog.escapeHtml(p.name) + '</a></h3>' +
+              '<p class="desc">' + catalog.escapeHtml(truncate(p.desc || 'Digital resource from SAMSUC Resource Hub.', 110)) + '</p>' +
+              '<div class="meta"><span class="price">' + catalog.escapeHtml(catalog.money(p)) + '</span>' +
+              '<a class="btn-sm" href="' + catalog.escapeHtml(buy) + '" data-gumroad-overlay-checkout="true">' + (p.price === 0 ? 'Get free' : 'Get it') + '</a></div>' +
             '</div>' +
           '</article>'
         );
-      }).join('');
+      }).join('') + (catalogNote ? '<p style="grid-column:1/-1;color:var(--muted);font-size:.85rem;text-align:center">' + catalog.escapeHtml(catalogNote) + '</p>' : '');
     }
 
     // Showcase
@@ -676,15 +638,17 @@
       }
     }
 
+    var dotsBound = false;
     function startShowcase() {
       renderShowcase();
       if (scTimer) clearInterval(scTimer);
       scTimer = setInterval(function () {
-        scIndex = (scIndex + 1) % Math.max(1, Math.min(4, PRODUCTS.length));
+        scIndex = (scIndex + 1) % Math.max(1, Math.min(4, PRODUCTS.length || 1));
         renderShowcase();
       }, 5000);
       var dots = document.getElementById('scDots');
-      if (dots) {
+      if (dots && !dotsBound) {
+        dotsBound = true;
         dots.addEventListener('click', function (e) {
           var b = e.target.closest('.slot-dot');
           if (!b) return;
@@ -694,18 +658,26 @@
       }
     }
 
-    async function loadProducts() {
-      try {
-        var res = await fetch(API, { credentials: 'omit', cache: 'no-store' });
-        if (res.ok) {
-          var data = await res.json();
-          if (data && data.success && Array.isArray(data.products) && data.products.length) {
-            PRODUCTS = data.products.map(mapWorker).filter(function (p) { return p.gumroadUrl; });
-          }
+    function loadProducts() {
+      if (!catalog || !catalog.load) {
+        catalogNote = 'Product catalog script did not load.';
+        var title = document.getElementById('scTitle');
+        if (title) title.textContent = 'Catalog unavailable';
+        renderProducts();
+        return;
+      }
+      catalog.load().then(function (result) {
+        PRODUCTS = result.products || [];
+        catalogNote = result.source === 'live' ? '' : (result.note || '');
+        if (!PRODUCTS.length) {
+          var title = document.getElementById('scTitle');
+          var desc = document.getElementById('scDesc');
+          if (title) title.textContent = 'No products published';
+          if (desc) desc.textContent = result.note || 'Check back soon.';
         }
-      } catch (e) {}
-      renderProducts();
-      startShowcase();
+        renderProducts();
+        if (PRODUCTS.length) startShowcase();
+      });
     }
 
     // FAQ
