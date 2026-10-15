@@ -30,6 +30,7 @@
     .meta{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:6px}
     .price{font-weight:700;color:var(--gold)}
     .btn{display:inline-flex;padding:10px 16px;border-radius:999px;font-size:.85rem;font-weight:700;background:linear-gradient(135deg,var(--gold),#b8860b);color:#0a0a0a}
+    .btn-details{background:transparent;color:var(--text);border:1px solid var(--border)}
     .status{text-align:center;color:var(--muted);padding:40px;grid-column:1/-1}
     footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--muted);font-size:.85rem}
   </style>
@@ -56,6 +57,7 @@
   </div>
   <div class="grid" id="grid"><p class="status">Loading…</p></div>
   <footer>© 2026 SAMSUC Resource Hub · <a href="../">Home</a></footer>
+  <script src="../js/samsuc-locale.js"></script>
   <script src="../js/samsuc-catalog.js"></script>
   <script src="https://gumroad.com/js/gumroad.js" defer></script>
   <script>
@@ -74,11 +76,14 @@
       }
       g.innerHTML=list.map(function(p){
         var cat=p.category==='students'?'Students':p.category==='churches'?'Churches':'Creators';
-        var page=catalog.detailHref(p,'../');
+        var page=p.detailPath?catalog.detailHref(p,'../'):'';
         var buy=p.gumroadUrl;
         var img=p.image||'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC';
-        return '<article class="card"><a href="'+catalog.escapeHtml(page)+'"><img src="'+catalog.escapeHtml(img)+'" alt="" loading="lazy" referrerpolicy="no-referrer"/></a><div class="body"><div class="cat">'+cat+'</div><h2><a href="'+catalog.escapeHtml(page)+'">'+catalog.escapeHtml(p.name)+'</a></h2><p>'+catalog.escapeHtml(trunc(p.desc,120))+'</p><div class="meta"><span class="price">'+catalog.escapeHtml(catalog.money(p))+'</span><a class="btn" href="'+catalog.escapeHtml(buy)+'" data-gumroad-overlay-checkout="true">'+(p.price===0?'Get free':'Get it')+'</a></div></div></article>';
+        var media=page?'<a href="'+catalog.escapeHtml(page)+'"><img src="'+catalog.escapeHtml(img)+'" alt="" loading="lazy" referrerpolicy="no-referrer"/></a>':'<img src="'+catalog.escapeHtml(img)+'" alt="" loading="lazy" referrerpolicy="no-referrer"/>';
+        var title=page?'<a href="'+catalog.escapeHtml(page)+'">'+catalog.escapeHtml(p.name)+'</a>':catalog.escapeHtml(p.name);
+        return '<article class="card">'+media+'<div class="body"><div class="cat">'+cat+'</div><h2>'+title+'</h2><p>'+catalog.escapeHtml(trunc(p.desc,120))+'</p><div class="meta"><span class="price" data-price-usd="'+catalog.escapeHtml(String(Number(p.price)||0))+'">'+catalog.escapeHtml(catalog.money(p))+'</span>'+(page?'<a class="btn btn-details" href="'+catalog.escapeHtml(page)+'">View details</a>':'')+'<a class="btn" href="'+catalog.escapeHtml(buy)+'" data-gumroad-overlay-checkout="true">'+(p.price===0?'Get free':'Get it')+'</a></div></div></article>';
       }).join('')+(sourceNote?'<p class="status">'+catalog.escapeHtml(sourceNote)+'</p>':'');
+      if(window.SAMSUC_LOCALE) window.SAMSUC_LOCALE.applyPrices();
     }
     document.getElementById('filters').addEventListener('click',function(e){
       var b=e.target.closest('.filter-btn');if(!b)return;

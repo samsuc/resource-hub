@@ -208,6 +208,9 @@
       display: inline-flex; padding: 10px 16px; border-radius: 999px; font-size: 0.85rem; font-weight: 700;
       background: linear-gradient(135deg, var(--gold), #b8860b); color: #0a0a0a;
     }
+    .btn-details {
+      background: transparent; color: var(--text); border: 1px solid var(--border);
+    }
     .center-cta { text-align: center; margin-top: 32px; }
 
     /* Trust */
@@ -342,11 +345,12 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="nav-dropdown" role="menu">
-          <a href="#categories">Students</a>
-          <a href="#categories">Churches</a>
-          <a href="#categories">Creators</a>
+          <a href="students-resources/">Students</a>
+          <a href="church-media/">Churches</a>
+          <a href="website-templates/">Creators</a>
         </div>
       </div>
+      <a href="collection/">Collection</a>
       <a href="#about">About</a>
       <a href="contact/">Contact</a>
       <a href="support/">Support</a>
@@ -545,6 +549,7 @@
     <div class="footer-bottom">© 2026 SAMSUC Resource Hub</div>
   </footer>
 
+  <script src="js/samsuc-locale.js"></script>
   <script src="js/samsuc-catalog.js"></script>
   <script src="https://gumroad.com/js/gumroad.js" defer></script>
   <script>
@@ -595,21 +600,29 @@
       grid.innerHTML = list.map(function (p) {
         var img = p.image || 'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC';
         var cat = p.category === 'students' ? 'Students' : p.category === 'churches' ? 'Churches' : 'Creators';
-        var page = catalog.detailHref(p, '');
+        var page = p.detailPath ? catalog.detailHref(p, '') : '';
         var buy = p.gumroadUrl;
+        var thumb = page
+          ? '<a href="' + catalog.escapeHtml(page) + '"><img src="' + catalog.escapeHtml(img) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.src=\'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC\'"/></a>'
+          : '<img src="' + catalog.escapeHtml(img) + '" alt="" loading="lazy" referrerpolicy="no-referrer"/>';
+        var title = page
+          ? '<a href="' + catalog.escapeHtml(page) + '">' + catalog.escapeHtml(p.name) + '</a>'
+          : catalog.escapeHtml(p.name);
         return (
           '<article class="product-card">' +
-            '<div class="thumb"><a href="' + catalog.escapeHtml(page) + '"><img src="' + catalog.escapeHtml(img) + '" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.src=\'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC\'"/></a></div>' +
+            '<div class="thumb">' + thumb + '</div>' +
             '<div class="body">' +
               '<div class="cat-label">' + cat + '</div>' +
-              '<h3><a href="' + catalog.escapeHtml(page) + '">' + catalog.escapeHtml(p.name) + '</a></h3>' +
+              '<h3>' + title + '</h3>' +
               '<p class="desc">' + catalog.escapeHtml(truncate(p.desc || 'Digital resource from SAMSUC Resource Hub.', 110)) + '</p>' +
-              '<div class="meta"><span class="price">' + catalog.escapeHtml(catalog.money(p)) + '</span>' +
+              '<div class="meta"><span class="price" data-price-usd="' + catalog.escapeHtml(String(Number(p.price) || 0)) + '">' + catalog.escapeHtml(catalog.money(p)) + '</span>' +
+              (p.detailPath ? '<a class="btn-sm btn-details" href="' + catalog.escapeHtml(page) + '">View details</a>' : '') +
               '<a class="btn-sm" href="' + catalog.escapeHtml(buy) + '" data-gumroad-overlay-checkout="true">' + (p.price === 0 ? 'Get free' : 'Get it') + '</a></div>' +
             '</div>' +
           '</article>'
         );
       }).join('') + (catalogNote ? '<p style="grid-column:1/-1;color:var(--muted);font-size:.85rem;text-align:center">' + catalog.escapeHtml(catalogNote) + '</p>' : '');
+      if (window.SAMSUC_LOCALE) window.SAMSUC_LOCALE.applyPrices();
     }
 
     // Showcase
@@ -630,7 +643,17 @@
       if (title) title.textContent = p.name;
       if (desc) desc.textContent = truncate(p.desc || '', 140);
       if (tag) tag.textContent = (p.category || 'featured').toUpperCase();
-      if (cta) { cta.href = p.gumroadUrl; cta.setAttribute('data-gumroad-overlay-checkout', 'true'); }
+      if (cta) {
+        var page = p.detailPath ? catalog.detailHref(p, '') : 'collection/';
+        cta.href = page;
+        cta.textContent = 'View details';
+        cta.removeAttribute('data-gumroad-overlay-checkout');
+      }
+      if (img && img.parentElement) {
+        var pageHref = p.detailPath ? catalog.detailHref(p, '') : '';
+        img.parentElement.style.cursor = pageHref ? 'pointer' : '';
+        img.parentElement.onclick = pageHref ? function () { window.location.href = pageHref; } : null;
+      }
       if (dots) {
         dots.innerHTML = list.map(function (_, i) {
           return '<button type="button" class="slot-dot' + (i === scIndex % list.length ? ' active' : '') + '" data-i="' + i + '" aria-label="Show resource ' + (i + 1) + '"></button>';

@@ -38,6 +38,8 @@
   ];
 
   var FX = {
+    // Static fallback only. Frankfurter overwrites codes it actually returns.
+    // NGN, GHS, KES, AED, SAR, PKR, KRW, PHP, and MYR stay on this table when the API has no quote.
     USD: 1, EUR: 0.92, GBP: 0.79, CAD: 1.36, AUD: 1.53, NZD: 1.67,
     NGN: 1550, GHS: 15.5, KES: 129, ZAR: 18.2, INR: 83.5, PKR: 278,
     BRL: 5.1, MXN: 17.2, AED: 3.67, SAR: 3.75, CNY: 7.25, JPY: 149,
@@ -91,17 +93,23 @@
     var n = Number(usdAmount);
     if (!isFinite(n)) return '';
     if (n === 0) return 'Free';
-    var rate = FX[state.currency] || 1;
+    var code = state.currency || 'USD';
+    var rate = code === 'USD' ? 1 : FX[code];
+    // Missing rate: keep the original USD amount. Never invent a 1:1 conversion.
+    if (code !== 'USD' && (typeof rate !== 'number' || !isFinite(rate) || rate <= 0)) {
+      code = 'USD';
+      rate = 1;
+    }
     var value = n * rate;
     var zeroDec = { JPY: 1, NGN: 1, KRW: 1, VND: 1 };
     try {
-      return new Intl.NumberFormat(state.localeTag || state.lang, {
+      return new Intl.NumberFormat(state.localeTag || state.lang || 'en', {
         style: 'currency',
-        currency: state.currency,
-        maximumFractionDigits: zeroDec[state.currency] ? 0 : 2
+        currency: code,
+        maximumFractionDigits: zeroDec[code] ? 0 : 2
       }).format(value);
     } catch (e) {
-      return state.currency + ' ' + value.toFixed(zeroDec[state.currency] ? 0 : 2);
+      return code + ' ' + value.toFixed(zeroDec[code] ? 0 : 2);
     }
   }
 
@@ -136,7 +144,27 @@
       .catch(function () {});
   }
 
+  function ensurePicker() {
+    if (!document.getElementById('samsuc-locale-css')) {
+      var style = document.createElement('style');
+      style.id = 'samsuc-locale-css';
+      style.textContent = '.locale-picker{position:relative;z-index:80}.locale-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 10px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:#141b2d;color:#f0f2f8;font-size:.75rem;font-weight:600;cursor:pointer}.locale-btn .locale-code{color:#d4a017;font-weight:700}.locale-panel{position:absolute;top:calc(100% + 8px);right:0;width:min(300px,92vw);background:#141b2d;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px;opacity:0;visibility:hidden;pointer-events:none;z-index:80}.locale-panel.open{opacity:1;visibility:visible;pointer-events:auto}.locale-panel label{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:#8b93a7;margin:10px 0 6px}.locale-panel select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:#0e1320;color:#f0f2f8;font:inherit}.locale-note{margin-top:10px;font-size:.72rem;line-height:1.4;color:#8b93a7}@media (max-width:900px){.locale-panel{position:fixed;top:72px;left:12px;right:12px;width:auto}}';
+      document.head.appendChild(style);
+    }
+    if (document.getElementById('localePicker')) return;
+    var header = document.querySelector('header.header') || document.querySelector('header');
+    if (!header) return;
+    var picker = document.createElement('div');
+    picker.className = 'locale-picker';
+    picker.id = 'localePicker';
+    picker.innerHTML = '<button type="button" class="locale-btn" id="localeBtn" aria-expanded="false" aria-haspopup="true" aria-controls="localePanel"><span class="locale-flag" id="localeFlag">🌐</span><span class="locale-label" id="localeLabel">EN</span><span class="locale-code" id="localeCurrency">USD</span></button><div class="locale-panel" id="localePanel" role="dialog" aria-label="Language and currency"><label for="localeCountry">Country / region</label><select id="localeCountry"></select><label for="localeLang">Language</label><select id="localeLang"><option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="pt">Português</option><option value="de">Deutsch</option><option value="zh">中文</option><option value="ja">日本語</option><option value="ar">العربية</option><option value="hi">हिन्दी</option></select><label for="localeCurrencySelect">Currency</label><select id="localeCurrencySelect"></select><p class="locale-note">Display only. Prices convert from the USD amount. Gumroad checkout is not changed.</p></div>';
+    var toggle = header.querySelector('.menu-toggle');
+    if (toggle) header.insertBefore(picker, toggle);
+    else header.appendChild(picker);
+  }
+
   function wirePicker() {
+    ensurePicker();
     var btn = document.getElementById('localeBtn');
     var panel = document.getElementById('localePanel');
     var picker = document.getElementById('localePicker');
@@ -144,8 +172,9 @@
     var currencySel = document.getElementById('localeCurrencySelect');
     var langSel = document.getElementById('localeLang');
     if (!btn || !panel) return;
+    if (btn.getAttribute('data-wired') === '1') return;
+    btn.setAttribute('data-wired', '1');
 
-    // populate countries
     if (countrySel && !countrySel.options.length) {
       REGIONS.forEach(function (r) {
         var o = document.createElement('option');
@@ -165,7 +194,7 @@
       });
     }
 
-    function syncControls() {
+    function syncBoundControls() {
       if (countrySel) countrySel.value = state.country;
       if (currencySel) currencySel.value = state.currency;
       if (langSel) langSel.value = state.lang;
@@ -181,7 +210,7 @@
     function refresh() {
       applyDocLang();
       applyPrices();
-      syncControls();
+      syncBoundControls();
       save();
     }
 
@@ -228,7 +257,7 @@
         refresh();
       });
     }
-    syncControls();
+    syncBoundControls();
   }
 
   function init() {

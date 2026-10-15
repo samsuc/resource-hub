@@ -115,13 +115,15 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
       return;
     }
     grid.innerHTML=items.map(function(p){
-      var href=catalog.detailHref(p,'../');
+      var href=p.detailPath?catalog.detailHref(p,'../'):'';
       return '<article style="background:#0e1320;border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden">'+
         (p.image?'<img src="'+catalog.escapeHtml(p.image)+'" alt="" style="width:100%;aspect-ratio:16/10;object-fit:cover">':'')+
-        '<div style="padding:16px"><h3 style="margin:0 0 8px;font-size:1.05rem">'+catalog.escapeHtml(p.name)+'</h3>'+
-        '<p style="color:#8b93a7;font-size:.88rem;margin:0 0 12px">'+catalog.escapeHtml(catalog.money(p))+'</p>'+
-        '<a href="'+catalog.escapeHtml(href)+'" style="display:inline-flex;padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,#d4a017,#b8860b);color:#0a0a0a;font-weight:700;font-size:.82rem;text-decoration:none">View</a></div></article>';
+        '<div style="padding:16px"><h3 style="margin:0 0 8px;font-size:1.05rem">'+(href?'<a href="'+catalog.escapeHtml(href)+'">'+catalog.escapeHtml(p.name)+'</a>':catalog.escapeHtml(p.name))+'</h3>'+
+        '<p class="price" data-price-usd="'+catalog.escapeHtml(String(Number(p.price)||0))+'" style="color:#d4a017;font-size:.88rem;margin:0 0 12px">'+catalog.escapeHtml(catalog.money(p))+'</p>'+
+        (href?'<a href="'+catalog.escapeHtml(href)+'" style="display:inline-flex;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.12);color:#f0f2f8;font-weight:700;font-size:.82rem;text-decoration:none;margin-right:8px">View details</a>':'')+
+        '<a href="'+catalog.escapeHtml(p.gumroadUrl)+'" data-gumroad-overlay-checkout="true" style="display:inline-flex;padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,#d4a017,#b8860b);color:#0a0a0a;font-weight:700;font-size:.82rem;text-decoration:none">'+(p.price===0?'Get free':'Get it')+'</a></div></article>';
     }).join('');
+    if(window.SAMSUC_LOCALE) window.SAMSUC_LOCALE.applyPrices();
   });
 })();
 </script>
