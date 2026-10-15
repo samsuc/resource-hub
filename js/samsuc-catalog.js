@@ -16,14 +16,16 @@
     FuturisticPortfolio: 'products/portfolio-template/',
     FuturisticSaaS: 'products/saas-landing/',
     media: 'products/church-media-manual/',
-    LivestreamChecklist: 'products/livestream-checklist/'
+    LivestreamChecklist: 'products/livestream-checklist/',
+    'maths-mastery-kit': 'products/jamb-mastery-kit/'
   };
 
   /**
-   * Recovery catalog. Verified against the product Worker on 2026-10-13.
+   * Recovery catalog. Verified against the product Worker on 2026-10-15.
    * Prices and Gumroad URLs can go stale. Do not treat this as live inventory.
    */
   var FALLBACK = [
+    { id: 'maths-mastery-kit', name: 'JAMB Mastery Kit 2027 | Mathematics UTME Preparation', desc: 'Structured mathematics study resource for 2027 JAMB UTME preparation, with a practice bank, mock examinations, a formula vault, a revision timetable, and a mistake tracker.', price: 10, category: 'students', image: 'https://public-files.gumroad.com/03c6r1x70c6pgl7e8ourgya409kx', gumroadUrl: 'https://samsuchub.gumroad.com/l/maths-mastery-kit', detailPath: 'products/jamb-mastery-kit/' },
     { id: 'PaleHours', name: 'Pale Hours — Cinematic Photographer Portfolio Website', desc: 'Cinematic photographer portfolio website with editorial presentation.', price: 15, category: 'creators', image: 'https://public-files.gumroad.com/wngmgzqe3disex3e6y37sfwimood', gumroadUrl: 'https://samsuchub.gumroad.com/l/PaleHours', detailPath: 'products/pale-hours/' },
     { id: 'fteadt', name: 'NOCTIS ROOM — CINEMATIC PHOTOGRAPHER WEBSITE', desc: 'Dark-mode cinematic photographer portfolio website.', price: 12, category: 'creators', image: 'https://public-files.gumroad.com/dbmmwkpw3l6tdq1q1m2nleectc8f', gumroadUrl: 'https://samsuchub.gumroad.com/l/fteadt', detailPath: 'products/noctis-room/' },
     { id: 'FuturisticPortfolio', name: 'Futuristic Portfolio Template — HTML, CSS & JavaScript', desc: 'Premium dark-mode portfolio template in HTML, CSS & JavaScript.', price: 29, category: 'creators', image: 'https://public-files.gumroad.com/t81cnby2ockh0nef8o9o464dcmrw', gumroadUrl: 'https://samsuchub.gumroad.com/l/FuturisticPortfolio', detailPath: 'products/portfolio-template/' },
@@ -46,7 +48,7 @@
 
   function inferCategory(name, permalink) {
     var s = ((name || '') + ' ' + (permalink || '')).toLowerCase();
-    if (/jamb|student|chemistry|formula|revision|exam|study/.test(s)) return 'students';
+    if (/jamb|student|mathematics|maths|utme|exam|study/.test(s)) return 'students';
     if (/church|livestream|media|obs|worship/.test(s)) return 'churches';
     return 'creators';
   }
@@ -116,7 +118,7 @@
       return {
         source: 'fallback',
         products: FALLBACK.map(function (item) { return Object.assign({}, item); }),
-        note: 'Live catalog could not be loaded. Showing a saved recovery list from 2026-10-13, not freshly verified inventory.'
+        note: 'Live catalog could not be loaded. Showing a saved recovery list from 2026-10-15, not freshly verified inventory.'
       };
     });
   }

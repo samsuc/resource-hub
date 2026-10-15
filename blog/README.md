@@ -1,6 +1,6 @@
 # SAMSUC Blog — how to add an article
 
-1. Copy any folder under `blog/` (for example `blog/jamb-chemistry-revision/`).
+1. Copy any folder under `blog/` (for example `blog/how-to-set-up-church-livestream/`).
 2. Rename the folder to a short slug: `my-new-article`.
 3. Edit `index.html`:
    - `<title>` and meta description

@@ -61,40 +61,5 @@
     "description": "How to choose a website template: fit to content, editability, performance, and license clarity\u2014so you buy once and actually launch.",
     "category": "templates",
     "path": "/blog/how-to-choose-a-website-template/"
-  },
-  {
-    "slug": "jamb-chemistry-revision",
-    "title": "JAMB Chemistry Revision: A Focused Weekly Plan",
-    "description": "JAMB Chemistry revision guidance with a focused weekly plan, active recall habits, and topic prioritization for clearer exam preparation.",
-    "category": "students",
-    "path": "/blog/jamb-chemistry-revision/"
-  },
-  {
-    "slug": "important-chemistry-formulas-for-jamb",
-    "title": "Important Chemistry Formulas for JAMB (Study Smart)",
-    "description": "Important Chemistry formulas for JAMB candidates: how to organize formulas, when memorization helps, and how to practice applying them.",
-    "category": "students",
-    "path": "/blog/important-chemistry-formulas-for-jamb/"
-  },
-  {
-    "slug": "how-to-prepare-for-jamb-chemistry",
-    "title": "How to Prepare for JAMB Chemistry Without Burning Out",
-    "description": "How to prepare for JAMB Chemistry with a realistic timeline, syllabus coverage, practice questions, and review habits that reduce last-minute panic.",
-    "category": "students",
-    "path": "/blog/how-to-prepare-for-jamb-chemistry/"
-  },
-  {
-    "slug": "jamb-chemistry-topics-to-study",
-    "title": "JAMB Chemistry Topics to Study First",
-    "description": "JAMB Chemistry topics to study with a practical order of priority so candidates strengthen foundations before rarer detail.",
-    "category": "students",
-    "path": "/blog/jamb-chemistry-topics-to-study/"
-  },
-  {
-    "slug": "common-jamb-chemistry-mistakes",
-    "title": "Common JAMB Chemistry Mistakes (And How to Avoid Them)",
-    "description": "Common JAMB Chemistry mistakes in reading questions, units, equations, and rushed calculations\u2014with practical ways to reduce them.",
-    "category": "students",
-    "path": "/blog/common-jamb-chemistry-mistakes/"
   }
 ]
