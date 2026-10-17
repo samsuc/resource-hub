@@ -171,7 +171,7 @@
 
     /* Categories */
     .cat-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;
     }
     .cat-card {
       border-radius: 18px; border: 1px solid var(--border); background: var(--elev);
@@ -345,9 +345,10 @@
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="nav-dropdown" role="menu">
-          <a href="students-resources/">Students</a>
-          <a href="church-media/">Churches</a>
-          <a href="website-templates/">Creators</a>
+          <a href="students-resources/">Student Resources</a>
+          <a href="church-media/">Church Resources</a>
+          <a href="creators-resources/">Creators Resources</a>
+          <a href="website-templates/">Website & Developer Templates</a>
         </div>
       </div>
       <a href="collection/">Collection</a>
@@ -363,7 +364,10 @@
 
   <div class="mobile-nav" id="mobileNav">
     <a href="./">Home</a>
-    <a href="#categories">Categories</a>
+    <a href="students-resources/">Student Resources</a>
+    <a href="church-media/">Church Resources</a>
+    <a href="creators-resources/">Creators Resources</a>
+    <a href="website-templates/">Website & Developer Templates</a>
     <a href="collection/">Collection</a>
     <a href="#about">About</a>
     <a href="contact/">Contact</a>
@@ -380,7 +384,7 @@
     <div class="hero-content">
       <div class="eyebrow">Digital resource hub</div>
       <h1>SAMSUC</h1>
-      <p>Study packs for students. Media tools for churches. Website templates for creators. Instant digital download.</p>
+      <p>Study packs for students. Tools for churches. Resources for creators. Website and developer templates. Instant digital download.</p>
       <div class="hero-ctas">
         <a class="btn btn-gold" href="#products">Explore digital resources</a>
         <a class="btn btn-ghost" href="https://samsuchub.gumroad.com/l/LivestreamChecklist" data-gumroad-overlay-checkout="true">
@@ -410,20 +414,24 @@
     <div class="wrap">
       <div class="section-header">
         <h2>Built for every mission</h2>
-        <p>Three clear paths — pick the one that matches what you’re building.</p>
+        <p>Four paths — pick the one that matches what you’re building.</p>
       </div>
       <div class="cat-grid">
-        <a class="cat-card" href="collection/?c=students">
-          <h3>Students</h3>
+        <a class="cat-card" href="students-resources/">
+          <h3>Student Resources</h3>
           <p>Study materials and revision resources built for focused learning.</p>
         </a>
-        <a class="cat-card" href="collection/?c=churches">
-          <h3>Churches</h3>
+        <a class="cat-card" href="church-media/">
+          <h3>Church Resources</h3>
           <p>Livestream checklists and media operations for smoother services.</p>
         </a>
-        <a class="cat-card" href="collection/?c=creators">
-          <h3>Creators</h3>
-          <p>HTML website templates and landing pages ready to customize.</p>
+        <a class="cat-card" href="creators-resources/">
+          <h3>Creators Resources</h3>
+          <p>Photographer and creator websites ready to customize.</p>
+        </a>
+        <a class="cat-card" href="website-templates/">
+          <h3>Website & Developer Templates</h3>
+          <p>HTML, CSS, and JavaScript templates for portfolios and product launches.</p>
         </a>
       </div>
     </div>
@@ -517,7 +525,7 @@
     <div class="footer-inner">
       <div>
         <a href="./" class="logo">SAMSUC <span>Resource Hub</span></a>
-        <p class="footer-tagline">Digital resources for students, churches, and creators.</p>
+        <p class="footer-tagline">Digital resources for students, churches, creators, and developers.</p>
         <div class="footer-social">
           <a href="https://x.com/samsuchub" target="_blank" rel="noopener" aria-label="X">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.725-8.835L1.2 2.25h7.084l4.261 5.638L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/></svg>
@@ -530,9 +538,10 @@
       <div class="footer-col">
         <h4>Explore</h4>
         <a href="collection/">Collection</a>
-        <a href="collection/?c=students">Students</a>
-        <a href="collection/?c=churches">Churches</a>
-        <a href="collection/?c=creators">Creators</a>
+        <a href="students-resources/">Student Resources</a>
+        <a href="church-media/">Church Resources</a>
+        <a href="creators-resources/">Creators Resources</a>
+        <a href="website-templates/">Website & Developer Templates</a>
       </div>
       <div class="footer-col">
         <h4>Help</h4>
@@ -570,7 +579,7 @@
     }
 
     function pickFeatured(list) {
-      var order = ['students', 'churches', 'creators'];
+      var order = ['students', 'churches', 'creators', 'templates'];
       var picked = [];
       var used = {};
       order.forEach(function (cat) {
@@ -581,7 +590,7 @@
         used[pool[0].id] = true;
       });
       list.forEach(function (p) {
-        if (picked.length >= 3) return;
+        if (picked.length >= 4) return;
         if (used[p.id]) return;
         picked.push(p);
         used[p.id] = true;
@@ -599,7 +608,7 @@
       var list = pickFeatured(PRODUCTS);
       grid.innerHTML = list.map(function (p) {
         var img = p.image || 'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC';
-        var cat = p.category === 'students' ? 'Students' : p.category === 'churches' ? 'Churches' : 'Creators';
+        var cat = catalog.categoryLabel(p.category);
         var page = p.detailPath ? catalog.detailHref(p, '') : '';
         var buy = p.gumroadUrl;
         var thumb = page
@@ -642,7 +651,7 @@
       if (img) { img.src = p.image || img.src; img.alt = p.name; }
       if (title) title.textContent = p.name;
       if (desc) desc.textContent = truncate(p.desc || '', 140);
-      if (tag) tag.textContent = (p.category || 'featured').toUpperCase();
+      if (tag) tag.textContent = catalog.categoryLabel(p.category);
       if (cta) {
         var page = p.detailPath ? catalog.detailHref(p, '') : 'collection/';
         cta.href = page;
