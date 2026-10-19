@@ -37,14 +37,18 @@
     { code: 'NZ', name: 'New Zealand', lang: 'en', currency: 'NZD', flag: '🇳🇿' }
   ];
 
-  var FX = {
-    // Static fallback only. Frankfurter overwrites codes it actually returns.
-    // NGN, GHS, KES, AED, SAR, PKR, KRW, PHP, and MYR stay on this table when the API has no quote.
+  var FALLBACK_FX = {
+    // Approximate saved rates. Used only when Frankfurter does not return a quote.
     USD: 1, EUR: 0.92, GBP: 0.79, CAD: 1.36, AUD: 1.53, NZD: 1.67,
     NGN: 1550, GHS: 15.5, KES: 129, ZAR: 18.2, INR: 83.5, PKR: 278,
     BRL: 5.1, MXN: 17.2, AED: 3.67, SAR: 3.75, CNY: 7.25, JPY: 149,
     SGD: 1.34, KRW: 1350, PHP: 58, MYR: 4.7
   };
+  var FX = Object.assign({}, FALLBACK_FX);
+  var rateMeta = { source: 'fallback', date: '', missing: Object.keys(FALLBACK_FX).filter(function (code) { return code !== 'USD'; }) };
+
+  var RATE_URL = 'https://api.frankfurter.dev/v2/rates?base=USD';
+  var RATE_TIMEOUT_MS = 8000;
 
   var state = { country: 'US', lang: 'en', currency: 'USD', localeTag: 'en-US', langOverride: false };
 
@@ -126,22 +130,83 @@
     document.documentElement.dir = state.lang === 'ar' ? 'rtl' : 'ltr';
   }
 
+  function rateNoteText() {
+    if (rateMeta.source === 'live') {
+      return 'Display only. Rates are from Frankfurter' + (rateMeta.date ? ' (' + rateMeta.date + ')' : '') + ', converted from the USD price. Gumroad checkout is not changed.';
+    }
+    if (rateMeta.source === 'mixed') {
+      return 'Display only. Frankfurter rates' + (rateMeta.date ? ' dated ' + rateMeta.date : '') + ' are in use. Currencies it did not quote use an approximate saved table and may be stale. Gumroad checkout is not changed.';
+    }
+    return 'Display only. Live rates could not be loaded, so these amounts use an approximate saved table and may be stale. Gumroad checkout is not changed.';
+  }
+
+  function setRateNote() {
+    var panel = document.getElementById('localePanel');
+    if (!panel) return;
+    var note = panel.querySelector('.locale-note');
+    if (!note) {
+      note = document.createElement('p');
+      note.className = 'locale-note';
+      panel.appendChild(note);
+    }
+    note.textContent = rateNoteText();
+  }
+
+  function applyRateRows(rows) {
+    if (!Array.isArray(rows) || !rows.length) throw new Error('shape');
+    var next = Object.assign({}, FALLBACK_FX);
+    var dates = {};
+    rows.forEach(function (row) {
+      if (!row || (row.base && row.base !== 'USD')) return;
+      var code = String(row.quote || '');
+      var value = Number(row.rate);
+      var date = String(row.date || '');
+      if (!/^[A-Z]{3}$/.test(code) || !isFinite(value) || value <= 0) return;
+      if (!dates[code] || date >= dates[code]) {
+        dates[code] = date;
+        next[code] = value;
+      }
+    });
+    next.USD = 1;
+    if (!dates.GBP && !dates.EUR) throw new Error('shape');
+    var missing = Object.keys(FALLBACK_FX).filter(function (code) {
+      return code !== 'USD' && !dates[code];
+    });
+    var quotedDates = Object.keys(dates).map(function (code) { return dates[code]; }).filter(Boolean).sort();
+    FX = next;
+    rateMeta = {
+      source: missing.length ? 'mixed' : 'live',
+      date: quotedDates.length ? quotedDates[quotedDates.length - 1] : '',
+      missing: missing
+    };
+  }
+
   function fetchRates() {
-    return fetch('https://api.frankfurter.app/latest?from=USD')
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (data) {
-        if (data && data.rates) {
-          FX = Object.assign({ USD: 1 }, data.rates, {
-            NGN: FX.NGN, GHS: FX.GHS, KES: FX.KES, AED: FX.AED, SAR: FX.SAR,
-            PKR: FX.PKR, KRW: FX.KRW, PHP: FX.PHP, MYR: FX.MYR
-          });
-          // prefer live rates when present
-          Object.keys(data.rates).forEach(function (k) { FX[k] = data.rates[k]; });
-          FX.USD = 1;
-          applyPrices();
-        }
-      })
-      .catch(function () {});
+    var controller = typeof AbortController === 'function' ? new AbortController() : null;
+    var timer = setTimeout(function () {
+      if (controller) controller.abort();
+    }, RATE_TIMEOUT_MS);
+    var options = { credentials: 'omit', cache: 'no-store' };
+    if (controller) options.signal = controller.signal;
+    return fetch(RATE_URL, options).then(function (response) {
+      clearTimeout(timer);
+      if (!response.ok) throw new Error('http ' + response.status);
+      return response.json();
+    }).then(function (data) {
+      applyRateRows(data);
+      applyPrices();
+      setRateNote();
+    }).catch(function () {
+      clearTimeout(timer);
+      FX = Object.assign({}, FALLBACK_FX);
+      rateMeta = {
+        source: 'fallback',
+        date: '',
+        missing: Object.keys(FALLBACK_FX).filter(function (code) { return code !== 'USD'; })
+      };
+      applyPrices();
+      setRateNote();
+    });
   }
 
   function ensurePicker() {
@@ -157,7 +222,7 @@
     var picker = document.createElement('div');
     picker.className = 'locale-picker';
     picker.id = 'localePicker';
-    picker.innerHTML = '<button type="button" class="locale-btn" id="localeBtn" aria-expanded="false" aria-haspopup="true" aria-controls="localePanel"><span class="locale-flag" id="localeFlag">🌐</span><span class="locale-label" id="localeLabel">EN</span><span class="locale-code" id="localeCurrency">USD</span></button><div class="locale-panel" id="localePanel" role="dialog" aria-label="Language and currency"><label for="localeCountry">Country / region</label><select id="localeCountry"></select><label for="localeLang">Language</label><select id="localeLang"><option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="pt">Português</option><option value="de">Deutsch</option><option value="zh">中文</option><option value="ja">日本語</option><option value="ar">العربية</option><option value="hi">हिन्दी</option></select><label for="localeCurrencySelect">Currency</label><select id="localeCurrencySelect"></select><p class="locale-note">Display only. Prices convert from the USD amount. Gumroad checkout is not changed.</p></div>';
+    picker.innerHTML = '<button type="button" class="locale-btn" id="localeBtn" aria-expanded="false" aria-haspopup="true" aria-controls="localePanel"><span class="locale-flag" id="localeFlag">🌐</span><span class="locale-label" id="localeLabel">EN</span><span class="locale-code" id="localeCurrency">USD</span></button><div class="locale-panel" id="localePanel" role="dialog" aria-label="Language and currency"><label for="localeCountry">Country / region</label><select id="localeCountry"></select><label for="localeLang">Language</label><select id="localeLang"><option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="pt">Português</option><option value="de">Deutsch</option><option value="zh">中文</option><option value="ja">日本語</option><option value="ar">العربية</option><option value="hi">हिन्दी</option></select><label for="localeCurrencySelect">Currency</label><select id="localeCurrencySelect"></select><p class="locale-note">Display only. Live rates could not be loaded, so these amounts use an approximate saved table and may be stale. Gumroad checkout is not changed.</p></div>';
     var toggle = header.querySelector('.menu-toggle');
     if (toggle) header.insertBefore(picker, toggle);
     else header.appendChild(picker);
@@ -258,6 +323,7 @@
       });
     }
     syncBoundControls();
+    setRateNote();
   }
 
   function init() {
@@ -309,6 +375,7 @@
   window.SAMSUC_LOCALE = {
     formatMoney: formatMoney,
     getState: function () { return Object.assign({}, state); },
+    getRateStatus: function () { return { source: rateMeta.source, date: rateMeta.date, missing: rateMeta.missing.slice() }; },
     applyPrices: applyPrices
   };
 })();
