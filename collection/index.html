@@ -4,21 +4,36 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Collection | SAMSUC Resource Hub</title>
-  <meta name="description" content="Browse all SAMSUC digital resources for students, churches, and creators." />
+  <meta name="description" content="Browse the current SAMSUC collection: Student Resources, Church Resources, Creators Resources, and Website and Developer Templates." />
   <link rel="canonical" href="https://samsuc.github.io/resource-hub/collection/" />
   <link rel="icon" type="image/png" href="../media/favicon-32.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Collection | SAMSUC Resource Hub" />
+  <meta property="og:description" content="Browse the current SAMSUC collection: Student Resources, Church Resources, Creators Resources, and Website and Developer Templates." />
+  <meta property="og:url" content="https://samsuc.github.io/resource-hub/collection/" />
+  <meta property="og:image" content="https://samsuc.github.io/resource-hub/media/og-share.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://samsuc.github.io/resource-hub/media/og-share.png" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <style>
     :root{--bg:#07090f;--elev:#0e1320;--surface:#141b2d;--text:#f0f2f8;--muted:#8b93a7;--gold:#d4a017;--border:rgba(255,255,255,.08);--header-h:64px}
     *{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
     a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
-    .header{position:sticky;top:0;z-index:50;height:var(--header-h);display:flex;align-items:center;justify-content:space-between;padding:0 24px;background:rgba(7,9,15,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    a:focus-visible, button:focus-visible { outline: 2px solid #e8c547; outline-offset: 3px; }
+    .skip {
+      position: absolute; left: 12px; top: 8px; z-index: 200;
+      background: var(--gold); color: #0a0a0a; padding: 8px 12px; border-radius: 8px;
+      transform: translateY(-140%);
+    }
+    .skip:focus { transform: none; }
+    .sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .header{position:sticky;top:0;z-index:50;min-height:var(--header-h);height:auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:10px 24px;background:rgba(7,9,15,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
     .logo{font-family:'Space Grotesk',sans-serif;font-weight:700}.logo span{color:var(--gold);font-size:.72rem;margin-left:6px}
     .nav{display:flex;gap:8px;flex-wrap:wrap}.nav a{font-size:.88rem;color:var(--muted);padding:8px 12px;border-radius:999px}.nav a:hover,.nav a.active{color:var(--text);background:rgba(255,255,255,.06)}
     .hero{padding:56px 24px 28px;text-align:center}.hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);margin-bottom:10px}
     .hero p{color:var(--muted);max-width:32em;margin:0 auto}
     .filters{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;padding:0 24px 28px}
-    .filter-btn{border:1px solid var(--border);background:var(--elev);color:var(--muted);font:inherit;font-size:.85rem;font-weight:600;padding:10px 16px;border-radius:999px;cursor:pointer}
+    .filter-btn{border:1px solid var(--border);background:var(--elev);color:var(--muted);font:inherit;font-size:.85rem;font-weight:600;padding:10px 16px;min-height:44px;border-radius:999px;cursor:pointer}
     .filter-btn.active,.filter-btn:hover{color:var(--text);border-color:rgba(212,160,23,.35);background:rgba(212,160,23,.08)}
     .grid{max-width:1100px;margin:0 auto;padding:0 24px 80px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
     .card{border:1px solid var(--border);border-radius:18px;background:var(--elev);overflow:hidden;display:flex;flex-direction:column}
@@ -36,9 +51,10 @@
   </style>
 </head>
 <body>
+  <a class="skip" href="#grid">Skip to products</a>
   <header class="header">
     <a href="../" class="logo">SAMSUC <span>Resource Hub</span></a>
-    <nav class="nav">
+    <nav class="nav" aria-label="Primary">
       <a href="../">Home</a>
       <a href="../students-resources/">Student Resources</a>
       <a href="../church-media/">Church Resources</a>
@@ -47,18 +63,21 @@
       <a href="../collection/" class="active">Collection</a>
     </nav>
   </header>
+  <main>
   <div class="hero">
     <h1>The Collection</h1>
     <p>Every resource currently available, in the four store categories.</p>
   </div>
-  <div class="filters" id="filters">
-    <button type="button" class="filter-btn active" data-f="all">All</button>
-    <button type="button" class="filter-btn" data-f="students">Student Resources</button>
-    <button type="button" class="filter-btn" data-f="churches">Church Resources</button>
-    <button type="button" class="filter-btn" data-f="creators">Creators Resources</button>
-    <button type="button" class="filter-btn" data-f="templates">Website & Developer Templates</button>
+  <div class="filters" id="filters" role="group" aria-label="Filter by category">
+    <button type="button" class="filter-btn active" data-f="all" aria-pressed="true">All</button>
+    <button type="button" class="filter-btn" data-f="students" aria-pressed="false">Student Resources</button>
+    <button type="button" class="filter-btn" data-f="churches" aria-pressed="false">Church Resources</button>
+    <button type="button" class="filter-btn" data-f="creators" aria-pressed="false">Creators Resources</button>
+    <button type="button" class="filter-btn" data-f="templates" aria-pressed="false">Website & Developer Templates</button>
   </div>
+  <p id="filterStatus" class="sr" aria-live="polite"></p>
   <div class="grid" id="grid"><p class="status">Loading…</p></div>
+  </main>
   <footer>© 2026 SAMSUC Resource Hub · <a href="../">Home</a></footer>
   <script src="../js/samsuc-locale.js"></script>
   <script src="../js/samsuc-catalog.js"></script>
@@ -75,6 +94,8 @@
       var g=document.getElementById('grid');
       if(!list.length){
         g.innerHTML='<p class="status">'+catalog.escapeHtml(sourceNote || 'No products in this category yet.')+'</p>';
+        var emptyStatus=document.getElementById('filterStatus');
+        if(emptyStatus) emptyStatus.textContent='No products in this category.';
         return;
       }
       g.innerHTML=list.map(function(p){
@@ -82,19 +103,29 @@
         var page=p.detailPath?catalog.detailHref(p,'../'):'';
         var buy=p.gumroadUrl;
         var img=p.image||'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC';
-        var media=page?'<a href="'+catalog.escapeHtml(page)+'"><img src="'+catalog.escapeHtml(img)+'" alt="" loading="lazy" referrerpolicy="no-referrer"/></a>':'<img src="'+catalog.escapeHtml(img)+'" alt="" loading="lazy" referrerpolicy="no-referrer"/>';
+        var media=page?'<a href="'+catalog.escapeHtml(page)+'"><img src="'+catalog.escapeHtml(img)+'" alt="'+catalog.escapeHtml(p.name)+'" loading="lazy" referrerpolicy="no-referrer"/></a>':'<img src="'+catalog.escapeHtml(img)+'" alt="'+catalog.escapeHtml(p.name)+'" loading="lazy" referrerpolicy="no-referrer"/>';
         var title=page?'<a href="'+catalog.escapeHtml(page)+'">'+catalog.escapeHtml(p.name)+'</a>':catalog.escapeHtml(p.name);
-        return '<article class="card">'+media+'<div class="body"><div class="cat">'+cat+'</div><h2>'+title+'</h2><p>'+catalog.escapeHtml(trunc(p.desc,120))+'</p><div class="meta"><span class="price" data-price-usd="'+catalog.escapeHtml(String(Number(p.price)||0))+'">'+catalog.escapeHtml(catalog.money(p))+'</span>'+(page?'<a class="btn btn-details" href="'+catalog.escapeHtml(page)+'">View details</a>':'')+'<a class="btn" href="'+catalog.escapeHtml(buy)+'" data-gumroad-overlay-checkout="true">'+(p.price===0?'Get free':'Get it')+'</a></div></div></article>';
+        return '<article class="card">'+media+'<div class="body"><div class="cat">'+cat+'</div><h2>'+title+'</h2><p>'+catalog.escapeHtml(trunc(p.desc,120))+'</p><div class="meta"><span class="price" data-price-usd="'+catalog.escapeHtml(String(Number(p.price)||0))+'">'+catalog.escapeHtml(catalog.money(p))+'</span>'+(page?'<a class="btn btn-details" href="'+catalog.escapeHtml(page)+'">View details</a>':'')+'<a class="btn" href="'+catalog.escapeHtml(buy)+'" data-gumroad-overlay-checkout="true">'+(p.price===0?'Get free':'Buy')+'</a></div></div></article>';
       }).join('')+(sourceNote?'<p class="status">'+catalog.escapeHtml(sourceNote)+'</p>':'');
+      var status=document.getElementById('filterStatus');
+      if(status) status.textContent='Showing '+list.length+' '+(list.length===1?'product':'products')+'.';
       if(window.SAMSUC_LOCALE) window.SAMSUC_LOCALE.applyPrices();
     }
     document.getElementById('filters').addEventListener('click',function(e){
       var b=e.target.closest('.filter-btn');if(!b)return;
       filter=b.getAttribute('data-f')||'all';
-      document.querySelectorAll('.filter-btn').forEach(function(x){x.classList.toggle('active',x===b);});
+      document.querySelectorAll('.filter-btn').forEach(function(x){
+        var on=x===b;
+        x.classList.toggle('active',on);
+        x.setAttribute('aria-pressed', on?'true':'false');
+      });
       render();
     });
-    document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-f')===filter);});
+    document.querySelectorAll('.filter-btn').forEach(function(b){
+      var on=b.getAttribute('data-f')===filter;
+      b.classList.toggle('active',on);
+      b.setAttribute('aria-pressed', on?'true':'false');
+    });
     if(!catalog||!catalog.load){
       document.getElementById('grid').innerHTML='<p class="status">Product catalog script did not load.</p>';
       return;

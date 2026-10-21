@@ -1,3 +1,9 @@
+:focus-visible{outline:2px solid #e8c547;outline-offset:3px}
+@media (max-width:900px){
+  body.depth-scene > .header{height:auto;flex-wrap:wrap;align-items:flex-start;gap:8px}
+  body.depth-scene > .header .nav{display:flex !important;flex-wrap:wrap;width:100%}
+  body.depth-scene > .header .nav a{min-height:44px;display:inline-flex;align-items:center}
+}
 /* SAMSUC immersive depth — shared across pages */
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) {
