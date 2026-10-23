@@ -386,10 +386,8 @@
 
   <main id="content">
   <section class="hero" id="top">
-    <video class="hero-video" id="heroVideo" autoplay muted loop playsinline preload="metadata"
-      poster="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=75">
-      <source src="https://videos.pexels.com/video-files/3129957/3129957-hd_1280_720_25fps.mp4" type="video/mp4" />
-    </video>
+    <video class="hero-video" id="heroVideo" muted loop playsinline width="1280" height="720"
+      poster="media/hero-globe-poster.jpg" aria-hidden="true"></video>
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <div class="eyebrow">Digital resource hub</div>
@@ -789,10 +787,23 @@
     (function initHeroMotion() {
       var video = document.getElementById('heroVideo');
       if (!video) return;
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        video.removeAttribute('autoplay');
-        video.pause();
-      }
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var saveData = navigator.connection && navigator.connection.saveData;
+      if (reduce || saveData) return;
+      var start = function () {
+        if (video.getAttribute('src')) return;
+        video.preload = 'none';
+        video.src = 'media/hero-globe.mp4';
+        video.addEventListener('ended', function () {
+          video.currentTime = 0;
+          video.play().catch(function () {});
+        });
+        video.play().catch(function () {});
+      };
+      var narrow = window.matchMedia('(max-width: 700px)').matches;
+      if (narrow) setTimeout(start, 1600);
+      else if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 800 });
+      else setTimeout(start, 400);
     })();
     (function initCursor() {
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -818,13 +829,6 @@
       }
       tick();
     })();
-
-    // Hero video loop safety
-    var vid = document.getElementById('heroVideo');
-    if (vid) {
-      vid.addEventListener('ended', function () { vid.currentTime = 0; vid.play(); });
-      vid.play().catch(function () {});
-    }
 
     loadProducts();
   })();
