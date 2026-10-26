@@ -37,7 +37,7 @@
     .filter-btn.active,.filter-btn:hover{color:var(--text);border-color:rgba(212,160,23,.35);background:rgba(212,160,23,.08)}
     .grid{max-width:1100px;margin:0 auto;padding:0 24px 80px;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
     .card{border:1px solid var(--border);border-radius:18px;background:var(--elev);overflow:hidden;display:flex;flex-direction:column}
-    .card img{width:100%;aspect-ratio:16/10;object-fit:cover;background:var(--surface)}
+    .card img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;background:var(--surface)}
     .card .body{padding:16px;display:flex;flex-direction:column;gap:8px;flex:1}
     .cat{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
     .card h2{font-family:'Space Grotesk',sans-serif;font-size:1.05rem}
@@ -47,6 +47,17 @@
     .btn{display:inline-flex;padding:10px 16px;border-radius:999px;font-size:.85rem;font-weight:700;background:linear-gradient(135deg,var(--gold),#b8860b);color:#0a0a0a}
     .btn-details{background:transparent;color:var(--text);border:1px solid var(--border)}
     .status{text-align:center;color:var(--muted);padding:40px;grid-column:1/-1}
+    .grid.is-loading{min-height:100vh;min-height:100svh;align-content:start}
+    .card.skeleton{pointer-events:none}
+    .skel-media{aspect-ratio:16/10;background:var(--surface)}
+    .skel-line{height:12px;border-radius:6px;background:rgba(255,255,255,.07)}
+    .skel-line.title{height:18px;width:88%}
+    .skel-line.desc{width:96%}
+    .skel-line.short{width:42%}
+    @media (prefers-reduced-motion:no-preference){
+      .skel-media,.skel-line{background:linear-gradient(90deg,#141b2d 25%,#243049 50%,#141b2d 75%);background-size:200% 100%;animation:skel 1.3s ease-in-out infinite}
+    }
+    @keyframes skel{from{background-position:100% 0}to{background-position:-100% 0}}
     footer{border-top:1px solid var(--border);padding:24px;text-align:center;color:var(--muted);font-size:.85rem}
   </style>
 </head>
@@ -76,7 +87,12 @@
     <button type="button" class="filter-btn" data-f="templates" aria-pressed="false">Website & Developer Templates</button>
   </div>
   <p id="filterStatus" class="sr" aria-live="polite"></p>
-  <div class="grid" id="grid"><p class="status">Loading…</p></div>
+  <div class="grid is-loading" id="grid" aria-busy="true">
+    <p class="sr">Loading products.</p>
+    <article class="card skeleton" aria-hidden="true"><div class="skel-media"></div><div class="body"><div class="skel-line short"></div><div class="skel-line title"></div><div class="skel-line desc"></div><div class="skel-line desc"></div></div></article>
+    <article class="card skeleton" aria-hidden="true"><div class="skel-media"></div><div class="body"><div class="skel-line short"></div><div class="skel-line title"></div><div class="skel-line desc"></div><div class="skel-line desc"></div></div></article>
+    <article class="card skeleton" aria-hidden="true"><div class="skel-media"></div><div class="body"><div class="skel-line short"></div><div class="skel-line title"></div><div class="skel-line desc"></div><div class="skel-line desc"></div></div></article>
+  </div>
   </main>
   <footer>© 2026 SAMSUC Resource Hub · <a href="../">Home</a></footer>
   <script src="../js/samsuc-locale.js"></script>
@@ -88,22 +104,42 @@
     var PRODUCTS=[], filter='all', sourceNote='';
     var params=new URLSearchParams(location.search);
     if(params.get('c')) filter=params.get('c');
+    var THUMBS={
+      'maths-mastery-kit':1, PaleHours:1, fteadt:1, FuturisticPortfolio:1,
+      FuturisticSaaS:1, media:1, LivestreamChecklist:1
+    };
     function trunc(s,m){s=String(s||'').trim();if(s.length<=m)return s;var c=s.slice(0,m-1);var i=c.lastIndexOf(' ');if(i>m*0.5)c=c.slice(0,i);return c+'…';}
+    function finishGrid(g){
+      g.classList.remove('is-loading');
+      g.removeAttribute('aria-busy');
+    }
+    function thumbImg(p, index){
+      var remote=p.image||'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC';
+      var src=remote;
+      var extra='';
+      if(THUMBS[p.id]){
+        var base='../media/thumbs/'+p.id;
+        src=base+'.webp';
+        extra=' srcset="'+catalog.escapeHtml(base+'-480.webp 480w, '+base+'.webp 600w')+'" sizes="(max-width: 720px) calc(100vw - 48px), 340px" data-full="'+catalog.escapeHtml(remote)+'"';
+      }
+      var hint=index>=3?' loading="lazy"':(index===0?' fetchpriority="high"':'');
+      return '<img src="'+catalog.escapeHtml(src)+'"'+extra+' width="600" height="375" alt="'+catalog.escapeHtml(p.name)+'" decoding="async" referrerpolicy="no-referrer"'+hint+'>';
+    }
     function render(){
       var list=filter==='all'?PRODUCTS:PRODUCTS.filter(function(p){return p.category===filter;});
       var g=document.getElementById('grid');
+      finishGrid(g);
       if(!list.length){
         g.innerHTML='<p class="status">'+catalog.escapeHtml(sourceNote || 'No products in this category yet.')+'</p>';
         var emptyStatus=document.getElementById('filterStatus');
         if(emptyStatus) emptyStatus.textContent='No products in this category.';
         return;
       }
-      g.innerHTML=list.map(function(p){
+      g.innerHTML=list.map(function(p, index){
         var cat=catalog.categoryLabel(p.category);
         var page=p.detailPath?catalog.detailHref(p,'../'):'';
         var buy=p.gumroadUrl;
-        var img=p.image||'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC';
-        var media=page?'<a href="'+catalog.escapeHtml(page)+'"><img src="'+catalog.escapeHtml(img)+'" alt="'+catalog.escapeHtml(p.name)+'" loading="lazy" referrerpolicy="no-referrer"/></a>':'<img src="'+catalog.escapeHtml(img)+'" alt="'+catalog.escapeHtml(p.name)+'" loading="lazy" referrerpolicy="no-referrer"/>';
+        var media=page?'<a href="'+catalog.escapeHtml(page)+'">'+thumbImg(p, index)+'</a>':thumbImg(p, index);
         var title=page?'<a href="'+catalog.escapeHtml(page)+'">'+catalog.escapeHtml(p.name)+'</a>':catalog.escapeHtml(p.name);
         return '<article class="card">'+media+'<div class="body"><div class="cat">'+cat+'</div><h2>'+title+'</h2><p>'+catalog.escapeHtml(trunc(p.desc,120))+'</p><div class="meta"><span class="price" data-price-usd="'+catalog.escapeHtml(String(Number(p.price)||0))+'">'+catalog.escapeHtml(catalog.money(p))+'</span>'+(page?'<a class="btn btn-details" href="'+catalog.escapeHtml(page)+'">View details</a>':'')+'<a class="btn" href="'+catalog.escapeHtml(buy)+'" data-gumroad-overlay-checkout="true">'+(p.price===0?'Get free':'Buy')+'</a></div></div></article>';
       }).join('')+(sourceNote?'<p class="status">'+catalog.escapeHtml(sourceNote)+'</p>':'');
@@ -111,6 +147,15 @@
       if(status) status.textContent='Showing '+list.length+' '+(list.length===1?'product':'products')+'.';
       if(window.SAMSUC_LOCALE) window.SAMSUC_LOCALE.applyPrices();
     }
+    document.getElementById('grid').addEventListener('error', function(e){
+      var img=e.target;
+      if(!img || img.tagName!=='IMG') return;
+      var full=img.getAttribute('data-full');
+      if(!full || img.getAttribute('data-fellback')==='1') return;
+      img.setAttribute('data-fellback','1');
+      img.removeAttribute('srcset');
+      img.src=full;
+    }, true);
     document.getElementById('filters').addEventListener('click',function(e){
       var b=e.target.closest('.filter-btn');if(!b)return;
       filter=b.getAttribute('data-f')||'all';
@@ -127,7 +172,10 @@
       b.setAttribute('aria-pressed', on?'true':'false');
     });
     if(!catalog||!catalog.load){
-      document.getElementById('grid').innerHTML='<p class="status">Product catalog script did not load.</p>';
+      var missing=document.getElementById('grid');
+      missing.classList.remove('is-loading');
+      missing.removeAttribute('aria-busy');
+      missing.innerHTML='<p class="status">Product catalog script did not load.</p>';
       return;
     }
     catalog.load().then(function(result){
