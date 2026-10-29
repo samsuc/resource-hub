@@ -5,6 +5,19 @@
 (function () {
   'use strict';
 
+  if (!window.__samsucCoverFallback) {
+    window.__samsucCoverFallback = true;
+    document.addEventListener('error', function (event) {
+      var img = event.target;
+      if (!img || img.tagName !== 'IMG') return;
+      var full = img.getAttribute('data-full');
+      if (!full || img.getAttribute('data-fellback') === '1') return;
+      img.setAttribute('data-fellback', '1');
+      img.removeAttribute('srcset');
+      img.src = full;
+    }, true);
+  }
+
   var STORAGE_KEY = 'samsuc_locale_v2';
   var REGIONS = [
     { code: 'US', name: 'United States', lang: 'en', currency: 'USD', flag: '🇺🇸' },
@@ -213,16 +226,23 @@
     if (!document.getElementById('samsuc-locale-css')) {
       var style = document.createElement('style');
       style.id = 'samsuc-locale-css';
-      style.textContent = '.locale-picker{position:relative;z-index:80}.locale-btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 10px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:#141b2d;color:#f0f2f8;font-size:.75rem;font-weight:600;cursor:pointer}.locale-btn .locale-code{color:#d4a017;font-weight:700}.locale-panel{position:absolute;top:calc(100% + 8px);right:0;width:min(300px,92vw);background:#141b2d;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px;opacity:0;visibility:hidden;pointer-events:none;z-index:80}.locale-panel.open{opacity:1;visibility:visible;pointer-events:auto}.locale-panel label{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:#8b93a7;margin:10px 0 6px}.locale-panel select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:#0e1320;color:#f0f2f8;font:inherit}.locale-note{margin-top:10px;font-size:.72rem;line-height:1.4;color:#8b93a7}@media (max-width:900px){.locale-panel{position:fixed;top:72px;left:12px;right:12px;width:auto}}';
+      style.textContent = '@font-face{font-family:"Samsuc Sans Fallback";src:local("Arial");size-adjust:107.64%;ascent-override:90.44%;descent-override:22.52%;line-gap-override:0%}body{font-family:Inter,"Samsuc Sans Fallback",system-ui,sans-serif}.locale-picker{position:relative;z-index:80;min-width:7.5rem;min-height:36px;flex:0 0 auto}.locale-btn{display:inline-flex;min-width:7.5rem;box-sizing:border-box;justify-content:center;align-items:center;gap:6px;height:36px;padding:0 10px;border-radius:999px;border:1px solid rgba(255,255,255,.08);background:#141b2d;color:#f0f2f8;font-size:.75rem;font-weight:600;cursor:pointer}.locale-btn .locale-code{color:#d4a017;font-weight:700}.locale-panel{position:absolute;top:calc(100% + 8px);right:0;width:min(300px,92vw);background:#141b2d;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px;opacity:0;visibility:hidden;pointer-events:none;z-index:80}.locale-panel.open{opacity:1;visibility:visible;pointer-events:auto}.locale-panel label{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:#8b93a7;margin:10px 0 6px}.locale-panel select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.08);background:#0e1320;color:#f0f2f8;font:inherit}.locale-note{margin-top:10px;font-size:.72rem;line-height:1.4;color:#8b93a7}@media (max-width:900px){.locale-panel{position:fixed;top:72px;left:12px;right:12px;width:auto}}';
       document.head.appendChild(style);
     }
-    if (document.getElementById('localePicker')) return;
+    var existing = document.getElementById('localePicker');
+    if (existing && existing.querySelector('#localeBtn')) return;
+    var markup = '<button type="button" class="locale-btn" id="localeBtn" aria-expanded="false" aria-haspopup="true" aria-controls="localePanel"><span class="locale-flag" id="localeFlag">🌐</span><span class="locale-label" id="localeLabel">EN</span><span class="locale-code" id="localeCurrency">USD</span></button><div class="locale-panel" id="localePanel" role="dialog" aria-label="Language and currency"><label for="localeCountry">Country / region</label><select id="localeCountry"></select><label for="localeLang">Language</label><select id="localeLang"><option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="pt">Português</option><option value="de">Deutsch</option><option value="zh">中文</option><option value="ja">日本語</option><option value="ar">العربية</option><option value="hi">हिन्दी</option></select><label for="localeCurrencySelect">Currency</label><select id="localeCurrencySelect"></select><p class="locale-note">Display only. Live rates could not be loaded, so these amounts use an approximate saved table and may be stale. Gumroad checkout is not changed.</p></div>';
+    if (existing) {
+      existing.removeAttribute('aria-hidden');
+      existing.innerHTML = markup;
+      return;
+    }
     var header = document.querySelector('header.header') || document.querySelector('header');
     if (!header) return;
     var picker = document.createElement('div');
     picker.className = 'locale-picker';
     picker.id = 'localePicker';
-    picker.innerHTML = '<button type="button" class="locale-btn" id="localeBtn" aria-expanded="false" aria-haspopup="true" aria-controls="localePanel"><span class="locale-flag" id="localeFlag">🌐</span><span class="locale-label" id="localeLabel">EN</span><span class="locale-code" id="localeCurrency">USD</span></button><div class="locale-panel" id="localePanel" role="dialog" aria-label="Language and currency"><label for="localeCountry">Country / region</label><select id="localeCountry"></select><label for="localeLang">Language</label><select id="localeLang"><option value="en">English</option><option value="fr">Français</option><option value="es">Español</option><option value="pt">Português</option><option value="de">Deutsch</option><option value="zh">中文</option><option value="ja">日本語</option><option value="ar">العربية</option><option value="hi">हिन्दी</option></select><label for="localeCurrencySelect">Currency</label><select id="localeCurrencySelect"></select><p class="locale-note">Display only. Live rates could not be loaded, so these amounts use an approximate saved table and may be stale. Gumroad checkout is not changed.</p></div>';
+    picker.innerHTML = markup;
     var toggle = header.querySelector('.menu-toggle');
     if (toggle) header.insertBefore(picker, toggle);
     else header.appendChild(picker);

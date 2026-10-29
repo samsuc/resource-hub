@@ -43,7 +43,7 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:28px}
 .card{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--elev);transition:.2s;display:flex;flex-direction:column}
 .card:hover{border-color:rgba(212,160,23,.35);transform:translateY(-2px)}
-.card img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.card img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover}
 .card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
 .card h3{font-size:1.02rem;line-height:1.3}
 .card p{font-size:.9rem;color:var(--muted);flex:1}
@@ -80,6 +80,7 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
     <a href="../collection/">Shop</a>
     <a href="../contact/">Contact</a>
   </nav>
+  <div class="locale-picker" id="localePicker" style="min-width:7.5rem;height:36px;flex:0 0 auto"></div>
   <a href="../collection/" class="btn btn-gold" style="padding:10px 16px;font-size:.82rem">Shop</a>
 </header>
 <main class="wrap">
@@ -92,7 +93,7 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
   <div class="copy"><p>These are website files for photographers and visual creators: cinematic portfolio sites you can edit and publish without a framework.</p><p>Developer-focused HTML templates are listed separately under <a href="../website-templates/">Website & Developer Templates</a>.</p><h2>Creators Resources available now</h2>
   </div>
   <div class="grid"><article class="card">
-  <a href="../products/pale-hours/"><img src="https://public-files.gumroad.com/wngmgzqe3disex3e6y37sfwimood" alt="Pale Hours — Cinematic Photographer Portfolio" loading="lazy" referrerpolicy="no-referrer"/></a>
+  <a href="../products/pale-hours/"><img src="../media/thumbs/PaleHours.webp" srcset="../media/thumbs/PaleHours-480.webp 480w, ../media/thumbs/PaleHours.webp 600w" sizes="(max-width: 720px) calc(100vw - 48px), 340px" data-full="https://public-files.gumroad.com/wngmgzqe3disex3e6y37sfwimood" width="600" height="375" alt="Pale Hours — Cinematic Photographer Portfolio" decoding="async" referrerpolicy="no-referrer" fetchpriority="high"></a>
   <div class="body">
     <h3><a href="../products/pale-hours/">Pale Hours — Cinematic Photographer Portfolio</a></h3>
     <p>Editorial-style photographer portfolio with a cinematic presentation, in clean web files.</p>
@@ -104,7 +105,7 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
   </div>
 </article>
 <article class="card">
-  <a href="../products/noctis-room/"><img src="https://public-files.gumroad.com/dbmmwkpw3l6tdq1q1m2nleectc8f" alt="NOCTIS ROOM — Cinematic Photographer Website" loading="lazy" referrerpolicy="no-referrer"/></a>
+  <a href="../products/noctis-room/"><img src="../media/thumbs/fteadt.webp" srcset="../media/thumbs/fteadt-480.webp 480w, ../media/thumbs/fteadt.webp 600w" sizes="(max-width: 720px) calc(100vw - 48px), 340px" data-full="https://public-files.gumroad.com/dbmmwkpw3l6tdq1q1m2nleectc8f" width="600" height="375" alt="NOCTIS ROOM — Cinematic Photographer Website" decoding="async" referrerpolicy="no-referrer" loading="lazy"></a>
   <div class="body">
     <h3><a href="../products/noctis-room/">NOCTIS ROOM — Cinematic Photographer Website</a></h3>
     <p>Dark-mode photographer website built for immersive portfolio presentation.</p>

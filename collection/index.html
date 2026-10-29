@@ -73,6 +73,7 @@
       <a href="../website-templates/">Website & Developer Templates</a>
       <a href="../collection/" class="active">Collection</a>
     </nav>
+    <div class="locale-picker" id="localePicker" style="min-width:7.5rem;height:36px;flex:0 0 auto"></div>
   </header>
   <main>
   <div class="hero">
@@ -104,26 +105,18 @@
     var PRODUCTS=[], filter='all', sourceNote='';
     var params=new URLSearchParams(location.search);
     if(params.get('c')) filter=params.get('c');
-    var THUMBS={
-      'maths-mastery-kit':1, PaleHours:1, fteadt:1, FuturisticPortfolio:1,
-      FuturisticSaaS:1, media:1, LivestreamChecklist:1
-    };
     function trunc(s,m){s=String(s||'').trim();if(s.length<=m)return s;var c=s.slice(0,m-1);var i=c.lastIndexOf(' ');if(i>m*0.5)c=c.slice(0,i);return c+'…';}
     function finishGrid(g){
       g.classList.remove('is-loading');
       g.removeAttribute('aria-busy');
     }
     function thumbImg(p, index){
-      var remote=p.image||'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC';
-      var src=remote;
-      var extra='';
-      if(THUMBS[p.id]){
-        var base='../media/thumbs/'+p.id;
-        src=base+'.webp';
-        extra=' srcset="'+catalog.escapeHtml(base+'-480.webp 480w, '+base+'.webp 600w')+'" sizes="(max-width: 720px) calc(100vw - 48px), 340px" data-full="'+catalog.escapeHtml(remote)+'"';
-      }
-      var hint=index>=3?' loading="lazy"':(index===0?' fetchpriority="high"':'');
-      return '<img src="'+catalog.escapeHtml(src)+'"'+extra+' width="600" height="375" alt="'+catalog.escapeHtml(p.name)+'" decoding="async" referrerpolicy="no-referrer"'+hint+'>';
+      return catalog.coverImg(p, {
+        prefix: '../',
+        lazy: index >= 3,
+        priority: index === 0,
+        sizes: '(max-width: 720px) calc(100vw - 48px), 340px'
+      });
     }
     function render(){
       var list=filter==='all'?PRODUCTS:PRODUCTS.filter(function(p){return p.category===filter;});
@@ -147,15 +140,6 @@
       if(status) status.textContent='Showing '+list.length+' '+(list.length===1?'product':'products')+'.';
       if(window.SAMSUC_LOCALE) window.SAMSUC_LOCALE.applyPrices();
     }
-    document.getElementById('grid').addEventListener('error', function(e){
-      var img=e.target;
-      if(!img || img.tagName!=='IMG') return;
-      var full=img.getAttribute('data-full');
-      if(!full || img.getAttribute('data-fellback')==='1') return;
-      img.setAttribute('data-fellback','1');
-      img.removeAttribute('srcset');
-      img.src=full;
-    }, true);
     document.getElementById('filters').addEventListener('click',function(e){
       var b=e.target.closest('.filter-btn');if(!b)return;
       filter=b.getAttribute('data-f')||'all';

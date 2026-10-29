@@ -154,6 +154,56 @@
     });
   }
 
+  var LOCAL_THUMBS = {
+    'maths-mastery-kit': 1,
+    PaleHours: 1,
+    fteadt: 1,
+    FuturisticPortfolio: 1,
+    FuturisticSaaS: 1,
+    media: 1,
+    LivestreamChecklist: 1
+  };
+
+  function localThumb(id, prefix) {
+    if (!id || !LOCAL_THUMBS[id]) return null;
+    var base = (prefix || '') + 'media/thumbs/' + id;
+    return {
+      src: base + '.webp',
+      srcset: base + '-480.webp 480w, ' + base + '.webp 600w'
+    };
+  }
+
+  function coverImg(product, options) {
+    options = options || {};
+    var remote = (product && product.image) || '';
+    var name = (product && product.name) || '';
+    var local = product && localThumb(product.id, options.prefix || '');
+    var src = local ? local.src : (remote || 'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC');
+    var attrs = ' width="600" height="375" alt="' + escapeHtml(name) + '" decoding="async" referrerpolicy="no-referrer"';
+    if (local) {
+      attrs += ' srcset="' + escapeHtml(local.srcset) + '" sizes="' + escapeHtml(options.sizes || '(max-width: 720px) calc(100vw - 48px), 340px') + '" data-full="' + escapeHtml(remote) + '"';
+    }
+    if (options.lazy) attrs += ' loading="lazy"';
+    if (options.priority) attrs += ' fetchpriority="high"';
+    return '<img src="' + escapeHtml(src) + '"' + attrs + '>';
+  }
+
+  function installCoverFallback() {
+    if (window.__samsucCoverFallback) return;
+    window.__samsucCoverFallback = true;
+    document.addEventListener('error', function (event) {
+      var img = event.target;
+      if (!img || img.tagName !== 'IMG') return;
+      var full = img.getAttribute('data-full');
+      if (!full || img.getAttribute('data-fellback') === '1') return;
+      img.setAttribute('data-fellback', '1');
+      img.removeAttribute('srcset');
+      img.src = full;
+    }, true);
+  }
+
+  installCoverFallback();
+
   window.SAMSUC_CATALOG = {
     load: load,
     escapeHtml: escapeHtml,
@@ -162,6 +212,8 @@
     inferCategory: inferCategory,
     categoryLabel: categoryLabel,
     categories: CATEGORIES,
-    fallback: FALLBACK
+    fallback: FALLBACK,
+    localThumb: localThumb,
+    coverImg: coverImg
   };
 })();

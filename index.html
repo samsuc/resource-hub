@@ -366,6 +366,7 @@
       <a href="support/">Support</a>
       <a href="#faq">FAQ</a>
     </nav>
+    <div class="locale-picker" id="localePicker" style="min-width:7.5rem;height:36px;flex:0 0 auto"></div>
     <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -406,7 +407,7 @@
   <section class="showcase" id="showcase">
     <div class="wrap showcase-grid">
       <div class="showcase-visual">
-        <img id="scImg" src="https://public-files.gumroad.com/t81cnby2ockh0nef8o9o464dcmrw" alt="Featured resource" width="800" height="500" />
+        <img id="scImg" src="media/thumbs/maths-mastery-kit.webp" srcset="media/thumbs/maths-mastery-kit-480.webp 480w, media/thumbs/maths-mastery-kit.webp 600w" sizes="(max-width: 800px) calc(100vw - 48px), 520px" data-full="https://public-files.gumroad.com/03c6r1x70c6pgl7e8ourgya409kx" width="600" height="375" alt="JAMB Mastery Kit 2027 | Mathematics UTME Preparation" decoding="async" referrerpolicy="no-referrer">
       </div>
       <div class="showcase-copy">
         <div class="tag" id="scTag">Featured</div>
@@ -616,13 +617,12 @@
       }
       var list = pickFeatured(PRODUCTS);
       grid.innerHTML = list.map(function (p) {
-        var img = p.image || 'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC';
         var cat = catalog.categoryLabel(p.category);
         var page = p.detailPath ? catalog.detailHref(p, '') : '';
         var buy = p.gumroadUrl;
         var thumb = page
-          ? '<a href="' + catalog.escapeHtml(page) + '"><img src="' + catalog.escapeHtml(img) + '" alt="' + catalog.escapeHtml(p.name) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.src=\'https://placehold.co/800x500/141b2d/d4a017?text=SAMSUC\'"/></a>'
-          : '<img src="' + catalog.escapeHtml(img) + '" alt="' + catalog.escapeHtml(p.name) + '" loading="lazy" referrerpolicy="no-referrer"/>';
+          ? '<a href="' + catalog.escapeHtml(page) + '">' + catalog.coverImg(p, { prefix: '', lazy: true, sizes: '(max-width: 720px) calc(100vw - 48px), 280px' }) + '</a>'
+          : catalog.coverImg(p, { prefix: '', lazy: true, sizes: '(max-width: 720px) calc(100vw - 48px), 280px' });
         var title = page
           ? '<a href="' + catalog.escapeHtml(page) + '">' + catalog.escapeHtml(p.name) + '</a>'
           : catalog.escapeHtml(p.name);
@@ -657,7 +657,19 @@
       var tag = document.getElementById('scTag');
       var cta = document.getElementById('scCta');
       var dots = document.getElementById('scDots');
-      if (img) { img.src = p.image || img.src; img.alt = p.name; }
+      if (img && catalog.localThumb) {
+        var local = catalog.localThumb(p.id, '');
+        if (local) {
+          img.src = local.src;
+          img.srcset = local.srcset;
+          img.sizes = '(max-width: 800px) calc(100vw - 48px), 520px';
+          if (p.image) img.setAttribute('data-full', p.image);
+        } else if (p.image) {
+          img.removeAttribute('srcset');
+          img.src = p.image;
+        }
+        img.alt = p.name;
+      } else if (img) { img.src = p.image || img.src; img.alt = p.name; }
       if (title) title.textContent = p.name;
       if (desc) desc.textContent = truncate(p.desc || '', 140);
       if (tag) tag.textContent = catalog.categoryLabel(p.category);

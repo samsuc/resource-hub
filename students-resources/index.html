@@ -43,7 +43,8 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:28px}
 .card{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:var(--elev);transition:.2s;display:flex;flex-direction:column}
 .card:hover{border-color:rgba(212,160,23,.35);transform:translateY(-2px)}
-.card img{width:100%;aspect-ratio:16/10;object-fit:cover}
+.card img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover}
+#studentGrid img{width:100%;height:auto;aspect-ratio:16/10;object-fit:cover;display:block}
 .card .body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:8px;flex:1}
 .card h3{font-size:1.02rem;line-height:1.3}
 .card p{font-size:.9rem;color:var(--muted);flex:1}
@@ -80,6 +81,7 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
     <a href="../collection/">Shop</a>
     <a href="../contact/">Contact</a>
   </nav>
+  <div class="locale-picker" id="localePicker" style="min-width:7.5rem;height:36px;flex:0 0 auto"></div>
   <a href="../collection/" class="btn btn-gold" style="padding:10px 16px;font-size:.82rem">Shop</a>
 </header>
 <main class="wrap">
@@ -118,7 +120,7 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
     grid.innerHTML=items.map(function(p){
       var href=p.detailPath?catalog.detailHref(p,'../'):'';
       return '<article style="background:#0e1320;border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden">'+
-        (p.image?'<img src="'+catalog.escapeHtml(p.image)+'" alt="'+catalog.escapeHtml(p.name)+'" style="width:100%;aspect-ratio:16/10;object-fit:cover">':'')+
+        (catalog.coverImg ? catalog.coverImg(p, { prefix: '../', lazy: false, priority: true, sizes: '(max-width: 720px) calc(100vw - 48px), 280px' }) : '')+
         '<div style="padding:16px"><h3 style="margin:0 0 8px;font-size:1.05rem">'+(href?'<a href="'+catalog.escapeHtml(href)+'">'+catalog.escapeHtml(p.name)+'</a>':catalog.escapeHtml(p.name))+'</h3>'+
         '<p class="price" data-price-usd="'+catalog.escapeHtml(String(Number(p.price)||0))+'" style="color:#d4a017;font-size:.88rem;margin:0 0 12px">'+catalog.escapeHtml(catalog.money(p))+'</p>'+
         (href?'<a href="'+catalog.escapeHtml(href)+'" style="display:inline-flex;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.12);color:#f0f2f8;font-weight:700;font-size:.82rem;text-decoration:none;margin-right:8px">View details</a>':'')+

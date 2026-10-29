@@ -1,0 +1,72 @@
+{
+  "note": "Local WebP copies of the Worker thumbnail_url values. NOCTIS ROOM uses id fteadt because the Worker permalink field is null and the Gumroad URL slug is fteadt. Run python3 scripts/refresh-thumbs.py from the repo root after a cover change, then commit the updated files.",
+  "quality": {
+    "full": "600px webp q80",
+    "small": "480px webp q78"
+  },
+  "products": [
+    {
+      "id": "maths-mastery-kit",
+      "source": "https://public-files.gumroad.com/03c6r1x70c6pgl7e8ourgya409kx",
+      "sha256": "6dd9bcaa16c4ef63d0406ba4a5076055686503276c74578e1807c7f083fc60f5",
+      "outputs": [
+        "media/thumbs/maths-mastery-kit.webp",
+        "media/thumbs/maths-mastery-kit-480.webp"
+      ]
+    },
+    {
+      "id": "PaleHours",
+      "source": "https://public-files.gumroad.com/wngmgzqe3disex3e6y37sfwimood",
+      "sha256": "f7eec7c206c2a15e95b14c0cfdc61714515c3ecb1cb2e962b7fa77ce68ddd8ab",
+      "outputs": [
+        "media/thumbs/PaleHours.webp",
+        "media/thumbs/PaleHours-480.webp"
+      ]
+    },
+    {
+      "id": "fteadt",
+      "source": "https://public-files.gumroad.com/dbmmwkpw3l6tdq1q1m2nleectc8f",
+      "sha256": "fd8306464672a6ed86f1e3b5f64525d5cfad9f624e832b1abbc093e75a5c7086",
+      "outputs": [
+        "media/thumbs/fteadt.webp",
+        "media/thumbs/fteadt-480.webp"
+      ]
+    },
+    {
+      "id": "FuturisticPortfolio",
+      "source": "https://public-files.gumroad.com/t81cnby2ockh0nef8o9o464dcmrw",
+      "sha256": "d56f1d12e8af9a21db20263d510b37c2e6ab0c85f15b97532a41e3d3e0f99430",
+      "outputs": [
+        "media/thumbs/FuturisticPortfolio.webp",
+        "media/thumbs/FuturisticPortfolio-480.webp"
+      ]
+    },
+    {
+      "id": "FuturisticSaaS",
+      "source": "https://public-files.gumroad.com/r2u3pd7w6afm4kkn3sh4pxc2sqsk",
+      "sha256": "f91a8a687ee1b328e566e84059b761d033eaf38d1406e2b669677059cc5e1518",
+      "outputs": [
+        "media/thumbs/FuturisticSaaS.webp",
+        "media/thumbs/FuturisticSaaS-480.webp"
+      ]
+    },
+    {
+      "id": "media",
+      "source": "https://public-files.gumroad.com/tndj2u5fspb4yta7p6e7q5xsml1q",
+      "sha256": "0c6c6106b52942443da2a0a485705210376e4c86662c0202cb95359fa1f0b620",
+      "outputs": [
+        "media/thumbs/media.webp",
+        "media/thumbs/media-480.webp"
+      ]
+    },
+    {
+      "id": "LivestreamChecklist",
+      "source": "https://public-files.gumroad.com/yh2o3ieh2f7o6a9vu3o5j87fzbm7",
+      "sha256": "856850c8c74ba5f9de615f575cc7ab04ab995d1e78c5d604246e100d039595c2",
+      "outputs": [
+        "media/thumbs/LivestreamChecklist.webp",
+        "media/thumbs/LivestreamChecklist-480.webp"
+      ]
+    }
+  ]
+}
