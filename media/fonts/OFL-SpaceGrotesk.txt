@@ -1,0 +1,9 @@
+Copyright 2020 The Space Grotesk Project Authors (https://github.com/floriankarsten/space-grotesk)
+
+Space Grotesk is licensed under the SIL Open Font License, Version 1.1.
+The license text is the same as OFL-Inter.txt in this directory.
+Source: https://github.com/floriankarsten/space-grotesk
+
+The woff2 files in this directory are the latin variable subsets published
+by Google Fonts for Inter and Space Grotesk. They are redistributed
+unmodified under the SIL Open Font License 1.1.

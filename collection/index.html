@@ -14,10 +14,41 @@
   <meta property="og:image" content="https://samsuc.github.io/resource-hub/media/og-share.png" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://samsuc.github.io/resource-hub/media/og-share.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="../media/thumbs/maths-mastery-kit.webp" imagesrcset="../media/thumbs/maths-mastery-kit-480.webp 480w, ../media/thumbs/maths-mastery-kit.webp 600w" imagesizes="(max-width: 720px) calc(100vw - 48px), 340px" fetchpriority="high" type="image/webp">
+  <link rel="preload" href="../media/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin fetchpriority="low">
+  <style>
+/* Latin variable subsets of Inter and Space Grotesk.
+   SIL Open Font License 1.1. See media/fonts/OFL-Inter.txt and OFL-SpaceGrotesk.txt.
+   Inter: Copyright 2016 The Inter Project Authors.
+   Space Grotesk: Copyright 2020 The Space Grotesk Project Authors. */
+@font-face{
+  font-family:Inter;
+  font-style:normal;
+  font-weight:100 900;
+  font-display:swap;
+  src:url("../media/fonts/inter-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Space Grotesk";
+  font-style:normal;
+  font-weight:300 700;
+  font-display:swap;
+  src:url("../media/fonts/space-grotesk-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Samsuc Sans Fallback";
+  src:local("Arial");
+  size-adjust:107.64%;
+  ascent-override:90.44%;
+  descent-override:22.52%;
+  line-gap-override:0%;
+}
+  </style>
   <style>
     :root{--bg:#07090f;--elev:#0e1320;--surface:#141b2d;--text:#f0f2f8;--muted:#8b93a7;--gold:#d4a017;--border:rgba(255,255,255,.08);--header-h:64px}
-    *{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+    *{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,"Samsuc Sans Fallback",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
     a{color:inherit;text-decoration:none}img{max-width:100%;display:block}
     a:focus-visible, button:focus-visible { outline: 2px solid #e8c547; outline-offset: 3px; }
     .skip {
@@ -89,8 +120,17 @@
   </div>
   <p id="filterStatus" class="sr" aria-live="polite"></p>
   <div class="grid is-loading" id="grid" aria-busy="true">
-    <p class="sr">Loading products.</p>
-    <article class="card skeleton" aria-hidden="true"><div class="skel-media"></div><div class="body"><div class="skel-line short"></div><div class="skel-line title"></div><div class="skel-line desc"></div><div class="skel-line desc"></div></div></article>
+    <p class="sr">Loading the rest of the collection.</p>
+    <!-- Preview mirrors SAMSUC_CATALOG.fallback[0] so the first cover can paint before the Worker responds. The script below reconciles it with the live catalog. -->
+    <article class="card" data-product-id="maths-mastery-kit" data-preview="fallback">
+      <a class="card-media" href="../products/jamb-mastery-kit/"><img id="lcpImg" src="../media/thumbs/maths-mastery-kit.webp" srcset="../media/thumbs/maths-mastery-kit-480.webp 480w, ../media/thumbs/maths-mastery-kit.webp 600w" sizes="(max-width: 720px) calc(100vw - 48px), 340px" data-full="https://public-files.gumroad.com/03c6r1x70c6pgl7e8ourgya409kx" width="600" height="375" alt="JAMB Mastery Kit 2027 | Mathematics UTME Preparation" decoding="async" referrerpolicy="no-referrer" fetchpriority="high"></a>
+      <div class="body">
+        <div class="cat">Student Resources</div>
+        <h2><a class="card-title" href="../products/jamb-mastery-kit/">JAMB Mastery Kit 2027 | Mathematics UTME Preparation</a></h2>
+        <p class="card-desc">Structured mathematics study resource for 2027 JAMB UTME preparation, with a practice bank, mock examinations, a…</p>
+        <div class="meta"><span class="price" data-price-usd="10">$10.00</span><a class="btn btn-details" href="../products/jamb-mastery-kit/">View details</a><a class="btn card-buy" href="https://samsuchub.gumroad.com/l/maths-mastery-kit" data-gumroad-overlay-checkout="true">Buy</a></div>
+      </div>
+    </article>
     <article class="card skeleton" aria-hidden="true"><div class="skel-media"></div><div class="body"><div class="skel-line short"></div><div class="skel-line title"></div><div class="skel-line desc"></div><div class="skel-line desc"></div></div></article>
     <article class="card skeleton" aria-hidden="true"><div class="skel-media"></div><div class="body"><div class="skel-line short"></div><div class="skel-line title"></div><div class="skel-line desc"></div><div class="skel-line desc"></div></div></article>
   </div>
@@ -102,7 +142,7 @@
   <script>
   (function(){
     var catalog = window.SAMSUC_CATALOG;
-    var PRODUCTS=[], filter='all', sourceNote='';
+    var PRODUCTS=[], filter='all', sourceNote='', ready=false;
     var params=new URLSearchParams(location.search);
     if(params.get('c')) filter=params.get('c');
     function trunc(s,m){s=String(s||'').trim();if(s.length<=m)return s;var c=s.slice(0,m-1);var i=c.lastIndexOf(' ');if(i>m*0.5)c=c.slice(0,i);return c+'…';}
@@ -118,27 +158,97 @@
         sizes: '(max-width: 720px) calc(100vw - 48px), 340px'
       });
     }
+    function cardHtml(p, index){
+      var cat=catalog.categoryLabel(p.category);
+      var page=p.detailPath?catalog.detailHref(p,'../'):'';
+      var buy=p.gumroadUrl;
+      var media=page?'<a class="card-media" href="'+catalog.escapeHtml(page)+'">'+thumbImg(p, index)+'</a>':thumbImg(p, index);
+      var title=page?'<a class="card-title" href="'+catalog.escapeHtml(page)+'">'+catalog.escapeHtml(p.name)+'</a>':catalog.escapeHtml(p.name);
+      return '<article class="card" data-product-id="'+catalog.escapeHtml(p.id)+'">'+media+'<div class="body"><div class="cat">'+cat+'</div><h2>'+title+'</h2><p class="card-desc">'+catalog.escapeHtml(trunc(p.desc,120))+'</p><div class="meta"><span class="price" data-price-usd="'+catalog.escapeHtml(String(Number(p.price)||0))+'">'+catalog.escapeHtml(catalog.money(p))+'</span>'+(page?'<a class="btn btn-details" href="'+catalog.escapeHtml(page)+'">View details</a>':'')+'<a class="btn card-buy" href="'+catalog.escapeHtml(buy)+'" data-gumroad-overlay-checkout="true">'+(Number(p.price)===0?'Get free':'Buy')+'</a></div></div></article>';
+    }
+    function updateCard(article, p){
+      var page=p.detailPath?catalog.detailHref(p,'../'):'';
+      var buy=p.gumroadUrl||'';
+      article.hidden=false;
+      article.removeAttribute('data-preview');
+      var catEl=article.querySelector('.cat');
+      if(catEl) catEl.textContent=catalog.categoryLabel(p.category);
+      var title=article.querySelector('.card-title');
+      if(title){
+        title.textContent=p.name||'';
+        if(page) title.setAttribute('href', page);
+      }
+      var media=article.querySelector('.card-media');
+      if(media && page) media.setAttribute('href', page);
+      var desc=article.querySelector('.card-desc');
+      if(desc) desc.textContent=trunc(p.desc,120);
+      var price=article.querySelector('.price');
+      if(price){
+        price.setAttribute('data-price-usd', String(Number(p.price)||0));
+        price.textContent=catalog.money(p);
+      }
+      var details=article.querySelector('.btn-details');
+      if(details && page) details.setAttribute('href', page);
+      var buyA=article.querySelector('.card-buy');
+      if(buyA){
+        buyA.setAttribute('href', buy);
+        buyA.textContent=Number(p.price)===0?'Get free':'Buy';
+      }
+      var img=article.querySelector('img');
+      if(!img) return;
+      img.alt=p.name||'';
+      var local=catalog.localThumb(p.id,'../');
+      var desired=local?local.src:(p.image||'');
+      if(desired && img.getAttribute('src')!==desired){
+        img.setAttribute('src', desired);
+        if(local){
+          img.setAttribute('srcset', local.srcset);
+          img.setAttribute('sizes', '(max-width: 720px) calc(100vw - 48px), 340px');
+          img.setAttribute('data-full', p.image||'');
+        } else {
+          img.removeAttribute('srcset');
+        }
+      }
+    }
     function render(){
       var list=filter==='all'?PRODUCTS:PRODUCTS.filter(function(p){return p.category===filter;});
       var g=document.getElementById('grid');
-      finishGrid(g);
+      var status=document.getElementById('filterStatus');
       if(!list.length){
+        finishGrid(g);
         g.innerHTML='<p class="status">'+catalog.escapeHtml(sourceNote || 'No products in this category yet.')+'</p>';
-        var emptyStatus=document.getElementById('filterStatus');
-        if(emptyStatus) emptyStatus.textContent='No products in this category.';
+        if(status) status.textContent='No products in this category.';
         return;
       }
-      g.innerHTML=list.map(function(p, index){
-        var cat=catalog.categoryLabel(p.category);
-        var page=p.detailPath?catalog.detailHref(p,'../'):'';
-        var buy=p.gumroadUrl;
-        var media=page?'<a href="'+catalog.escapeHtml(page)+'">'+thumbImg(p, index)+'</a>':thumbImg(p, index);
-        var title=page?'<a href="'+catalog.escapeHtml(page)+'">'+catalog.escapeHtml(p.name)+'</a>':catalog.escapeHtml(p.name);
-        return '<article class="card">'+media+'<div class="body"><div class="cat">'+cat+'</div><h2>'+title+'</h2><p>'+catalog.escapeHtml(trunc(p.desc,120))+'</p><div class="meta"><span class="price" data-price-usd="'+catalog.escapeHtml(String(Number(p.price)||0))+'">'+catalog.escapeHtml(catalog.money(p))+'</span>'+(page?'<a class="btn btn-details" href="'+catalog.escapeHtml(page)+'">View details</a>':'')+'<a class="btn" href="'+catalog.escapeHtml(buy)+'" data-gumroad-overlay-checkout="true">'+(p.price===0?'Get free':'Buy')+'</a></div></div></article>';
-      }).join('')+(sourceNote?'<p class="status">'+catalog.escapeHtml(sourceNote)+'</p>':'');
-      var status=document.getElementById('filterStatus');
+      var note=sourceNote?'<p class="status">'+catalog.escapeHtml(sourceNote)+'</p>':'';
+      var first=g.querySelector('article.card[data-product-id]');
+      if(first && String(first.getAttribute('data-product-id'))===String(list[0].id)){
+        updateCard(first, list[0]);
+        var node=first.nextSibling;
+        while(node){
+          var next=node.nextSibling;
+          node.parentNode.removeChild(node);
+          node=next;
+        }
+        var sr=g.querySelector('.sr');
+        if(sr) sr.parentNode.removeChild(sr);
+        g.querySelectorAll('article.skeleton').forEach(function(skel){
+          if(skel!==first) skel.parentNode.removeChild(skel);
+        });
+        first.insertAdjacentHTML('afterend', list.slice(1).map(function(p, i){return cardHtml(p, i+1);}).join('')+note);
+      } else {
+        g.innerHTML=list.map(cardHtml).join('')+note;
+      }
+      finishGrid(g);
       if(status) status.textContent='Showing '+list.length+' '+(list.length===1?'product':'products')+'.';
       if(window.SAMSUC_LOCALE) window.SAMSUC_LOCALE.applyPrices();
+    }
+    function previewMatchesFilter(){
+      var preview=document.querySelector('#grid article[data-preview]');
+      if(!preview || !catalog.fallback) return;
+      var fb=null;
+      catalog.fallback.forEach(function(p){ if(p.id===preview.getAttribute('data-product-id')) fb=p; });
+      preview.hidden=!(filter==='all' || (fb && fb.category===filter));
     }
     document.getElementById('filters').addEventListener('click',function(e){
       var b=e.target.closest('.filter-btn');if(!b)return;
@@ -148,6 +258,7 @@
         x.classList.toggle('active',on);
         x.setAttribute('aria-pressed', on?'true':'false');
       });
+      if(!ready){ previewMatchesFilter(); return; }
       render();
     });
     document.querySelectorAll('.filter-btn').forEach(function(b){
@@ -162,7 +273,12 @@
       missing.innerHTML='<p class="status">Product catalog script did not load.</p>';
       return;
     }
+    var fb0=catalog.fallback && catalog.fallback[0];
+    var preview=document.querySelector('#grid article[data-preview]');
+    if(preview && fb0 && preview.getAttribute('data-product-id')!==fb0.id) preview.remove();
+    previewMatchesFilter();
     catalog.load().then(function(result){
+      ready=true;
       PRODUCTS=result.products||[];
       sourceNote=result.source==='live'?'':(result.note||'');
       if(result.source==='empty') sourceNote=result.note;

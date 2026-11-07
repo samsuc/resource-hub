@@ -47,6 +47,7 @@
   /**
    * Recovery catalog. Verified against the product Worker and Gumroad product JSON on 2026-10-17.
    * Prices and Gumroad URLs can go stale. Do not treat this as live inventory.
+   * collection/index.html paints fallback[0] immediately for LCP, then this loader reconciles it.
    */
   var FALLBACK = [
     { id: 'maths-mastery-kit', name: 'JAMB Mastery Kit 2027 | Mathematics UTME Preparation', desc: 'Structured mathematics study resource for 2027 JAMB UTME preparation, with a practice bank, mock examinations, a formula vault, a revision timetable, and a mistake tracker.', price: 10, category: 'students', image: 'https://public-files.gumroad.com/03c6r1x70c6pgl7e8ourgya409kx', gumroadUrl: 'https://samsuchub.gumroad.com/l/maths-mastery-kit', detailPath: 'products/jamb-mastery-kit/' },

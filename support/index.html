@@ -14,10 +14,40 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://samsuc.github.io/resource-hub/media/og-share.png" />
   <link rel="icon" type="image/png" href="../media/favicon-32.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="preload" href="../media/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <style>
+/* Latin variable subsets of Inter and Space Grotesk.
+   SIL Open Font License 1.1. See media/fonts/OFL-Inter.txt and OFL-SpaceGrotesk.txt.
+   Inter: Copyright 2016 The Inter Project Authors.
+   Space Grotesk: Copyright 2020 The Space Grotesk Project Authors. */
+@font-face{
+  font-family:Inter;
+  font-style:normal;
+  font-weight:100 900;
+  font-display:swap;
+  src:url("../media/fonts/inter-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Space Grotesk";
+  font-style:normal;
+  font-weight:300 700;
+  font-display:swap;
+  src:url("../media/fonts/space-grotesk-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Samsuc Sans Fallback";
+  src:local("Arial");
+  size-adjust:107.64%;
+  ascent-override:90.44%;
+  descent-override:22.52%;
+  line-gap-override:0%;
+}
+  </style>
   <style>
     :root{--bg:#07090f;--elev:#0e1320;--text:#f0f2f8;--muted:#8b93a7;--gold:#d4a017;--border:rgba(255,255,255,.08)}
-    *{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
+    *{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,"Samsuc Sans Fallback",system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.65}
     a:focus-visible{outline:2px solid #e8c547;outline-offset:3px}
     a{color:var(--gold);text-decoration:none}.header{display:flex;justify-content:space-between;align-items:center;padding:18px 24px;border-bottom:1px solid var(--border)}
     .logo{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--text)}.logo span{color:var(--gold);font-size:.72rem;margin-left:6px}
