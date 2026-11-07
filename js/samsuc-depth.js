@@ -18,20 +18,20 @@
       var inner = hero.querySelector('.page-hero-inner, .hero-content, .hero-inner') || hero.firstElementChild;
       if (inner) inner.classList.add('depth-hero-inner');
     }
+    // Cards and section chrome only. Skip large body-copy blocks so
+    // font swap and reveal timing cannot resize the main column.
     var selectors = [
-      '.section-header', '.page-hero h1', '.page-hero p',
-      'main h1', 'main h2', 'main .lead',
+      '.section-header',
       '.product-card', '.product-item', '.card', '.cat-card',
       '.post-card', '.article-card', '.faq-item',
-      '.trust-item', '.how-step', '.about-inner',
-      '.content-block', '.grid > *', '.products-grid > *',
-      'article', '.feature', '.cta-block'
+      '.trust-item', '.how-step',
+      '.grid > .card', '.products-grid > *',
+      '.feature', '.cta-block'
     ];
     selectors.forEach(function (sel) {
       document.querySelectorAll(sel).forEach(function (el) {
-        if (el.closest('header, footer, nav, .header, .nav')) return;
+        if (el.closest('header, footer, nav, .header, .nav, .copy, .hero-block, .breadcrumb')) return;
         if (el.classList.contains('depth-reveal')) return;
-        // avoid nesting reveal on children of already-marked parents of same type
         el.classList.add('depth-reveal');
       });
     });
