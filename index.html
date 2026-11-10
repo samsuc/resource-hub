@@ -96,7 +96,9 @@
     .nav { display: flex; align-items: center; gap: 4px; }
     .nav a, .nav-drop-btn {
       font-size: 0.88rem; font-weight: 500; color: var(--muted);
-      padding: 8px 12px; border-radius: 999px; transition: 0.2s;
+      padding: 10px 14px; border-radius: 999px; transition: 0.2s;
+      min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center;
+      box-sizing: border-box;
     }
     .nav a:hover, .nav-drop-btn:hover { color: var(--text); background: rgba(255,255,255,0.05); }
     .nav-item { position: relative; }
@@ -112,9 +114,9 @@
     .nav-item:hover .nav-dropdown, .nav-item:focus-within .nav-dropdown {
       opacity: 1; visibility: visible; transform: none;
     }
-    .nav-dropdown a { display: block; padding: 10px 12px; border-radius: 10px; font-size: 0.86rem; color: var(--muted); }
+    .nav-dropdown a { display: flex; align-items: center; min-height: 44px; padding: 10px 14px; border-radius: 10px; font-size: 0.86rem; color: var(--muted); box-sizing: border-box; }
     .nav-dropdown a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
-    .menu-toggle { display: none; flex-direction: column; gap: 5px; width: 40px; height: 40px; align-items: center; justify-content: center; }
+    .menu-toggle { display: none; flex-direction: column; gap: 5px; width: 44px; height: 44px; align-items: center; justify-content: center; }
     .menu-toggle span { display: block; width: 20px; height: 2px; background: var(--text); border-radius: 2px; }
 
     /* Hero */
@@ -195,16 +197,22 @@
       display: inline-block; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.14em;
       text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
     }
-    .showcase-copy h3 {
+    .showcase-copy h2 {
       font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; letter-spacing: -0.02em; margin-bottom: 12px;
+      font-weight: 700; line-height: 1.2;
     }
     .showcase-copy p { color: var(--muted); margin-bottom: 20px; }
-    .showcase-slots { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+    .showcase-slots { display: flex; gap: 4px; margin-bottom: 8px; flex-wrap: wrap; align-items: center; }
     .slot-dot {
-      width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.15);
-      cursor: pointer; transition: 0.2s;
+      width: 44px; height: 44px; border-radius: 50%; background: transparent;
+      border: none; padding: 0; cursor: pointer; position: relative;
+      display: inline-flex; align-items: center; justify-content: center;
     }
-    .slot-dot.active { background: var(--gold); transform: scale(1.2); }
+    .slot-dot::before {
+      content: ""; width: 10px; height: 10px; border-radius: 50%;
+      background: rgba(255,255,255,0.15); transition: 0.2s;
+    }
+    .slot-dot.active::before { background: var(--gold); transform: scale(1.2); }
 
     /* Categories */
     .cat-grid {
@@ -395,7 +403,7 @@
       <a href="support/">Support</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <div class="locale-picker" id="localePicker" style="min-width:7.5rem;height:36px;flex:0 0 auto"></div>
+    <div class="locale-picker" id="localePicker" style="min-width:7.5rem;min-height:44px;height:44px;flex:0 0 auto"></div>
     <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open menu" aria-controls="mobileNav" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
@@ -440,7 +448,7 @@
       </div>
       <div class="showcase-copy">
         <div class="tag" id="scTag">Featured</div>
-        <h3 id="scTitle">Loading resources…</h3>
+        <h2 id="scTitle">Loading resources…</h2>
         <p id="scDesc">Premium digital products with clear details before you buy.</p>
         <div class="showcase-slots" id="scDots"></div>
         <a class="btn btn-gold" id="scCta" href="collection/">View details</a>
