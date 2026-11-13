@@ -1,7 +1,10 @@
 /**
  * Shared catalog loader.
- * Live source: Cloudflare Worker.
- * FALLBACK is a recovery snapshot only — not proof of current inventory.
+ * Live source: Cloudflare Worker, which currently returns Gumroad's public product JSON
+ * (name, description HTML, price_cents, currency, permalink, url, published, thumbnail_url).
+ * Authenticated Gumroad API v2 (custom_summary, covers[], webhooks) is NOT wired: the Worker
+ * source is not in this repo and no GUMROAD_ACCESS_TOKEN is available. Do not treat FALLBACK
+ * as fresh inventory.
  */
 (function () {
   'use strict';
@@ -96,18 +99,60 @@
       url = 'https://samsuchub.gumroad.com/l/' + permalink;
     }
     var cents = product && typeof product.price_cents === 'number' ? product.price_cents : 0;
-    var desc = String((product && product.description) || '').replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+    var descriptionHtml = sanitizeDescription(product && product.description);
+    var desc = descriptionHtml.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
     var image = safeHttps(product && product.thumbnail_url, 'public-files.gumroad.com');
     return {
       id: permalink || 'item',
       name: String((product && product.name) || permalink || 'Product'),
       desc: desc.slice(0, 180),
+      descriptionHtml: descriptionHtml,
       price: Math.round(cents) / 100,
+      currency: String((product && product.currency) || 'usd'),
+      published: product ? product.published !== false : true,
       category: inferCategory(product && product.name, permalink),
       image: image,
       gumroadUrl: url,
       detailPath: DETAIL[permalink] || ''
     };
+  }
+
+  function sanitizeDescription(html) {
+    var raw = String(html || '');
+    if (!raw) return '';
+    if (typeof document === 'undefined' || !document.implementation) {
+      return escapeHtml(raw.replace(/<[^>]+>/g, ' '));
+    }
+    var allowed = { P: 1, BR: 1, STRONG: 1, EM: 1, B: 1, I: 1, UL: 1, OL: 1, LI: 1, A: 1, H2: 1, H3: 1, H4: 1, BLOCKQUOTE: 1 };
+    var doc = document.implementation.createHTMLDocument('');
+    var box = doc.createElement('div');
+    box.innerHTML = raw;
+    function walk(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+        if (child.nodeType === 3) return;
+        if (child.nodeType !== 1) {
+          if (child.parentNode) child.parentNode.removeChild(child);
+          return;
+        }
+        var tag = child.tagName;
+        var href = tag === 'A' ? child.getAttribute('href') || '' : '';
+        walk(child);
+        if (!allowed[tag]) {
+          var parent = child.parentNode;
+          while (child.firstChild) parent.insertBefore(child.firstChild, child);
+          parent.removeChild(child);
+          return;
+        }
+        while (child.attributes.length) child.removeAttribute(child.attributes[0].name);
+        if (tag === 'A' && /^https:\/\//i.test(href)) {
+          child.setAttribute('href', href);
+          child.setAttribute('rel', 'noopener noreferrer');
+        }
+        walk(child);
+      });
+    }
+    walk(box);
+    return box.innerHTML;
   }
 
   function money(product) {
@@ -140,7 +185,9 @@
       if (!data || data.success !== true || !Array.isArray(data.products)) {
         throw new Error('unexpected shape');
       }
-      var products = data.products.map(mapWorker).filter(function (item) { return item.gumroadUrl; });
+      var products = data.products.filter(function (product) {
+        return product && product.published !== false && product.deleted !== true;
+      }).map(mapWorker).filter(function (item) { return item.gumroadUrl; });
       if (!products.length) {
         return { source: 'empty', products: [], note: 'No products are published in the store right now.' };
       }

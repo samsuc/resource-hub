@@ -97,25 +97,25 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
 </style>
 <!-- samsuc-depth -->
 <link rel="stylesheet" href="../js/samsuc-depth.css"/>
+<link rel="stylesheet" href="../css/samsuc-nav.css"/>
 </head>
 <body class="depth-scene">
 <header class="header">
-  <a href="" class="logo">SAMSUC <span>Resource Hub</span></a>
+  <a href="https://samsuc.github.io/resource-hub/" class="logo">SAMSUC <span>Resource Hub</span></a>
   <nav class="nav">
-    <a href="">Home</a>
+    <a href="https://samsuc.github.io/resource-hub/">Home</a>
     <a href="../students-resources/" class="active">Student Resources</a>
     <a href="../church-media/" class="">Church Resources</a>
     <a href="../creators-resources/" class="">Creators Resources</a>
     <a href="../website-templates/" class="">Website & Developer Templates</a>
     <a href="../blog/">Blog</a>
-    <a href="../collection/">Shop</a>
     <a href="../contact/">Contact</a>
   </nav>
   <div class="locale-picker" id="localePicker" style="min-width:7.5rem;min-height:44px;height:44px;flex:0 0 auto"></div>
-  <a href="../collection/" class="btn btn-gold" style="padding:10px 16px;font-size:.82rem">Shop</a>
+  <a href="https://samsuc.github.io/resource-hub/#categories" class="btn btn-gold" style="padding:10px 16px;font-size:.82rem">Browse Categories</a>
 </header>
 <main class="wrap">
-  <p class="breadcrumb"><a href="">Home</a> · Student Resources</p>
+  <p class="breadcrumb"><a href="https://samsuc.github.io/resource-hub/">Home</a> · Student Resources</p>
   <div class="hero-block">
     <div class="eyebrow">Student Resources</div>
     <h1>Student Resources</h1>
@@ -125,44 +125,28 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
     <p>Students often need resources that cut noise and highlight what matters. Our student category is built around practical study materials you can download and use immediately — without accounts, apps, or complicated setup.</p><p>When study resources are available here, you will find concise materials aimed at real exam and classroom workflows. Each product page explains what is included so you know exactly what you are getting before you download.</p><p>Looking for other digital tools from SAMSUC? Explore Church Resources, Creators Resources, or Website & Developer Templates.</p>
     <h2>Student Resources available now</h2>
   </div>
-  <div class="grid"><div class="empty">
-  <p><strong>Student products from the live catalog appear below when published.</strong></p>
-  <p>When new study resources are published, they will appear here. In the meantime, explore our church media tools and website templates, or check back soon.</p>
-  <p style="margin-top:14px"><a class="btn btn-ghost" href="../church-media/">Church media resources</a>
-  <a class="btn btn-ghost" href="../website-templates/" style="margin-left:8px">Website templates</a></p>
-</div></div>
-  <div class="links"><p style="margin-bottom:10px;color:var(--muted)"><strong style="color:var(--text)"><div class="grid" id="studentGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;margin:24px 0 40px"></div>
-<script src="../js/samsuc-catalog.js"></script>
-<script>
-(function(){
-  var grid=document.getElementById('studentGrid');
-  var catalog=window.SAMSUC_CATALOG;
-  if(!grid||!catalog) return;
-  catalog.load().then(function(result){
-    var items=(result.products||[]).filter(function(p){return p.category==='students';});
-    if(!items.length){
-      var msg=result.source==='fallback'
-        ? 'No Student Resources are in the saved recovery list. The other categories are still available.'
-        : 'No Student Resources are published in the store right now. The other categories are still available.';
-      grid.innerHTML='<div style="grid-column:1/-1;padding:20px;border:1px solid rgba(255,255,255,.08);border-radius:16px;color:#8b93a7">'+catalog.escapeHtml(msg)+'</div>';
-      return;
-    }
-    grid.innerHTML=items.map(function(p){
-      var href=p.detailPath?catalog.detailHref(p,'../'):'';
-      return '<article style="background:#0e1320;border:1px solid rgba(255,255,255,.08);border-radius:18px;overflow:hidden">'+
-        (catalog.coverImg ? catalog.coverImg(p, { prefix: '../', lazy: false, priority: true, sizes: '(max-width: 720px) calc(100vw - 48px), 280px' }) : '')+
-        '<div style="padding:16px"><h3 style="margin:0 0 8px;font-size:1.05rem">'+(href?'<a href="'+catalog.escapeHtml(href)+'">'+catalog.escapeHtml(p.name)+'</a>':catalog.escapeHtml(p.name))+'</h3>'+
-        '<p class="price" data-price-usd="'+catalog.escapeHtml(String(Number(p.price)||0))+'" style="color:#d4a017;font-size:.88rem;margin:0 0 12px">'+catalog.escapeHtml(catalog.money(p))+'</p>'+
-        (href?'<a href="'+catalog.escapeHtml(href)+'" style="display:inline-flex;padding:10px 16px;border-radius:999px;border:1px solid rgba(255,255,255,.12);color:#f0f2f8;font-weight:700;font-size:.82rem;text-decoration:none;margin-right:8px">View details</a>':'')+
-        '<a href="'+catalog.escapeHtml(p.gumroadUrl)+'" data-gumroad-overlay-checkout="true" style="display:inline-flex;padding:10px 16px;border-radius:999px;background:linear-gradient(135deg,#d4a017,#b8860b);color:#0a0a0a;font-weight:700;font-size:.82rem;text-decoration:none">'+(p.price===0?'Get free':'Buy')+'</a></div></article>';
-    }).join('');
-    if(window.SAMSUC_LOCALE) window.SAMSUC_LOCALE.applyPrices();
-  });
-})();
-</script>
-    <p style="margin-top:8px"><a href="../products/jamb-mastery-kit/">JAMB Mastery Kit 2027 — Mathematics</a></p></div>
+  <div class="grid" id="catGrid" data-category="students" data-prefix="../">
+<article class="card">
+  <a href="../products/jamb-mastery-kit/"><img src="../media/thumbs/maths-mastery-kit.webp" width="600" height="375" alt="JAMB Mastery Kit 2027 | Mathematics UTME Preparation" decoding="async"></a>
+  <div class="body">
+    <h3><a href="../products/jamb-mastery-kit/">JAMB Mastery Kit 2027 | Mathematics UTME Preparation</a></h3>
+    <p>Structured mathematics study resource for 2027 JAMB UTME preparation.</p>
+    <div class="price" data-price-usd="10">$10</div>
+    <div class="actions">
+      <a class="btn-sm gold" href="../products/jamb-mastery-kit/">View details</a>
+      <a class="btn-sm" href="https://samsuchub.gumroad.com/l/maths-mastery-kit">Buy</a>
+    </div>
+  </div>
+</article>
+</div>
+<div class="empty" id="catEmpty" hidden>
+  <p><strong>No student resources are published right now.</strong></p>
+  <p>When a study resource is published, it will appear here.</p>
+  <p style="margin-top:14px"><a class="btn btn-ghost" href="../church-media/">Church resources</a> <a class="btn btn-ghost" href="../website-templates/">Website templates</a></p>
+</div>
+
   <div class="links">
-    <a href="../collection/">Browse full shop</a>
+    <a href="https://samsuc.github.io/resource-hub/#categories">Browse categories</a>
     <a href="../students-resources/">Students</a>
     <a href="../church-media/">Church media</a>
     <a href="../website-templates/">Website templates</a>
@@ -171,12 +155,12 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
   </div>
 </main>
 <footer class="footer">
-  <a href="" class="logo">SAMSUC <span>Resource Hub</span></a>
+  <a href="https://samsuc.github.io/resource-hub/" class="logo">SAMSUC <span>Resource Hub</span></a>
   <div class="footer-links">
     <a href="../students-resources/">Students</a>
     <a href="../church-media/">Churches</a>
     <a href="../website-templates/">Templates</a>
-    <a href="../collection/">Shop</a>
+    <a href="https://samsuc.github.io/resource-hub/#categories">Categories</a>
     <a href="../contact/">Contact</a>
     <a href="../support/">Support</a>
     <a href="../privacy/">Privacy</a>
@@ -202,5 +186,8 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
   data-cf-beacon='{"token":"e5113820420a4f208635fabbb9c450e3"}'>
 </script><!-- End Cloudflare Web Analytics -->
 
+<script src="../js/samsuc-catalog.js"></script>
+<script src="../js/samsuc-category.js"></script>
+<script src="../js/samsuc-nav.js"></script>
 </body>
 </html>

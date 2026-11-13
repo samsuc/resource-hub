@@ -375,6 +375,7 @@
       .scroll-hint span { animation: none; }
     }
   </style>
+<link rel="stylesheet" href="css/samsuc-nav.css"/>
 </head>
 <body>
   <a class="skip" href="#products">Skip to resources</a>
@@ -382,9 +383,9 @@
   <div class="cursor-dot" id="cursorDot"></div>
 
   <header class="header">
-    <a href="./" class="logo">SAMSUC <span>Resource Hub</span></a>
+    <a href="https://samsuc.github.io/resource-hub/" class="logo">SAMSUC <span>Resource Hub</span></a>
     <nav class="nav" aria-label="Primary">
-      <a href="./">Home</a>
+      <a href="https://samsuc.github.io/resource-hub/">Home</a>
       <div class="nav-item">
         <button type="button" class="nav-drop-btn" aria-haspopup="true" aria-expanded="false" aria-controls="categoryMenu">
           Categories
@@ -397,7 +398,6 @@
           <a href="website-templates/">Website & Developer Templates</a>
         </div>
       </div>
-      <a href="collection/">Collection</a>
       <a href="#about">About</a>
       <a href="contact/">Contact</a>
       <a href="support/">Support</a>
@@ -410,12 +410,11 @@
   </header>
 
   <div class="mobile-nav" id="mobileNav">
-    <a href="./">Home</a>
+    <a href="https://samsuc.github.io/resource-hub/">Home</a>
     <a href="students-resources/">Student Resources</a>
     <a href="church-media/">Church Resources</a>
     <a href="creators-resources/">Creators Resources</a>
     <a href="website-templates/">Website & Developer Templates</a>
-    <a href="collection/">Collection</a>
     <a href="#about">About</a>
     <a href="contact/">Contact</a>
     <a href="support/">Support</a>
@@ -451,7 +450,7 @@
         <h2 id="scTitle">Loading resources…</h2>
         <p id="scDesc">Premium digital products with clear details before you buy.</p>
         <div class="showcase-slots" id="scDots"></div>
-        <a class="btn btn-gold" id="scCta" href="collection/">View details</a>
+        <a class="btn btn-gold" id="scCta" href="products/jamb-mastery-kit/">View details</a>
       </div>
     </div>
   </section>
@@ -497,7 +496,7 @@
       </div>
       <div class="products-grid" id="productsGrid"></div>
       <div class="center-cta">
-        <a class="btn btn-ghost" href="collection/">View full collection →</a>
+        <a class="btn btn-ghost" href="#categories">Browse categories</a>
       </div>
     </div>
   </section>
@@ -571,7 +570,7 @@
   <footer>
     <div class="footer-inner">
       <div>
-        <a href="./" class="logo">SAMSUC <span>Resource Hub</span></a>
+        <a href="https://samsuc.github.io/resource-hub/" class="logo">SAMSUC <span>Resource Hub</span></a>
         <p class="footer-tagline">Digital resources for students, churches, creators, and developers.</p>
         <div class="footer-social">
           <a href="https://x.com/samsuchub" target="_blank" rel="noopener" aria-label="X">
@@ -584,7 +583,7 @@
       </div>
       <div class="footer-col">
         <h4>Explore</h4>
-        <a href="collection/">Collection</a>
+        <a href="#categories">Categories</a>
         <a href="students-resources/">Student Resources</a>
         <a href="church-media/">Church Resources</a>
         <a href="creators-resources/">Creators Resources</a>
@@ -711,7 +710,7 @@
       if (desc) desc.textContent = truncate(p.desc || '', 140);
       if (tag) tag.textContent = catalog.categoryLabel(p.category);
       if (cta) {
-        var page = p.detailPath ? catalog.detailHref(p, '') : 'collection/';
+        var page = p.detailPath ? catalog.detailHref(p, '') : '#categories';
         cta.href = page;
         cta.textContent = 'View details';
         cta.removeAttribute('data-gumroad-overlay-checkout');

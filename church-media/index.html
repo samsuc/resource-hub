@@ -96,25 +96,25 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
 </style>
 <!-- samsuc-depth -->
 <link rel="stylesheet" href="../js/samsuc-depth.css"/>
+<link rel="stylesheet" href="../css/samsuc-nav.css"/>
 </head>
 <body class="depth-scene">
 <header class="header">
-  <a href="" class="logo">SAMSUC <span>Resource Hub</span></a>
+  <a href="https://samsuc.github.io/resource-hub/" class="logo">SAMSUC <span>Resource Hub</span></a>
   <nav class="nav">
-    <a href="">Home</a>
+    <a href="https://samsuc.github.io/resource-hub/">Home</a>
     <a href="../students-resources/" class="">Student Resources</a>
     <a href="../church-media/" class="active">Church Resources</a>
     <a href="../creators-resources/" class="">Creators Resources</a>
     <a href="../website-templates/" class="">Website & Developer Templates</a>
     <a href="../blog/">Blog</a>
-    <a href="../collection/">Shop</a>
     <a href="../contact/">Contact</a>
   </nav>
   <div class="locale-picker" id="localePicker" style="min-width:7.5rem;min-height:44px;height:44px;flex:0 0 auto"></div>
-  <a href="../collection/" class="btn btn-gold" style="padding:10px 16px;font-size:.82rem">Shop</a>
+  <a href="https://samsuc.github.io/resource-hub/#categories" class="btn btn-gold" style="padding:10px 16px;font-size:.82rem">Browse Categories</a>
 </header>
 <main class="wrap">
-  <p class="breadcrumb"><a href="">Home</a> · Church Resources</p>
+  <p class="breadcrumb"><a href="https://samsuc.github.io/resource-hub/">Home</a> · Church Resources</p>
   <div class="hero-block">
     <div class="eyebrow">Church Resources</div>
     <h1>Church Resources</h1>
@@ -124,7 +124,7 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
     <p>Church livestream setup involves more than pressing go-live. Audio checks, camera positions, OBS scenes, and team roles all need to be consistent. SAMSUC Resource Hub provides church media resources that help teams prepare before service starts.</p><p>Whether you are building a church streaming setup for the first time or tightening an existing media workflow, these downloads focus on repeatable steps: what to check, who owns each task, and how to reduce avoidable technical issues during worship.</p><p>Media leads, OBS operators, camera volunteers, and church media team members can use these resources alongside your existing tools. Every product page lists what is included so your team knows what they are downloading.</p>
     <h2>Church media downloads</h2>
   </div>
-  <div class="grid"><article class="card">
+  <div class="grid" id="catGrid" data-category="churches" data-prefix="../"><article class="card">
   <a href="../products/church-media-manual/"><img src="../media/thumbs/media.webp" srcset="../media/thumbs/media-480.webp 480w, ../media/thumbs/media.webp 600w" sizes="(max-width: 720px) calc(100vw - 48px), 340px" data-full="https://public-files.gumroad.com/tndj2u5fspb4yta7p6e7q5xsml1q" width="600" height="375" alt="Church Media Standard Operations Manual" decoding="async" referrerpolicy="no-referrer" fetchpriority="high"></a>
   <div class="body">
     <h3><a href="../products/church-media-manual/">Church Media Standard Operations Manual</a></h3>
@@ -149,9 +149,14 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
   </div>
 </article>
 </div>
+  <div class="empty" id="catEmpty" hidden>
+  <p><strong>Nothing is published in this category right now.</strong></p>
+  <p>When a resource is published, it will appear here. You can browse the other categories in the meantime.</p>
+</div>
+
   <div class="links"><p style="margin-bottom:10px;color:var(--muted)"><strong style="color:var(--text)">From the blog</strong></p><a href="../blog/how-to-set-up-church-livestream/">How to set up a church livestream</a> <a href="../blog/obs-church-livestream-setup/">OBS church livestream setup</a> <a href="../blog/church-media-team-checklist/">Church media team checklist</a> </div>
   <div class="links">
-    <a href="../collection/">Browse full shop</a>
+    <a href="https://samsuc.github.io/resource-hub/#categories">Browse categories</a>
     <a href="../students-resources/">Students</a>
     <a href="../church-media/">Church media</a>
     <a href="../website-templates/">Website templates</a>
@@ -160,12 +165,12 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
   </div>
 </main>
 <footer class="footer">
-  <a href="" class="logo">SAMSUC <span>Resource Hub</span></a>
+  <a href="https://samsuc.github.io/resource-hub/" class="logo">SAMSUC <span>Resource Hub</span></a>
   <div class="footer-links">
     <a href="../students-resources/">Students</a>
     <a href="../church-media/">Churches</a>
     <a href="../website-templates/">Templates</a>
-    <a href="../collection/">Shop</a>
+    <a href="https://samsuc.github.io/resource-hub/#categories">Categories</a>
     <a href="../contact/">Contact</a>
     <a href="../support/">Support</a>
     <a href="../privacy/">Privacy</a>
@@ -191,5 +196,8 @@ h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);let
   data-cf-beacon='{"token":"e5113820420a4f208635fabbb9c450e3"}'>
 </script><!-- End Cloudflare Web Analytics -->
 
+<script src="../js/samsuc-catalog.js"></script>
+<script src="../js/samsuc-category.js"></script>
+<script src="../js/samsuc-nav.js"></script>
 </body>
 </html>
